@@ -1,0 +1,160 @@
+<section class="section">
+    <div class="section-header">
+      <h1>Mi Cuenta</h1>
+    </div>
+    <div class="section-body">
+      <div class="loader" *ngIf="loading"></div>
+      <div class="row mt-sm-4">
+        <div class="col-12 col-md-12 col-lg-4">
+          <div class="card author-box">
+            <div class="card-body">
+              <div class="author-box-center">
+                <div class="clearfix"></div>
+                <div class="author-box-name">
+                  Hola {{user.name + ' ' + user.lastname}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <form name="updatePasswordForm" role="form" novalidate 
+                      (ngSubmit)="updatePassword()" [formGroup]="updatePasswordForm" autocomplete="off">
+              <div class="card-header">
+                <h4>Seguridad - Actualizar Contraseña</h4>
+              </div>
+              <div class="card-body">
+                  <div class="form-group">
+                    <label for="actualpassword" class="d-block">Contraseña Actual</label>
+                    <input id="actualpassword" pPassword type="password" class="form-control pwstrength"
+                        formControlName="actualpassword" promptLabel="Ingresar Password" weakLabel="Débil"
+                        mediumLabel="Medio" strongLabel="Fuerte"/>
+                    <div *ngIf="updatePasswordForm.get('actualpassword')!.invalid && (updatePasswordForm.get('actualpassword')!.dirty || updatePasswordForm.get('actualpassword')!.touched)">
+                        <small class="form-text text-danger" *ngIf="updatePasswordForm.get('actualpassword')?.errors?.required">
+                        Este campo es obligatorio.
+                        </small>
+                        <small class="form-text text-danger"
+                            *ngIf="updatePasswordForm.get('actualpassword')?.errors?.maxlength" [translateValues]="{ max: 30 }">
+                            Este campo no puede tener más de 30 caracteres.
+                        </small>
+                        <small class="form-text text-danger"
+                            *ngIf="updatePasswordForm.get('actualpassword')?.errors?.minlength" [translateValues]="{ min: 8 }">
+                            Este campo debe tener mínimo 8 caracteres.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="newpassword" class="d-block">Nueva Contraseña</label>
+                    <input id="newpassword" pPassword type="password" class="form-control pwstrength"
+                        formControlName="newpassword" promptLabel="Ingresar Password" weakLabel="Débil"
+                        mediumLabel="Medio" strongLabel="Fuerte"/>
+                    <div *ngIf="updatePasswordForm.get('newpassword')!.invalid && (updatePasswordForm.get('newpassword')!.dirty || updatePasswordForm.get('newpassword')!.touched)">
+                        <small class="form-text text-danger" *ngIf="updatePasswordForm.get('newpassword')?.errors?.required">
+                        Este campo es obligatorio.
+                        </small>
+                        <small class="form-text text-danger"
+                            *ngIf="updatePasswordForm.get('newpassword')?.errors?.maxlength" [translateValues]="{ max: 30 }">
+                            Este campo no puede tener más de 30 caracteres.
+                        </small>
+                        <small class="form-text text-danger"
+                            *ngIf="updatePasswordForm.get('newpassword')?.errors?.minlength" [translateValues]="{ min: 8 }">
+                            Este campo debe tener mínimo 8 caracteres.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="passwordConfirm" class="d-block">Confirmar Contraseña</label>
+                    <input id="passwordConfirm" pPassword type="password" class="form-control pwstrength"
+                        formControlName="passwordConfirm" promptLabel="Ingresar Password" weakLabel="Débil"
+                        mediumLabel="Medio" strongLabel="Fuerte"/>
+                    <div *ngIf="updatePasswordForm.get('passwordConfirm')!.invalid && (updatePasswordForm.get('passwordConfirm')!.dirty || updatePasswordForm.get('passwordConfirm')!.touched)">
+                        <small class="form-text text-danger" *ngIf="updatePasswordForm.get('passwordConfirm')?.errors?.required">
+                        Este campo es obligatorio.
+                        </small>
+                        <small class="form-text text-danger"
+                            *ngIf="updatePasswordForm.get('passwordConfirm')?.errors?.maxlength" [translateValues]="{ max: 30 }">
+                        Este campo no puede tener más de 30 caracteres.
+                        </small>
+                        <small class="form-text text-danger"
+                            *ngIf="updatePasswordForm.get('passwordConfirm')?.errors?.minlength" [translateValues]="{ min: 8 }">
+                            Este campo debe tener mínimo 8 caracteres.
+                        </small>
+                        <small class="form-text text-danger"
+                            *ngIf="updatePasswordForm.get('passwordConfirm')?.errors?.mustMatch">
+                            La contraseña no coincide
+                        </small>
+                    </div>
+                </div>
+              </div>
+              <div class="card-footer text-right">
+                <button type="submit" class="btn btn-primary" [disabled]="updatePasswordForm.invalid">Actualizar Contraseña</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-12 col-md-12 col-lg-8">
+          <div class="card">
+            <div class="padding-20">
+              <div class="tab-content tab-bordered" id="myTab3Content">
+                <div class="tab-pane fade active show" id="settings" role="tabpanel" aria-labelledby="profile-tab2">
+                  <form name="userForm" role="form" novalidate 
+                      (ngSubmit)="save()" [formGroup]="userForm" autocomplete="off">
+                    <div class="card-header">
+                      <h4>Información Personal</h4>
+                    </div>
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label class="form-control-label" for="field_email">Email</label>
+                        <input type="text" class="form-control" name="email" id="field_email"
+                            formControlName="email" maxlength="50" size="50"/>
+                        <div *ngIf="userForm.get('email')!.invalid && (userForm.get('email')!.dirty || userForm.get('email')!.touched)">
+                            <small class="form-text text-danger" *ngIf="userForm.get('email')?.errors?.required">
+                                Este campo es obligatorio.
+                            </small>
+                            <small class="form-text text-danger" *ngIf="userForm.get('email')?.errors?.pattern">
+                                El email que ingresaste no es válido.
+                            </small>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group col-6">
+                            <label class="form-control-label" for="field_name">Nombres</label>
+                            <input type="text" class="form-control" name="name" id="field_name"
+                                formControlName="name"/>
+                            <div *ngIf="userForm.get('name')!.invalid && (userForm.get('name')!.dirty || userForm.get('name')!.touched)">
+                                <small class="form-text text-danger" *ngIf="userForm.get('name')?.errors?.required">
+                                Este campo es obligatorio.
+                                </small>
+                                <small class="form-text text-danger"
+                                    *ngIf="userForm.get('name')?.errors?.maxlength" [translateValues]="{ max: 50 }">
+                                Este campo no puede tener más de 50 caracteres.
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-group col-6">
+                            <label class="form-control-label" for="field_lastname">Apellidos</label>
+                            <input type="text" class="form-control" name="lastname" id="field_lastname"
+                                formControlName="lastname"/>
+                            <div *ngIf="userForm.get('lastname')!.invalid && (userForm.get('lastname')!.dirty || userForm.get('lastname')!.touched)">
+                                <small class="form-text text-danger" *ngIf="userForm.get('lastname')?.errors?.required">
+                                Este campo es obligatorio.
+                                </small>
+                                <small class="form-text text-danger"
+                                    *ngIf="userForm.get('lastname')?.errors?.maxlength" [translateValues]="{ max: 50 }">
+                                Este campo no puede tener más de 50 caracteres.
+                                </small>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-footer text-right">
+                      <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">Guardar Cambios</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
