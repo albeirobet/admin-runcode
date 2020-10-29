@@ -36,8 +36,8 @@ export class UserService {
       { params: options, observe: 'response' });
   }
 
-  delete(id: number): Observable<HttpResponse<{}>> {
-    return this.http.delete(`${AccessControlConstants.ACCESS_CONTROL_ENDPOINT_URL_USERS}/${id}`, 
+  delete(id: string): Observable<HttpResponse<{}>> {
+    return this.http.delete(`${AccessControlConstants.ACCESS_CONTROL_ENDPOINT_URL_USERS}deleteUser/${id}`, 
     { observe: 'response' });
   }
 

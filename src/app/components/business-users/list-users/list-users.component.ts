@@ -13,6 +13,7 @@ import { CreateEditUserComponent } from '../create-edit-user/create-edit-user.co
 import { IAccount } from 'src/app/model/access-control/account';
 import { AppConstants } from 'src/app/utils/constants/app-constants';
 import { NotificationService } from 'src/app/services/common/notification.service';
+import {ConfirmationService} from 'primeng/api';
 
 @Component({
   selector: 'app-list-users',
@@ -55,7 +56,9 @@ export class ListUsersComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
     public dialogService: DialogService,
-    private notificationService: NotificationService) {
+    private notificationService: NotificationService,
+    private confirmationService: ConfirmationService
+    ) {
   }
 
   ngOnInit(): void {
@@ -75,7 +78,7 @@ export class ListUsersComponent implements OnInit {
     this.pagedRequest = new PagedRequest;
     this.pagedRequest.order = 'desc';
     this.pagedRequest.sort = 'name';
-    this.pagedRequest.page = pageNumber;
+    this.pagedRequest.page = pageNumber + 1;
     this.pagedRequest.limit = rowsNumber;
 
     if(event.globalFilter) {
@@ -93,8 +96,8 @@ export class ListUsersComponent implements OnInit {
     console.log(this.pagedRequest)
     this.userService.query(this.pagedRequest, this.search).subscribe(
       (res: HttpResponse<GeneralResponse>) => {
-        this.users = res.body.data;
-        this.totalRecords = this.users.length;
+        this.users = res.body.data.userLst;
+        this.totalRecords = res.body.data.total;
         this.loading = false;
 
       },
@@ -155,6 +158,35 @@ export class ListUsersComponent implements OnInit {
         this.notificationService.success('Usuario actualizado correctamente.');
         this.reloadUsers();
       }
+    });
+  }
+
+  /**
+   * Abrir modal para eliminar un usuario
+   */
+  deleteUser(userSelected: IAccount) {
+    this.loading = true;
+    this.userService.delete(userSelected.user._id).subscribe(
+      (res: HttpResponse<GeneralResponse>) => {
+        this.notificationService.success('Usuario eliminado correctamente.');
+        this.reloadUsers();
+        this.loading = false;
+      },
+      error => {
+        console.dir(error.error);
+        this.notificationService.error('Se ha presentado un error en el sistema, por favor intente nuevamente.');
+        this.loading = false;
+      }
+    );
+  }
+
+  confirmDeleteUser(userSelected: IAccount) {
+    console.log(userSelected)
+    this.confirmationService.confirm({
+        message: 'Está seguro de eliminar este usuario?',
+        accept: () => {
+            this.deleteUser(userSelected);
+        }
     });
   }
 

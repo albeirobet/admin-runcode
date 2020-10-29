@@ -9,6 +9,7 @@ import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
 import {DynamicDialogModule} from 'primeng/dynamicdialog';
 import { CreateEditUserModule } from './create-edit-users.module';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [ListUsersComponent],
@@ -21,7 +22,8 @@ import { CreateEditUserModule } from './create-edit-users.module';
     ButtonModule,
     InputTextModule,
     DynamicDialogModule,
-    CreateEditUserModule
+    CreateEditUserModule,
+    ConfirmDialogModule
   ],
   exports: [ListUsersComponent]
 })

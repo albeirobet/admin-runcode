@@ -8,7 +8,12 @@
 <div class="alert alert-warning" id="no-result" *ngIf="users?.length === 0">
     <span>No se encontraron usuarios en el sistema</span>
 </div>
-
+<p-confirmDialog #cd header="Confirmar" icon="pi pi-exclamation-triangle" >
+    <p-footer>
+        <button type="submit" class="btn btn-primary" (click)="cd.accept()">Confirmar</button>
+        <button type="button" class="btn btn-secondary" (click)="cd.reject()">Cancelar</button>
+    </p-footer>
+</p-confirmDialog>
 <div class="card">
     <p-toolbar styleClass="p-mb-4">
         <ng-template pTemplate="left">
@@ -45,6 +50,7 @@
                 <td>{{user.authorities}}</td>
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="openEditUser(user)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="confirmDeleteUser(user)"></button>
                 </td>
             </tr>
         </ng-template>

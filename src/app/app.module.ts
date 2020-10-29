@@ -16,6 +16,7 @@ import { Ng2IziToastModule } from 'ng2-izitoast';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from './modules/shared/shared.module';
 import { JwtModule } from '@auth0/angular-jwt';
+import { ConfirmationService } from 'primeng/api';
 
 // ======= To get access token
 export function tokenGetter() {
@@ -43,7 +44,8 @@ export function tokenGetter() {
     })
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtHttpInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: JwtHttpInterceptor, multi: true },
+    ConfirmationService
   ],
   bootstrap: [AppComponent]
 })

@@ -8,6 +8,7 @@ import { IUser, User } from 'src/app/model/access-control/user';
 import { GeneralResponse } from 'src/app/model/commons/response/general-response';
 import { RolService } from 'src/app/services/business-users/rol.service';
 import { UserService } from 'src/app/services/business-users/user.service';
+import { NotificationService } from 'src/app/services/common/notification.service';
 import { AppConstants } from 'src/app/utils/constants/app-constants';
 
 @Component({
@@ -31,14 +32,15 @@ export class CreateEditUserComponent implements OnInit {
     lastname: [null, [Validators.required, Validators.maxLength(50)]],
     email: [null, [Validators.required, Validators.pattern(AppConstants.REGEX_EMAIL)]],
     active: [],
-    authorities: []
+    authorities: [null, [Validators.required]]
   });
 
   constructor(protected rolService: RolService,
     protected userService: UserService,
     private fb: FormBuilder,
     public ref: DynamicDialogRef,
-    public config: DynamicDialogConfig) { 
+    public config: DynamicDialogConfig,
+    private notificationService: NotificationService) { 
       if(config.data) {
         this.user = config.data;  
       }
@@ -129,7 +131,7 @@ export class CreateEditUserComponent implements OnInit {
   protected subscribeToSaveResponse(result: Observable<HttpResponse<GeneralResponse>>): void {
     result.subscribe(
       () => this.onSaveSuccess(),
-      () => this.onSaveError()
+      (error) => this.onSaveError(error)
     );
   }
 
@@ -138,7 +140,13 @@ export class CreateEditUserComponent implements OnInit {
     this.ref.close(true);
   }
 
-  protected onSaveError(): void {
+  protected onSaveError(error): void {
+    console.log(error)
+    if(error.error.apiError.code == 'EM_COMMON_07') {
+      this.notificationService.error('El correo ingresado ya ha sido registrado, por favor verifique los datos.');
+    } else {
+      this.notificationService.error('Se ha presentado un error en el sistema, por favor intente nuevamente.');
+    }
     this.loading = false;
   }
 

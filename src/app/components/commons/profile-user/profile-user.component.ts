@@ -104,7 +104,7 @@ export class ProfileUserComponent implements OnInit {
   protected subscribeToSaveResponse(result: Observable<HttpResponse<GeneralResponse>>): void {
     result.subscribe(
       () => this.onSaveSuccess(),
-      () => this.onSaveError()
+      (error) => this.onSaveError(error)
     );
   }
 
@@ -113,7 +113,9 @@ export class ProfileUserComponent implements OnInit {
     this.notificationService.success('Usuario actualizado correctamente.');
   }
 
-  protected onSaveError(): void {
+  protected onSaveError(error): void {
+    console.log(error)
+    this.notificationService.error('Se ha presentado un error en el sistema, por favor intente nuevamente.');
     this.loading = false;
   }
 
@@ -136,6 +138,12 @@ export class ProfileUserComponent implements OnInit {
       },
       error => {
         console.dir(error.error);
+        console.log(error)
+        if(error.error.apiError.code == 'E_ACCESS_CONTROL_MS_12') {
+          this.notificationService.error('La contraseña actual no es correcta, por favor verifica los datos.');
+        } else {
+          this.notificationService.error('Se ha presentado un error en el sistema, por favor intente nuevamente.');
+        }
         this.loading = false;
       }
     );

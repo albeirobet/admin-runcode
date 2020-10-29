@@ -44,8 +44,6 @@ export class AccountService {
 
           if (account) {
             this.authenticate(account.data);
-            this.notificationService.success('Bienvenido '+account.data.user.name);
-            this.navigateToStoredUrl();
           } else {
             this.authenticate(null);
           }
@@ -75,7 +73,6 @@ export class AccountService {
   }
 
   private navigateToStoredUrl(): void {
-    console.log('navegar')
     this.router.navigateByUrl('/dashboard');
   }
   

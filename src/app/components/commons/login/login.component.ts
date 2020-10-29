@@ -39,8 +39,10 @@ export class LoginComponent implements OnInit {
         password: this.loginForm.get('password')!.value,
       })
       .subscribe(
-        () => {
+        (data) => {
+          console.log(data)
           this.loading = false;
+          this.notificationService.success('Bienvenido '+data.data.user.name);
           this.router.navigate(['/dashboard']);
         },
         (error) => {
