@@ -75,6 +75,7 @@ export class ProfileUserComponent implements OnInit {
         });
 
         this.user = account.data.user;
+        this.user.authorities = account.data.authorities;
       }
     });
   }

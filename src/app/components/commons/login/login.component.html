@@ -8,16 +8,20 @@
                         <h4>Ingreso Usuarios</h4>
                     </div>
                     <div class="card-body">
-                        <form [formGroup]="loginForm" (ngSubmit)="login()" autocomplete="on" class="needs-validation" novalidate="">
+                        <form [formGroup]="loginForm" (ngSubmit)="login()" autocomplete="on" class="needs-validation"
+                            novalidate="">
                             <div class="form-group">
                                 <label for="email">Correo Electrónico</label>
-                                <input id="email" type="email" class="form-control" formControlName="username" 
+                                <input id="email" type="email" class="form-control" formControlName="username"
                                     name="username" tabindex="1" required autofocus maxlength="50" size="50">
-                                <div *ngIf="loginForm.get('username')!.invalid && (loginForm.get('username')!.dirty || loginForm.get('username')!.touched)">
-                                    <small class="form-text text-danger" *ngIf="loginForm.get('username')?.errors?.required">
+                                <div
+                                    *ngIf="loginForm.get('username')!.invalid && (loginForm.get('username')!.dirty || loginForm.get('username')!.touched)">
+                                    <small class="form-text text-danger"
+                                        *ngIf="loginForm.get('username')?.errors?.required">
                                         Este campo es obligatorio.
                                     </small>
-                                    <small class="form-text text-danger" *ngIf="loginForm.get('username')?.errors?.pattern">
+                                    <small class="form-text text-danger"
+                                        *ngIf="loginForm.get('username')?.errors?.pattern">
                                         El email que ingresaste no es válido.
                                     </small>
                                 </div>
@@ -31,7 +35,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                <input id="password" type="password" class="form-control" formControlName="password" 
+                                <input id="password" type="password" class="form-control" formControlName="password"
                                     name="password" tabindex="2" required>
                                 <div class="invalid-feedback" *ngIf="loginForm.get('password').hasError('required')">
                                     Por favor ingrese su contraseña
@@ -50,23 +54,16 @@
                                 </button>
                             </div>
                         </form>
-                        <div class="text-center mt-4 mb-3">
-                            <div class="text-job text-muted">Iniciar sesión con redes sociales</div>
-                        </div>
-                        <div class="row sm-gutters">
-                            <div class="col-6">
-                                <a class="btn btn-block btn-social btn-facebook">
-                                    <span class="fab fa-facebook"></span> Facebook
-                                </a>
-                            </div>
-                            <div class="col-6">
-                                <a class="btn btn-block btn-social btn-google">
-                                    <span class="fab fa-google"></span> Google
-                                </a>
+                        <div class="login-brand">
+                            <div class="login-brand">
+                                <img alt="image"
+                                    src="https://runcode.co/wp-content/uploads/2016/04/logo-horizontal-runecode.png"
+                                    width="150" data-toggle="title" title="">
                             </div>
                         </div>
                         <div class="mt-5 text-muted text-center">
-                            ¿Aún no tiene una cuenta? <a href="javascript:void(0);" (click)="createAccount()">Crearla</a>
+                            ¿Aún no tiene una cuenta? <a href="javascript:void(0);"
+                                (click)="createAccount()">Crearla</a>
                         </div>
                     </div>
                 </div>
