@@ -42,7 +42,8 @@ export class ForgotPasswordComponent implements OnInit {
         this.loading = false;
       },
       error => {
-        console.dir(error.error);
+        this.notificationService.success('Te enviamos un correo con los datos para actualizar tu contraseña.');
+        this.forgotPasswordForm.reset();
         this.loading = false;
       }
     );

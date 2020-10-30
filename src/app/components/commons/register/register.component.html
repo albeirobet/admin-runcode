@@ -4,116 +4,139 @@
         <div class="row">
             <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
                 <div class="card card-primary">
-                <div class="card-header">
-                    <h4>Registro de Usuario</h4>
-                </div>
-                <div class="card-body">
-                    <form name="registerForm" role="form" novalidate 
-                        (ngSubmit)="save()" [formGroup]="registerForm" autocomplete="off">
-                        <div>
-                            <div class="form-group">
-                                <label class="form-control-label" for="field_email">Email</label>
-                                <input type="text" class="form-control" name="email" id="field_email"
-                                    formControlName="email" maxlength="50" size="50"/>
-                                <div *ngIf="registerForm.get('email')!.invalid && (registerForm.get('email')!.dirty || registerForm.get('email')!.touched)">
-                                    <small class="form-text text-danger" *ngIf="registerForm.get('email')?.errors?.required">
-                                        Este campo es obligatorio.
-                                    </small>
-                                    <small class="form-text text-danger" *ngIf="registerForm.get('email')?.errors?.pattern">
-                                        El email que ingresaste no es válido.
-                                    </small>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="form-group col-6">
-                                    <label class="form-control-label" for="field_name">Nombres</label>
-                                    <input type="text" class="form-control" name="name" id="field_name"
-                                        formControlName="name"/>
-                                    <div *ngIf="registerForm.get('name')!.invalid && (registerForm.get('name')!.dirty || registerForm.get('name')!.touched)">
-                                        <small class="form-text text-danger" *ngIf="registerForm.get('name')?.errors?.required">
-                                        Este campo es obligatorio.
+                    <div class="card-header">
+                        <h4>Registro de Usuario</h4>
+                    </div>
+                    <div class="card-body">
+                        <form name="registerForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="registerForm"
+                            autocomplete="off">
+                            <div>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="field_email">Email</label>
+                                    <input type="text" class="form-control" name="email" id="field_email"
+                                        formControlName="email" maxlength="50" size="50" />
+                                    <div
+                                        *ngIf="registerForm.get('email')!.invalid && (registerForm.get('email')!.dirty || registerForm.get('email')!.touched)">
+                                        <small class="form-text text-danger"
+                                            *ngIf="registerForm.get('email')?.errors?.required">
+                                            Este campo es obligatorio.
                                         </small>
                                         <small class="form-text text-danger"
-                                            *ngIf="registerForm.get('name')?.errors?.maxlength" [translateValues]="{ max: 50 }">
-                                        Este campo no puede tener más de 50 caracteres.
+                                            *ngIf="registerForm.get('email')?.errors?.pattern">
+                                            El email que ingresaste no es válido.
                                         </small>
                                     </div>
                                 </div>
-                                <div class="form-group col-6">
-                                    <label class="form-control-label" for="field_lastname">Apellidos</label>
-                                    <input type="text" class="form-control" name="lastname" id="field_lastname"
-                                        formControlName="lastname"/>
-                                    <div *ngIf="registerForm.get('lastname')!.invalid && (registerForm.get('lastname')!.dirty || registerForm.get('lastname')!.touched)">
-                                        <small class="form-text text-danger" *ngIf="registerForm.get('lastname')?.errors?.required">
-                                        Este campo es obligatorio.
-                                        </small>
-                                        <small class="form-text text-danger"
-                                            *ngIf="registerForm.get('lastname')?.errors?.maxlength" [translateValues]="{ max: 50 }">
-                                        Este campo no puede tener más de 50 caracteres.
-                                        </small>
+
+                                <div class="row">
+                                    <div class="form-group col-6">
+                                        <label class="form-control-label" for="field_name">Nombres</label>
+                                        <input type="text" class="form-control" name="name" id="field_name"
+                                            formControlName="name" />
+                                        <div
+                                            *ngIf="registerForm.get('name')!.invalid && (registerForm.get('name')!.dirty || registerForm.get('name')!.touched)">
+                                            <small class="form-text text-danger"
+                                                *ngIf="registerForm.get('name')?.errors?.required">
+                                                Este campo es obligatorio.
+                                            </small>
+                                            <small class="form-text text-danger"
+                                                *ngIf="registerForm.get('name')?.errors?.maxlength"
+                                                [translateValues]="{ max: 50 }">
+                                                Este campo no puede tener más de 50 caracteres.
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label class="form-control-label" for="field_lastname">Apellidos</label>
+                                        <input type="text" class="form-control" name="lastname" id="field_lastname"
+                                            formControlName="lastname" />
+                                        <div
+                                            *ngIf="registerForm.get('lastname')!.invalid && (registerForm.get('lastname')!.dirty || registerForm.get('lastname')!.touched)">
+                                            <small class="form-text text-danger"
+                                                *ngIf="registerForm.get('lastname')?.errors?.required">
+                                                Este campo es obligatorio.
+                                            </small>
+                                            <small class="form-text text-danger"
+                                                *ngIf="registerForm.get('lastname')?.errors?.maxlength"
+                                                [translateValues]="{ max: 50 }">
+                                                Este campo no puede tener más de 50 caracteres.
+                                            </small>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="form-group col-6">
-                                    <label for="password" class="d-block">Password</label>
-                                    <input id="password" pPassword type="password" class="form-control pwstrength"
-                                        formControlName="password" promptLabel="Ingresar Password" weakLabel="Débil"
-                                        mediumLabel="Medio" strongLabel="Fuerte"/>
-                                    <div *ngIf="registerForm.get('password')!.invalid && (registerForm.get('password')!.dirty || registerForm.get('password')!.touched)">
-                                        <small class="form-text text-danger" *ngIf="registerForm.get('password')?.errors?.required">
-                                        Este campo es obligatorio.
-                                        </small>
-                                        <small class="form-text text-danger"
-                                            *ngIf="registerForm.get('password')?.errors?.maxlength" [translateValues]="{ max: 30 }">
-                                            Este campo no puede tener más de 30 caracteres.
-                                        </small>
-                                        <small class="form-text text-danger"
-                                            *ngIf="registerForm.get('password')?.errors?.minlength" [translateValues]="{ min: 8 }">
-                                            Este campo debe tener mínimo 8 caracteres.
-                                        </small>
+                                <div class="row">
+                                    <div class="form-group col-6">
+                                        <label for="password" class="d-block">Password</label>
+                                        <input id="password" pPassword type="password" class="form-control pwstrength"
+                                            formControlName="password" promptLabel="Ingresar Password" weakLabel="Débil"
+                                            mediumLabel="Medio" strongLabel="Fuerte" />
+                                        <div
+                                            *ngIf="registerForm.get('password')!.invalid && (registerForm.get('password')!.dirty || registerForm.get('password')!.touched)">
+                                            <small class="form-text text-danger"
+                                                *ngIf="registerForm.get('password')?.errors?.required">
+                                                Este campo es obligatorio.
+                                            </small>
+                                            <small class="form-text text-danger"
+                                                *ngIf="registerForm.get('password')?.errors?.maxlength"
+                                                [translateValues]="{ max: 30 }">
+                                                Este campo no puede tener más de 30 caracteres.
+                                            </small>
+                                            <small class="form-text text-danger"
+                                                *ngIf="registerForm.get('password')?.errors?.minlength"
+                                                [translateValues]="{ min: 8 }">
+                                                Este campo debe tener mínimo 8 caracteres.
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="passwordConfirm" class="d-block">Confirmar Password</label>
+                                        <input id="passwordConfirm" pPassword type="password"
+                                            class="form-control pwstrength" formControlName="passwordConfirm"
+                                            promptLabel="Ingresar Password" weakLabel="Débil" mediumLabel="Medio"
+                                            strongLabel="Fuerte" />
+                                        <div
+                                            *ngIf="registerForm.get('passwordConfirm')!.invalid && (registerForm.get('passwordConfirm')!.dirty || registerForm.get('passwordConfirm')!.touched)">
+                                            <small class="form-text text-danger"
+                                                *ngIf="registerForm.get('passwordConfirm')?.errors?.required">
+                                                Este campo es obligatorio.
+                                            </small>
+                                            <small class="form-text text-danger"
+                                                *ngIf="registerForm.get('passwordConfirm')?.errors?.maxlength"
+                                                [translateValues]="{ max: 30 }">
+                                                Este campo no puede tener más de 30 caracteres.
+                                            </small>
+                                            <small class="form-text text-danger"
+                                                *ngIf="registerForm.get('passwordConfirm')?.errors?.minlength"
+                                                [translateValues]="{ min: 8 }">
+                                                Este campo debe tener mínimo 8 caracteres.
+                                            </small>
+                                            <small class="form-text text-danger"
+                                                *ngIf="registerForm.get('passwordConfirm')?.errors?.mustMatch">
+                                                La contraseña no coincide
+                                            </small>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-6">
-                                    <label for="passwordConfirm" class="d-block">Confirmar Password</label>
-                                    <input id="passwordConfirm" pPassword type="password" class="form-control pwstrength"
-                                        formControlName="passwordConfirm" promptLabel="Ingresar Password" weakLabel="Débil"
-                                        mediumLabel="Medio" strongLabel="Fuerte"/>
-                                    <div *ngIf="registerForm.get('passwordConfirm')!.invalid && (registerForm.get('passwordConfirm')!.dirty || registerForm.get('passwordConfirm')!.touched)">
-                                        <small class="form-text text-danger" *ngIf="registerForm.get('passwordConfirm')?.errors?.required">
-                                        Este campo es obligatorio.
-                                        </small>
-                                        <small class="form-text text-danger"
-                                            *ngIf="registerForm.get('passwordConfirm')?.errors?.maxlength" [translateValues]="{ max: 30 }">
-                                        Este campo no puede tener más de 30 caracteres.
-                                        </small>
-                                        <small class="form-text text-danger"
-                                            *ngIf="registerForm.get('passwordConfirm')?.errors?.minlength" [translateValues]="{ min: 8 }">
-                                            Este campo debe tener mínimo 8 caracteres.
-                                        </small>
-                                        <small class="form-text text-danger"
-                                            *ngIf="registerForm.get('passwordConfirm')?.errors?.mustMatch">
-                                            La contraseña no coincide
-                                        </small>
-                                    </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block"
+                                        [disabled]="registerForm.invalid">
+                                        Registrarme
+                                    </button>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-lg btn-block"
-                                    [disabled]="registerForm.invalid">
-                                  Registrarme
-                                </button>
                             </div>
-
-                        </div>
-                    </form>
-                    </div>  
+                        </form>
+                    </div>
+                    <div class="login-brand">
+                        <img alt="image"
+                            src="https://runcode.co/wp-content/uploads/2016/04/logo-horizontal-runecode.png" width="150"
+                            data-toggle="title" title="">
+                    </div>
                     <div class="mb-4 text-muted text-center">
                         Tienes Cuenta? <a href="javascript:void(0);" (click)="login()">Iniciar Sesión</a>
-                    </div>  
+                    </div>
                 </div>
             </div>
         </div>
