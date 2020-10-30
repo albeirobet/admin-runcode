@@ -57,8 +57,8 @@ export class ResetPasswordComponent implements OnInit {
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Contraseña actualizada correctamente.');
         this.authService.authenticateSuccess(res.body, true);
-        this.loading = false;
         this.router.navigate(['/dashboard']);
+        //this.loading = false;
       },
       error => {
         this.loading = false;

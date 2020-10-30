@@ -80,11 +80,11 @@ export class RegisterComponent implements OnInit {
   protected onSaveSuccess(res): void {
     this.notificationService.success('Usuario registrado correctamente.');
     this.authService.authenticateSuccess(res.body, true);
-    this.loading = false;
     this.router.navigate(['/dashboard']);
   }
 
   protected onSaveError(): void {
+    this.notificationService.error('Se ha presentado un error en el sistema, por favor intente nuevamente.');
     this.loading = false;
   }
 

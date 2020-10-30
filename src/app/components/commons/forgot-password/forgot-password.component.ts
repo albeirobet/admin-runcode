@@ -42,8 +42,11 @@ export class ForgotPasswordComponent implements OnInit {
         this.loading = false;
       },
       error => {
-        this.notificationService.success('Te enviamos un correo con los datos para actualizar tu contraseña.');
-        this.forgotPasswordForm.reset();
+        if(error.error.apiError.code == 'E_ACCESS_CONTROL_MS_09') {
+          this.notificationService.error(error.error.apiError.messageUser);
+        } else {
+          this.notificationService.error('Ha ocurrido un error. Por favor intente nuevamente restablecerlo.');
+        }
         this.loading = false;
       }
     );
