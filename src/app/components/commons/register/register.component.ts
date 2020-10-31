@@ -73,7 +73,7 @@ export class RegisterComponent implements OnInit {
   protected subscribeToSaveResponse(result: Observable<HttpResponse<GeneralResponse>>): void {
     result.subscribe(
       (res) => this.onSaveSuccess(res),
-      () => this.onSaveError()
+      (error) => this.onSaveError(error)
     );
   }
 
@@ -83,8 +83,12 @@ export class RegisterComponent implements OnInit {
     this.router.navigate(['/dashboard']);
   }
 
-  protected onSaveError(): void {
-    this.notificationService.error('Se ha presentado un error en el sistema, por favor intente nuevamente.');
+  protected onSaveError(error): void {
+    if(error.error.apiError.code == 'EM_COMMON_07') {
+      this.notificationService.error('El correo ingresado ya ha sido registrado, por favor verifique los datos.');
+    } else {
+      this.notificationService.error('Se ha presentado un error en el sistema, por favor intente nuevamente.');
+    }
     this.loading = false;
   }
 
