@@ -133,7 +133,7 @@ export class ListUsersComponent implements OnInit {
     const ref = this.dialogService.open(CreateEditUserComponent, {
         data: null,
         header: 'Crear Usuario',
-        width: '40%'
+        width: '50%'
     });
     ref.onClose.subscribe((response: Boolean) => {
       if (response) {
@@ -151,7 +151,7 @@ export class ListUsersComponent implements OnInit {
     const ref = this.dialogService.open(CreateEditUserComponent, {
         data: this.user,
         header: 'Editar Usuario',
-        width: '40%'
+        width: '50%'
     });
     ref.onClose.subscribe((response: Boolean) => {
       if (response) {

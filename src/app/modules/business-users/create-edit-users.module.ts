@@ -5,6 +5,7 @@ import { CreateEditUserRoutingModule } from './create-edit-user-routing.module';
 import { ButtonModule } from 'primeng/button';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {CheckboxModule} from 'primeng/checkbox';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [CreateEditUserComponent],
@@ -13,7 +14,8 @@ import {CheckboxModule} from 'primeng/checkbox';
     CreateEditUserRoutingModule,
     ButtonModule,
     MultiSelectModule,
-    CheckboxModule
+    CheckboxModule,
+    DropdownModule
   ],
   exports: [CreateEditUserComponent]
 })

@@ -1,14 +1,17 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { SelectItem } from 'primeng/api';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
 import { IRol } from 'src/app/model/access-control/rol';
 import { IUser, User } from 'src/app/model/access-control/user';
 import { GeneralResponse } from 'src/app/model/commons/response/general-response';
+import { ICompany } from 'src/app/model/enterprise-information/company';
 import { RolService } from 'src/app/services/business-users/rol.service';
 import { UserService } from 'src/app/services/business-users/user.service';
 import { NotificationService } from 'src/app/services/common/notification.service';
+import { CompanyDataService } from 'src/app/services/enterprise-information/company-data.service';
 import { AppConstants } from 'src/app/utils/constants/app-constants';
 
 @Component({
@@ -21,6 +24,10 @@ export class CreateEditUserComponent implements OnInit {
   // --- Lista de roles
   roles?: IRol[];
 
+  // --- Lista de empresas
+  companies?: ICompany[];
+  companiesSI?: SelectItem[];
+
   // --- Usuario a editar
   user?: IUser;
 
@@ -32,11 +39,13 @@ export class CreateEditUserComponent implements OnInit {
     lastname: [null, [Validators.required, Validators.maxLength(50)]],
     email: [null, [Validators.required, Validators.pattern(AppConstants.REGEX_EMAIL)]],
     active: [],
-    authorities: [null, [Validators.required]]
+    authorities: [null, [Validators.required]],
+    companyId: [null, [Validators.required]]
   });
 
   constructor(protected rolService: RolService,
     protected userService: UserService,
+    protected companyDataService: CompanyDataService,
     private fb: FormBuilder,
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
@@ -59,6 +68,26 @@ export class CreateEditUserComponent implements OnInit {
       (res: HttpResponse<GeneralResponse>) => {
         this.roles = res.body.data;
 
+        this.getCompanies();
+
+      },
+      error => {
+        console.dir(error.error);
+        this.loading = false;
+      }
+    );
+  }
+
+  /**
+   * Obtener empresas 
+   */
+  getCompanies(): void {
+    this.loading = true;
+    this.companyDataService.query().subscribe(
+      (res: HttpResponse<GeneralResponse>) => {
+        this.companies = res.body.data.dataLst;
+        this.setCompaniesSI();
+
         // --- si es edicion se actualiza el formulario con los datos
         if(this.user) {
           this.updateForm(this.user);
@@ -70,6 +99,13 @@ export class CreateEditUserComponent implements OnInit {
         this.loading = false;
       }
     );
+  }
+
+  setCompaniesSI(){
+    this.companiesSI = [];
+    this.companies.forEach(company => {
+      this.companiesSI.push({ label: company.name, value: company._id });
+    });
   }
 
   /**
@@ -95,7 +131,8 @@ export class CreateEditUserComponent implements OnInit {
       lastname: user.lastname,
       email: user.email,
       active: user.active,
-      authorities: rolesUser
+      authorities: rolesUser,
+      companyId: user.companyId
     });
   }
 
@@ -124,7 +161,8 @@ export class CreateEditUserComponent implements OnInit {
       name: this.editForm.get(['name'])!.value,
       lastname: this.editForm.get(['lastname'])!.value,
       email: this.editForm.get(['email'])!.value,
-      active: this.editForm.get(['active'])!.value
+      active: this.editForm.get(['active'])!.value,
+      companyId: this.editForm.get(['companyId'])!.value
     };
   }
 

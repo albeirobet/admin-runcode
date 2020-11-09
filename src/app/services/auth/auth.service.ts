@@ -23,11 +23,9 @@ export class AuthService {
       .pipe(map(response => this.authenticateSuccess(response, true)));
   }
 
-  logout(): Observable<void> {
-    return new Observable(observer => {
-      localStorage.removeItem('acc_tok_rc');
-      sessionStorage.removeItem('acc_tok_rc');
-    });
+  logout(): void {
+    localStorage.removeItem('acc_tok_rc');
+    sessionStorage.removeItem('acc_tok_rc');
   }
 
   /**

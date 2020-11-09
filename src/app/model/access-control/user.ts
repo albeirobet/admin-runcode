@@ -12,6 +12,7 @@ export interface IUser {
     active?: Boolean;
     token?: string;
     authorities?: string[];
+    companyId?: string;
 }
 
 export class User implements IUser {
@@ -28,5 +29,6 @@ export class User implements IUser {
         public passwordResetExpires?: Date,
         public active?: Boolean,
         public token?: string,
-        public authorities?: string[]) {}
+        public authorities?: string[],
+        public companyId?: string) {}
 }
