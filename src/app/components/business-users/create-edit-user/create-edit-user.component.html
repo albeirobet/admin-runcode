@@ -34,7 +34,7 @@
                 <div class="form-group col-6">
                     <label class="form-control-label" for="field_name">Nombres</label>
                     <input type="text" class="form-control" name="name" id="field_name"
-                        formControlName="name"/>
+                        formControlName="name" maxlength="50" size="50"/>
                     <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.required">
                         Este campo es obligatorio.
@@ -48,7 +48,7 @@
                 <div class="form-group col-6">
                     <label class="form-control-label" for="field_lastname">Apellidos</label>
                     <input type="text" class="form-control" name="lastname" id="field_lastname"
-                        formControlName="lastname"/>
+                        formControlName="lastname" maxlength="50" size="50"/>
                     <div *ngIf="editForm.get('lastname')!.invalid && (editForm.get('lastname')!.dirty || editForm.get('lastname')!.touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('lastname')?.errors?.required">
                         Este campo es obligatorio.

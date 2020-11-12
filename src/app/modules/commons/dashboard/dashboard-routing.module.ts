@@ -14,7 +14,11 @@ const routes: Routes = [
             {
                 path: 'user-list',
                 loadChildren: () => import('../../business-users/list-users.module').then(m => m.ListUsersModule)
-            }         
+            },
+            {
+                path: 'company-list',
+                loadChildren: () => import('../../company-data/list-companies.module').then(m => m.ListCompaniesModule)
+            }
         ]
     }
 ];

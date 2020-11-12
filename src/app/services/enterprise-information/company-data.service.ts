@@ -6,6 +6,7 @@ import { AccessControlConstants } from 'src/app/utils/constants/access-control.c
 import { GeneralResponse } from 'src/app/model/commons/response/general-response';
 import { UpdatePassRequest } from 'src/app/model/access-control/update-pass-request';
 import { EnterpriseInformationConstants } from 'src/app/utils/constants/enterprise-information.constants';
+import { ICompany } from 'src/app/model/enterprise-information/company';
 
 type EntityResponseType = HttpResponse<GeneralResponse>;
 type EntityArrayResponseType = HttpResponse<GeneralResponse>;
@@ -15,14 +16,14 @@ export class CompanyDataService {
 
   constructor(protected http: HttpClient) {}
 
-  create(user: IUser): Observable<EntityResponseType> {
-    return this.http.post<GeneralResponse>(AccessControlConstants.ACCESS_CONTROL_ENDPOINT_URL_USERS + 'createUser', 
-      user, { observe: 'response' });
+  create(company: ICompany): Observable<EntityResponseType> {
+    return this.http.post<GeneralResponse>(EnterpriseInformationConstants.ENTERPRISE_INFO_ENDPOINT_URL_COMPANY_DATA + 'create', 
+    company, { observe: 'response' });
   }
 
-  update(user: IUser): Observable<EntityResponseType> {
-    return this.http.patch<GeneralResponse>(AccessControlConstants.ACCESS_CONTROL_ENDPOINT_URL_USERS + 'updateUser', 
-      user, { observe: 'response' });
+  update(company: ICompany): Observable<EntityResponseType> {
+    return this.http.patch<GeneralResponse>(EnterpriseInformationConstants.ENTERPRISE_INFO_ENDPOINT_URL_COMPANY_DATA + 'update', 
+    company, { observe: 'response' });
   }
 
   find(id: number): Observable<EntityResponseType> {
@@ -42,12 +43,4 @@ export class CompanyDataService {
     { observe: 'response' });
   }
 
-  /**
-   * Actualizar password
-   * @param updatePass 
-   */
-  updatePassword(updatePass: UpdatePassRequest): Observable<HttpResponse<GeneralResponse>> {
-    return this.http.patch<GeneralResponse>(AccessControlConstants.ACCESS_CONTROL_ENDPOINT_URL_USERS + 'updatePassword', 
-    updatePass, { observe: 'response' });
-  }
 }

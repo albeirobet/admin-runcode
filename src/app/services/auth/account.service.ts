@@ -8,6 +8,7 @@ import { IAccount } from 'src/app/model/access-control/account';
 import { GeneralResponse } from 'src/app/model/commons/response/general-response';
 import { NotificationService } from '../common/notification.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class AccountService {
 
   constructor(private http: HttpClient,
     private router: Router, 
+    private authService: AuthService,
     private notificationService: NotificationService,
     public jwtHelper: JwtHelperService) { }
 
@@ -39,6 +41,8 @@ export class AccountService {
         catchError((error) => {
           console.log(error)
           this.notificationService.error(error.error.apiError.messageUser);
+          this.authService.logout();
+          this.authenticate(null);
           return of(null);
         }),
         tap((account: GeneralResponse | null) => {

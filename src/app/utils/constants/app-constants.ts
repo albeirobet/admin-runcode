@@ -1,3 +1,5 @@
+import { SelectItem } from 'primeng/api';
+
 export class AppConstants {
 
     public static get APP_VERSION(): string {
@@ -34,6 +36,16 @@ export class AppConstants {
      */
     public static get ROL_GENERIC_USER(): string {
         return 'user';
+    }
+
+    /**
+     * Lista de tipos de identificacion
+     */
+    public static get IDENTIFICATION_TYPE_LIST(): SelectItem[] {
+        return [
+            { label: 'CC', value: 'CEDULA' },
+            { label: 'NIT', value: 'NIT' },
+            { label: 'CE', value: 'CEDULA EXTRANJERIA' }];
     }
 
 }

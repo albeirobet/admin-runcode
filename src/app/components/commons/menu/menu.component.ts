@@ -25,6 +25,10 @@ export class MenuComponent implements OnInit {
     this.router.navigate(['/dashboard/user-list']);
   }
 
+  companyList(): void {
+    this.router.navigate(['/dashboard/company-list']);
+  }
+
   dashboard(): void {
     this.router.navigate(['/dashboard']);
   }

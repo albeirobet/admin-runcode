@@ -1,0 +1,129 @@
+<div class="loader" *ngIf="loading"></div>
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <div class="modal-body">
+        <div>
+            <div class="row">
+                <div class="form-group col-6">
+                    <label class="form-control-label" for="field_name">Tipo ID</label>
+                    <div class="input-group">
+                        <p-dropdown [options]="idTypeList" formControlName="identificationType" 
+                            placeholder="Seleccionar el tipo de ID"></p-dropdown>
+                        <div *ngIf="editForm.get('identificationType')!.invalid && (editForm.get('identificationType')!.dirty || editForm.get('identificationType')!.touched)">
+                            <small class="form-text text-danger" *ngIf="editForm.get('identificationType')?.errors?.required">
+                            Este campo es obligatorio.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-6">
+                    <label class="form-control-label" for="field_numid">Número ID</label>
+                    <input type="text" class="form-control" name="numid" id="field_numid"
+                        formControlName="identificationNumber" maxlength="15" size="15" pKeyFilter="int"/>
+                    <div *ngIf="editForm.get('identificationNumber')!.invalid && (editForm.get('identificationNumber')!.dirty || editForm.get('identificationNumber')!.touched)">
+                        <small class="form-text text-danger" *ngIf="editForm.get('identificationNumber')?.errors?.required">
+                        Este campo es obligatorio.
+                        </small>
+                        <small class="form-text text-danger"
+                            *ngIf="editForm.get('identificationNumber')?.errors?.maxlength" [translateValues]="{ max: 50 }">
+                        Este campo no puede tener más de 50 caracteres.
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-6">
+                    <label class="form-control-label" for="field_razonsocial">Razón Social</label>
+                    <input type="text" class="form-control" name="razonsocial" id="field_razonsocial"
+                        formControlName="name" maxlength="50" size="50"/>
+                    <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+                        <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.required">
+                            Este campo es obligatorio.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group col-6">
+                    <label class="form-control-label" for="field_email">Email</label>
+                    <input type="text" class="form-control" name="email" id="field_email"
+                        formControlName="email" maxlength="50" size="50"/>
+                    <div *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">
+                        <small class="form-text text-danger" *ngIf="editForm.get('email')?.errors?.required">
+                            Este campo es obligatorio.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="editForm.get('email')?.errors?.pattern">
+                            El email que ingresaste no es válido.
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-6">
+                    <label class="form-control-label" for="field_paddress">Dirección Principal</label>
+                    <input type="text" class="form-control" name="paddress" id="field_paddress"
+                        formControlName="principalAddress" maxlength="50" size="50"/>
+                    <div *ngIf="editForm.get('principalAddress')!.invalid && (editForm.get('principalAddress')!.dirty || editForm.get('principalAddress')!.touched)">
+                        <small class="form-text text-danger" *ngIf="editForm.get('principalAddress')?.errors?.required">
+                        Este campo es obligatorio.
+                        </small>
+                        <small class="form-text text-danger"
+                            *ngIf="editForm.get('principalAddress')?.errors?.maxlength" [translateValues]="{ max: 50 }">
+                        Este campo no puede tener más de 50 caracteres.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group col-6">
+                    <label class="form-control-label" for="field_saddress">Dirección Secundaria</label>
+                    <input type="text" class="form-control" name="saddress" id="field_saddress"
+                        formControlName="secondaryAddress" maxlength="50" size="50"/>
+                    <div *ngIf="editForm.get('secondaryAddress')!.invalid && (editForm.get('secondaryAddress')!.dirty || editForm.get('secondaryAddress')!.touched)">
+                        <small class="form-text text-danger" *ngIf="editForm.get('secondaryAddress')?.errors?.required">
+                        Este campo es obligatorio.
+                        </small>
+                        <small class="form-text text-danger"
+                            *ngIf="editForm.get('secondaryAddress')?.errors?.maxlength" [translateValues]="{ max: 50 }">
+                        Este campo no puede tener más de 50 caracteres.
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-6">
+                    <label class="form-control-label" for="field_namecontactperson">Nombre Contacto</label>
+                    <input type="text" class="form-control" name="namecontactperson" id="field_namecontactperson"
+                        formControlName="nameContactPerson" maxlength="50" size="50"/>
+                    <div *ngIf="editForm.get('nameContactPerson')!.invalid && (editForm.get('nameContactPerson')!.dirty || editForm.get('nameContactPerson')!.touched)">
+                        <small class="form-text text-danger" *ngIf="editForm.get('nameContactPerson')?.errors?.required">
+                        Este campo es obligatorio.
+                        </small>
+                        <small class="form-text text-danger"
+                            *ngIf="editForm.get('nameContactPerson')?.errors?.maxlength" [translateValues]="{ max: 50 }">
+                        Este campo no puede tener más de 50 caracteres.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group col-6">
+                    <label class="form-control-label" for="field_phone">Teléfono</label>
+                    <input type="text" class="form-control" name="phone" id="field_phone"
+                        formControlName="phoneNumber" maxlength="50" size="50"/>
+                    <div *ngIf="editForm.get('phoneNumber')!.invalid && (editForm.get('phoneNumber')!.dirty || editForm.get('phoneNumber')!.touched)">
+                        <small class="form-text text-danger" *ngIf="editForm.get('phoneNumber')?.errors?.required">
+                        Este campo es obligatorio.
+                        </small>
+                        <small class="form-text text-danger"
+                            *ngIf="editForm.get('phoneNumber')?.errors?.maxlength" [translateValues]="{ max: 50 }">
+                        Este campo no puede tener más de 50 caracteres.
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="modal-footer bg-whitesmoke br">
+        <button type="submit" class="btn btn-primary" [disabled]="editForm.invalid">Guardar</button>
+        <button type="button" class="btn btn-secondary" (click)="close()">Cancelar</button>
+    </div>
+</form>

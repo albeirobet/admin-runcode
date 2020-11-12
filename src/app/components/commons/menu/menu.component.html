@@ -27,6 +27,21 @@
                   </li>
               </ul>
           </li>
+          <li class="nav-item dropdown" id="accordion" *ngIf="checkUserRole('admin')">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" 
+              role="button" aria-haspopup="true" aria-expanded="false"
+              data-target="#collapseCompanyMenu">
+              <i class="fas fa-user-shield"></i>
+              <span>Empresas</span>
+            </a>
+            <ul class="dropdown-menu" >
+                <li>
+                    <a class="nav-link child-style dropdown-item" routerLinkActive="active" id="companies" data-toggle="tab" 
+                        href="javascript:void(0);" (click)="companyList()" role="tab" aria-controls="recurrence" aria-selected="true">
+                        <span class="icon-light-arrow-right icon-nav-my-account icon-subitem"></span>Listado de Empresas</a>
+                </li>
+            </ul>
+        </li>
       </ul>
   </aside>
 </div>

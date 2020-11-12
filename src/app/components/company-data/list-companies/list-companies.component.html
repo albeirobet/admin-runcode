@@ -1,0 +1,68 @@
+
+<section class="section">
+    <div class="section-header">
+        <h1>{{titleComponent}}</h1>
+    </div>
+</section>
+
+<div class="alert alert-warning" id="no-result" *ngIf="companies?.length === 0">
+    <span>No se encontraron empresas en el sistema</span>
+</div>
+<p-confirmDialog #cd header="Confirmar" icon="pi pi-exclamation-triangle" >
+    <p-footer>
+        <button type="submit" class="btn btn-primary" (click)="cd.accept()">Confirmar</button>
+        <button type="button" class="btn btn-secondary" (click)="cd.reject()">Cancelar</button>
+    </p-footer>
+</p-confirmDialog>
+<div class="card">
+    <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="Nueva Empresa" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNewCompany()"></button>
+        </ng-template>
+    </p-toolbar>
+    <p-table #dt [value]="companies" [lazy]="true" (onLazyLoad)="loadCompaniesList($event)"
+        [loading]="loading" loadingIcon="loaderIcon">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                <h5 class="p-m-0">Administrar Empresas</h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (keyup.enter)="aplicarFiltro($event.target.value)" placeholder="Ingrese texto y Enter" />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+            <th >Tipo ID </th>
+            <th >Número ID </th>
+            <th >Nombre </th>
+            <th >Dirección </th>
+            <th >Email</th>
+            <th >Teléfono</th>
+            <th style="width:15em">Operaciones</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-company>
+            <tr>
+                <td>{{company.identificationType}}</td>
+                <td>{{company.identificationNumber}}</td>
+                <td>{{company.name}}</td>
+                <td>{{company.principalAddress}}</td>
+                <td>{{company.email}}</td>
+                <td>{{company.phoneNumber}}</td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="openEditCompany(company)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+        </ng-template>
+    </p-table>
+    <div style="position: relative;">
+        <p-paginator rows="10" (onLazyLoad)="loadCompaniesList($event)"
+            (onPageChange)="loadCompaniesList($event)"
+            [totalRecords]="totalRecords"  
+            [rowsPerPageOptions]="[10,20,30]"></p-paginator>
+            <span style="position: absolute; top:3px; right:5px; margin: 5px;">Total de Empresas: {{totalRecords}} </span>
+    </div>
+</div>  
