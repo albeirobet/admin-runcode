@@ -6,6 +6,8 @@ import { ButtonModule } from 'primeng/button';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {CheckboxModule} from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
+import {TooltipModule} from 'primeng/tooltip';
+import {OverlayPanelModule} from 'primeng/overlaypanel';
 
 @NgModule({
   declarations: [CreateEditUserComponent],
@@ -15,7 +17,9 @@ import { DropdownModule } from 'primeng/dropdown';
     ButtonModule,
     MultiSelectModule,
     CheckboxModule,
-    DropdownModule
+    DropdownModule,
+    TooltipModule,
+    OverlayPanelModule
   ],
   exports: [CreateEditUserComponent]
 })

@@ -27,6 +27,7 @@ export class CreateEditUserComponent implements OnInit {
   // --- Lista de empresas
   companies?: ICompany[];
   companiesSI?: SelectItem[];
+  companySelected?: ICompany;
 
   // --- Usuario a editar
   user?: IUser;
@@ -91,6 +92,12 @@ export class CreateEditUserComponent implements OnInit {
         // --- si es edicion se actualiza el formulario con los datos
         if(this.user) {
           this.updateForm(this.user);
+          this.companySelected = null;
+          this.companies.forEach(element => {
+            if(element._id === this.user.companyId){
+              this.companySelected = element;
+            }
+          });
         }
         this.loading = false;
       },
@@ -99,6 +106,20 @@ export class CreateEditUserComponent implements OnInit {
         this.loading = false;
       }
     );
+  }
+
+  onChangeCompany(event) {
+    console.log(event)
+    let found = false;
+    this.companies.forEach(element => {
+      if(element._id === event.value){
+        found = true;
+        this.companySelected = element;
+      }
+    });
+    if(!found) {
+      this.companySelected = null;
+    }
   }
 
   setCompaniesSI(){

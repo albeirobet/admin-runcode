@@ -10,9 +10,12 @@ import { HeaderComponent } from '../header/header.component';
 export class MenuComponent implements OnInit {
 
   navbarOpen = true;
+  activeURL = "";
 
   constructor(private userRouteAccessService: UserRouteAccessService,
-    private router: Router) { }
+    private router: Router) { 
+      this.activeURL = this.router.url;
+    }
 
   ngOnInit(): void {
   }
@@ -22,14 +25,17 @@ export class MenuComponent implements OnInit {
   }
 
   userList(): void {
+    this.activeURL = '/dashboard/user-list';
     this.router.navigate(['/dashboard/user-list']);
   }
 
   companyList(): void {
+    this.activeURL = '/dashboard/company-list';
     this.router.navigate(['/dashboard/company-list']);
   }
 
   dashboard(): void {
+    this.activeURL = '/dashboard';
     this.router.navigate(['/dashboard']);
   }
 

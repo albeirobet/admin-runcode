@@ -119,6 +119,19 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div class="form-group col-12">
+                    <label class="form-control-label" for="field_urllogo">URL Logo</label>
+                    <input type="text" class="form-control" name="urllogo" id="field_urllogo"
+                        formControlName="logoUrl"/>
+                    <div *ngIf="editForm.get('logoUrl')!.invalid && (editForm.get('logoUrl')!.dirty || editForm.get('logoUrl')!.touched)">
+                        <small class="form-text text-danger" *ngIf="editForm.get('logoUrl')?.errors?.required">
+                        Este campo es obligatorio.
+                        </small>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
     </div>

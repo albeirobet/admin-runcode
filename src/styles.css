@@ -111,3 +111,29 @@
 .fa-circle-o-notch {
   color: red;
 }
+
+.p-input-icon-minfo > i:first-of-type {
+  left: 0.429rem;
+  color: #6777ef;
+}
+
+.p-input-icon-minfo {
+  position: relative;
+  display: inline-block;
+}
+
+.p-input-icon-minfo>i, .p-input-icon-right>i {
+  position: absolute;
+  top: 50%;
+  margin-top: -.5rem;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: 0.2rem;
+}
+

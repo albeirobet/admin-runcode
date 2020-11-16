@@ -1,47 +1,40 @@
-<div class="main-sidebar sidebar-style-2">
-  <aside id="sidebar-wrapper">
+<div class="main-sidebar sidebar-style-2" tabindex="1" style="overflow: hidden; outline: none;">
+    <aside id="sidebar-wrapper">
       <div class="sidebar-brand">
-          <a href="index.html">
-              <img alt="image" src="../../../../assets/ality/assets/img/logo.png" class="header-logo" />
-              <span class="logo-name">&nbsp;RunCode</span>
-          </a>
+        <a href="index.html">
+          <img alt="image" src="../../../../assets/ality/assets/img/logo.png" class="header-logo">
+          <span class="logo-name">&nbsp;RunCode</span>
+        </a>
       </div>
       <ul class="sidebar-menu">
-          <li class="menu-header">Módulos</li>
-          <li>
-              <a href="javascript:void(0);" (click)="dashboard()" routerLinkActive="active" class="nav-link"><i
-                      class="fas fa-home"></i><span>Dashboard</span></a>
-          </li>
-          <li class="nav-item dropdown" id="accordion" *ngIf="checkUserRole('admin')">
-              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" 
-                role="button" aria-haspopup="true" aria-expanded="false"
-                data-target="#collapseUserMenu">
-                <i class="fas fa-user-shield"></i>
-                <span>Usuarios Empresariales</span>
-              </a>
-              <ul class="dropdown-menu" >
-                  <li>
-                      <a class="nav-link child-style dropdown-item" routerLinkActive="active" id="repo-sim" data-toggle="tab" 
-                          href="javascript:void(0);" (click)="userList()" role="tab" aria-controls="recurrence" aria-selected="true">
-                          <span class="icon-light-arrow-right icon-nav-my-account icon-subitem"></span>Listado de Usuarios</a>
-                  </li>
-              </ul>
-          </li>
-          <li class="nav-item dropdown" id="accordion" *ngIf="checkUserRole('admin')">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" 
-              role="button" aria-haspopup="true" aria-expanded="false"
-              data-target="#collapseCompanyMenu">
-              <i class="fas fa-user-shield"></i>
-              <span>Empresas</span>
-            </a>
-            <ul class="dropdown-menu" >
-                <li>
-                    <a class="nav-link child-style dropdown-item" routerLinkActive="active" id="companies" data-toggle="tab" 
-                        href="javascript:void(0);" (click)="companyList()" role="tab" aria-controls="recurrence" aria-selected="true">
-                        <span class="icon-light-arrow-right icon-nav-my-account icon-subitem"></span>Listado de Empresas</a>
-                </li>
-            </ul>
+        <li class="menu-header">Módulos</li>
+        <li class="dropdown">
+          <a href="javascript:void(0);" (click)="dashboard()" class="nav-link"><i class="fas fa-home"></i><span>Dashboard</span></a>
         </li>
+        <li class="nav-item accordion-item" id="users" data-value="value 1" *ngIf="checkUserRole('admin')">
+            <a href="#" class="nav-link parent-menu" data-toggle="collapse" data-target="#collapseUserMenu" aria-expanded="true" aria-controls="collapseUserMenu">
+              <i class="fas fa-user"></i><span>Usuarios Empresariales</span>
+            </a>
+            <div id="collapseUserMenu" class="collapse" aria-labelledby="headingUserMenu" data-parent="#users">
+                <a [ngClass]="activeURL === '/dashboard/user-list' ? 'nav-link child-style dropdown-item submenu active' : 'nav-link child-style dropdown-item submenu'" 
+                  id="user-lst" 
+                  data-toggle="tab" role="tab"  
+                  aria-selected="true" href="javascript:void(0);" (click)="userList()">
+                  Gestión de Usuarios</a>
+            </div>
+        </li> 
+        <li class="nav-item accordion-item" id="companies" data-value="value 2" *ngIf="checkUserRole('admin')">
+            <a href="#" class="nav-link parent-menu" data-toggle="collapse" data-target="#collapseCompanyMenu" aria-expanded="true" aria-controls="collapseCompanyMenu">
+              <i class="fas fa-industry"></i><span>Empresas</span>
+            </a>
+            <div id="collapseCompanyMenu" class="collapse" aria-labelledby="headingCompanyMenu" data-parent="#companies">
+                <a [ngClass]="activeURL === '/dashboard/company-list' ? 'nav-link child-style dropdown-item submenu active' : 'nav-link child-style dropdown-item submenu'" 
+                  id="company-lst" 
+                  data-toggle="tab" role="tab"  
+                  aria-selected="true" href="javascript:void(0);" (click)="companyList()">
+                  Gestión de Empresas</a>
+            </div>
+        </li> 
       </ul>
-  </aside>
+    </aside>
 </div>

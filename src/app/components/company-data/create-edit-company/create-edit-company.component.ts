@@ -35,7 +35,7 @@ export class CreateEditCompanyComponent implements OnInit {
     email: [null, [Validators.required, Validators.pattern(AppConstants.REGEX_EMAIL)]],
     phoneNumber: [null, [Validators.required]],
     nameContactPerson: [null, [Validators.required]],
-    logoUrl: [null, [Validators.nullValidator]]
+    logoUrl: [null, [Validators.required]]
   });
 
   constructor(

@@ -16,11 +16,33 @@
                         </small>
                     </div>
                 </div>
+                <p-overlayPanel #op appendTo="body" [showCloseIcon]="true">
+                    <ng-template pTemplate>
+                        {{companySelected.identificationType + ' ' +
+                            companySelected.identificationNumber}}
+                        <br/>
+                        {{companySelected.name}}
+                        <br/>
+                        {{companySelected.email}}
+                        <br/>
+                        {{companySelected.principalAddress}}
+                        <br/>
+                        {{companySelected.phoneNumber}}
+                    </ng-template>
+                </p-overlayPanel>
                 <div class="form-group col-6">
                     <label class="form-control-label" for="field_company">Empresa</label>
                     <div class="input-group">
                         <p-dropdown [options]="companiesSI" formControlName="companyId" 
-                            placeholder="Seleccionar la empresa"></p-dropdown>
+                            placeholder="Seleccionar la empresa" [style]="{'width':'250px'}" appendTo="body"
+                            (onChange)="onChangeCompany($event)"></p-dropdown>
+                        <a *ngIf="companySelected" href="javascript:void(0);" pTooltip="Clic para más información de la empresa" 
+                            tooltipPosition="top" 
+                            (click)="op.toggle($event)">
+                            <span class="p-input-icon-minfo">
+                                <i class="pi pi-info-circle"></i>
+                            </span>
+                        </a>
                         <div *ngIf="editForm.get('companyId')!.invalid && (editForm.get('companyId')!.dirty || editForm.get('companyId')!.touched)">
                             <small class="form-text text-danger" *ngIf="editForm.get('companyId')?.errors?.required">
                             Este campo es obligatorio.
