@@ -34,6 +34,16 @@ export class MenuComponent implements OnInit {
     this.router.navigate(['/dashboard/company-list']);
   }
 
+  uploadInfo(): void {
+    this.activeURL = '/dashboard/upload-info';
+    this.router.navigate(['/dashboard/upload-info']);
+  }
+
+  viewReports(): void {
+    this.activeURL = '/dashboard/reports';
+    this.router.navigate(['/dashboard/reports']);
+  }
+
   dashboard(): void {
     this.activeURL = '/dashboard';
     this.router.navigate(['/dashboard']);

@@ -18,6 +18,10 @@ const routes: Routes = [
             {
                 path: 'company-list',
                 loadChildren: () => import('../../company-data/list-companies.module').then(m => m.ListCompaniesModule)
+            },
+            {
+                path: 'upload-info',
+                loadChildren: () => import('../../reports/upload-info.module').then(m => m.UploadInfoModule)
             }
         ]
     }

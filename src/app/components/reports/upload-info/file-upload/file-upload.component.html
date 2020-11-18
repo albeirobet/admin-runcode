@@ -1,0 +1,21 @@
+<div class="loader" *ngIf="loading"></div>
+<div class="modal-body">
+    <div>
+        <div class="row">
+            <div class="form-group col-12">
+                <label class="form-control-label" for="field_file">Archivo</label>
+                <p-fileUpload #fileInput name="fu[]" customUpload="true" (onUpload)="onUpload($event)" 
+                    (uploadHandler)="upload($event)"
+                    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" 
+                    maxFileSize="100000000" chooseLabel="Seleccionar Archivo"
+                    uploadLabel="Subir" cancelLabel="Borrar"
+                    [showUploadButton]="enableUpload" [showCancelButton]="enableUpload">
+                        <ng-template let-file pTemplate="file">
+                            <div><strong>Archivo a procesar:</strong></div>
+                            {{file.name}} - {{file.size}} bytes
+                        </ng-template>
+                    </p-fileUpload>
+            </div>
+        </div>
+    </div>
+</div>

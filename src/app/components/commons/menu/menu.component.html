@@ -34,7 +34,24 @@
                   aria-selected="true" href="javascript:void(0);" (click)="companyList()">
                   Gestión de Empresas</a>
             </div>
-        </li> 
+        </li>
+        <li class="nav-item accordion-item" id="reports" data-value="value 3" *ngIf="checkUserRole('admin')">
+          <a href="#" class="nav-link parent-menu" data-toggle="collapse" data-target="#collapseReportsMenu" aria-expanded="true" aria-controls="collapseReportsMenu">
+            <i class="fas fa-list"></i><span>Reportes</span>
+          </a>
+          <div id="collapseReportsMenu" class="collapse" aria-labelledby="headingReportsMenu" data-parent="#reports">
+              <a [ngClass]="activeURL === '/dashboard/upload-info' ? 'nav-link child-style dropdown-item submenu active' : 'nav-link child-style dropdown-item submenu'" 
+                id="upload-info" 
+                data-toggle="tab" role="tab"  
+                aria-selected="true" href="javascript:void(0);" (click)="uploadInfo()">
+                Cargar Información</a>
+              <a [ngClass]="activeURL === '/dashboard/reports' ? 'nav-link child-style dropdown-item submenu active' : 'nav-link child-style dropdown-item submenu'" 
+                id="reports-opt" 
+                data-toggle="tab" role="tab"  
+                aria-selected="true" href="javascript:void(0);" (click)="viewReports()">
+                Ver Reportes</a>
+          </div>
+      </li>  
       </ul>
     </aside>
 </div>

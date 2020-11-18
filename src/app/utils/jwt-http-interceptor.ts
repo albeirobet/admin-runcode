@@ -2,6 +2,7 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppConstants } from './constants/app-constants';
+import { ReportGeneratorConstants } from './constants/report-generator.constants';
 
 @Injectable()
 export class JwtHttpInterceptor implements HttpInterceptor {
@@ -13,6 +14,15 @@ export class JwtHttpInterceptor implements HttpInterceptor {
         if (request.url === AppConstants.URL_IP_ADDRESS) {
             clone = request.clone({
                 setHeaders: {
+                }
+            });
+            return next.handle(clone);
+        }
+
+        if (request.url.includes(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL)) {
+            clone = request.clone({
+                setHeaders: {
+                    Authorization: `Bearer ${token}`
                 }
             });
             return next.handle(clone);
