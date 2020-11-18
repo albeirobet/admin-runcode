@@ -44,36 +44,22 @@ export class UploadInfoComponent implements OnInit {
     this.loading = true;
     this.infoList = [];
 
-    const responses = await Promise.all([
-      this.countClients(),
-      this.countSuppliers(),
-      this.countServices(),
-      this.countMaterials(),
-      this.countPurchaseOrders(),
-      this.countEntryMerchandises(),
-      this.countInvoiceSupplier(),
-      this.countRetentionSupplier(),
-      this.countInvoiceClient(),
-      this.countMasterReport(),
-      this.countAssistantReport(),
-      this.countPaymentOriginal(),
-      this.countPaymentExtra()
+    let counter = await this.counter();
+    console.log(counter);
 
-    ]);
-
-    this.infoList.push({ type: 'Clientes', code: 'CLI', numReg: responses[0], id: 1 });
-    this.infoList.push({ type: 'Proveedores', code: 'PRO', numReg: responses[1], id: 2 });
-    this.infoList.push({ type: 'Servicios', code: 'SER', numReg: responses[2], id: 3 });
-    this.infoList.push({ type: 'Materiales', code: 'MAT', numReg: responses[3], id: 4 });
-    this.infoList.push({ type: 'Pedidos de Compra', code: 'PDC', numReg: responses[4], id: 5 });
-    this.infoList.push({ type: 'Entrada de Mercancias', code: 'EDM', numReg: responses[5], id: 6 });
-    this.infoList.push({ type: 'Factura Proveedores', code: 'FPR', numReg: responses[6], id: 7 });
-    this.infoList.push({ type: 'Retenciones Proveedores', code: 'RPR', numReg: responses[7], id: 8 });
-    this.infoList.push({ type: 'Facturas de Ventas', code: 'FDV', numReg: responses[8], id: 9 });
-    this.infoList.push({ type: 'Pagos y Depositos', code: 'PYD', numReg: responses[9], id: 10 });
-    this.infoList.push({ type: 'Cuentas Contables', code: 'CCO', numReg: responses[10], id: 11 });
-    this.infoList.push({ type: 'Documentos Facturas', code: 'DOF', numReg: responses[11], id: 12 });
-    this.infoList.push({ type: 'Pagos Extra', code: 'PEX', numReg: responses[12], id: 13 });
+    this.infoList.push({ type: 'Clientes', code: 'CLI', numReg: counter.find(data => data.code === 'CLI').counter, id: 1 });
+    this.infoList.push({ type: 'Proveedores', code: 'PRO', numReg: counter.find(data => data.code === 'PRO').counter, id: 2 });
+    this.infoList.push({ type: 'Servicios', code: 'SER', numReg: counter.find(data => data.code === 'SER').counter, id: 3 });
+    this.infoList.push({ type: 'Materiales', code: 'MAT', numReg: counter.find(data => data.code === 'MAT').counter, id: 4 });
+    this.infoList.push({ type: 'Pedidos de Compra', code: 'PDC', numReg: counter.find(data => data.code === 'PDC').counter, id: 5 });
+    this.infoList.push({ type: 'Entrada de Mercancias', code: 'EDM', numReg: counter.find(data => data.code === 'EDM').counter, id: 6 });
+    this.infoList.push({ type: 'Factura Proveedores', code: 'FPR', numReg: counter.find(data => data.code === 'FPR').counter, id: 7 });
+    this.infoList.push({ type: 'Retenciones Proveedores', code: 'RPR', numReg: counter.find(data => data.code === 'RPR').counter, id: 8 });
+    this.infoList.push({ type: 'Facturas de Ventas', code: 'FDV', numReg: counter.find(data => data.code === 'FDV').counter, id: 9 });
+    this.infoList.push({ type: 'Pagos y Depositos', code: 'PYD', numReg: counter.find(data => data.code === 'PYD').counter, id: 10 });
+    this.infoList.push({ type: 'Cuentas Contables', code: 'CCO', numReg: counter.find(data => data.code === 'CCO').counter, id: 11 });
+    this.infoList.push({ type: 'Documentos Facturas', code: 'DOF', numReg: counter.find(data => data.code === 'DOF').counter, id: 12 });
+    this.infoList.push({ type: 'Pagos Extra', code: 'PEX', numReg: counter.find(data => data.code === 'PEX').counter, id: 13 });
     this.loading = false;
   }
 
@@ -177,6 +163,12 @@ export class UploadInfoComponent implements OnInit {
         this.loading = false;
       }
     );
+  }
+
+  async counter() {
+    const value = <GeneralResponse>await this.reportGeneratorService.counter().toPromise();
+    console.log(value)
+    return value.data;
   }
 
   async countClients() {

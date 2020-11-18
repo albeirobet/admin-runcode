@@ -129,6 +129,11 @@ export class ReportGeneratorService {
       formData);
   }
 
+  counter(): Observable<GeneralResponse> {
+    return this.http.get<any>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'counter');
+  }
+
   deleteClients(): Observable<HttpResponse<{}>> {
     return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'clients/delete',
       { observe: 'response' });
