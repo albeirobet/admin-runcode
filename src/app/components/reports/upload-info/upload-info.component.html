@@ -4,7 +4,7 @@
     </div>
 </section>
 
-<p-confirmDialog #cd header="Confirmar" icon="pi pi-exclamation-triangle" >
+<p-confirmDialog #cd header="Confirmar" icon="pi pi-exclamation-triangle">
     <p-footer>
         <button type="submit" class="btn btn-primary" (click)="cd.accept()">Confirmar</button>
         <button type="button" class="btn btn-secondary" (click)="cd.reject()">Cancelar</button>
@@ -14,21 +14,21 @@
     <p-table #dt [value]="infoList" [loading]="loading" loadingIcon="loaderIcon">
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th >Tipo </th>
-                <th >Registros </th>
+                <th style="width:5%">ID </th>
+                <th>Tipo </th>
+                <th>Registros </th>
                 <th style="width:20%">Operaciones </th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-info>
             <tr>
+                <td>{{info.id}}</td>
                 <td>{{info.type}}</td>
                 <td>{{info.numReg}}</td>
                 <td>
-                    <button pButton pRipple icon="pi pi-upload" 
-                        class="p-button-rounded p-button-success p-mr-2" 
+                    <button pButton pRipple icon="pi pi-upload" class="p-button-rounded p-button-success p-mr-2"
                         (click)="uploadFile(info)"></button>
-                    <button pButton pRipple icon="pi pi-trash" 
-                        class="p-button-rounded p-button-warning" 
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
                         (click)="confirmDeleteData(info)"></button>
                 </td>
             </tr>
@@ -36,4 +36,4 @@
         <ng-template pTemplate="emptymessage">
         </ng-template>
     </p-table>
-</div>  
+</div>

@@ -10,14 +10,14 @@ type EntityArrayResponseType = HttpResponse<GeneralResponse>;
 @Injectable({ providedIn: 'root' })
 export class ReportGeneratorService {
 
-  constructor(protected http: HttpClient) {}
+  constructor(protected http: HttpClient) { }
 
   uploadClients(file: File): Observable<EntityResponseType> {
     const formData = new FormData();
     formData.append('file', file);
 
     return this.http.post<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'clients/load', 
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'clients/load',
       formData);
   }
 
@@ -26,7 +26,7 @@ export class ReportGeneratorService {
     formData.append('file', file);
 
     return this.http.post<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'suppliers/load', 
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'suppliers/load',
       formData);
   }
 
@@ -35,7 +35,7 @@ export class ReportGeneratorService {
     formData.append('file', file);
 
     return this.http.post<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'services/load', 
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'services/load',
       formData);
   }
 
@@ -44,7 +44,7 @@ export class ReportGeneratorService {
     formData.append('file', file);
 
     return this.http.post<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'materials/load', 
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'materials/load',
       formData);
   }
 
@@ -53,7 +53,7 @@ export class ReportGeneratorService {
     formData.append('file', file);
 
     return this.http.post<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'purchaseOrders/load', 
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'purchaseOrders/load',
       formData);
   }
 
@@ -62,7 +62,7 @@ export class ReportGeneratorService {
     formData.append('file', file);
 
     return this.http.post<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'entryMerchandises/load', 
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'entryMerchandises/load',
       formData);
   }
 
@@ -71,7 +71,7 @@ export class ReportGeneratorService {
     formData.append('file', file);
 
     return this.http.post<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'invoiceSupplier/load', 
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'invoiceSupplier/load',
       formData);
   }
 
@@ -80,7 +80,7 @@ export class ReportGeneratorService {
     formData.append('file', file);
 
     return this.http.post<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'retentionSupplier/load', 
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'retentionSupplier/load',
       formData);
   }
 
@@ -89,7 +89,7 @@ export class ReportGeneratorService {
     formData.append('file', file);
 
     return this.http.post<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'invoiceClient/load', 
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'invoiceClient/load',
       formData);
   }
 
@@ -98,7 +98,7 @@ export class ReportGeneratorService {
     formData.append('file', file);
 
     return this.http.post<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'masterReport/load', 
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'masterReport/load',
       formData);
   }
 
@@ -107,7 +107,7 @@ export class ReportGeneratorService {
     formData.append('file', file);
 
     return this.http.post<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'assistantReport/load', 
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'assistantReport/load',
       formData);
   }
 
@@ -116,12 +116,21 @@ export class ReportGeneratorService {
     formData.append('file', file);
 
     return this.http.post<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'paymentOriginal/load', 
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'paymentOriginal/load',
+      formData);
+  }
+
+  uploadPaymentExtra(file: File): Observable<EntityResponseType> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return this.http.post<any>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'paymentExtra/load',
       formData);
   }
 
   deleteClients(): Observable<HttpResponse<{}>> {
-    return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'clients/delete', 
+    return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'clients/delete',
       { observe: 'response' });
   }
 
@@ -130,59 +139,113 @@ export class ReportGeneratorService {
       ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'clients/count');
   }
 
+  deleteSuppliers(): Observable<HttpResponse<{}>> {
+    return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'suppliers/delete',
+      { observe: 'response' });
+  }
+
   countSuppliers(): Observable<GeneralResponse> {
     return this.http.get<any>(
       ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'suppliers/count');
   }
 
+  deleteServices(): Observable<HttpResponse<{}>> {
+    return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'services/delete',
+      { observe: 'response' });
+  }
   countServices(): Observable<GeneralResponse> {
     return this.http.get<any>(
       ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'services/count');
   }
 
+  deleteMaterials(): Observable<HttpResponse<{}>> {
+    return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'materials/delete',
+      { observe: 'response' });
+  }
   countMaterials(): Observable<GeneralResponse> {
     return this.http.get<any>(
       ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'materials/count');
   }
 
+  deletePurchaseOrders(): Observable<HttpResponse<{}>> {
+    return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'purchaseOrders/delete',
+      { observe: 'response' });
+  }
   countPurchaseOrders(): Observable<GeneralResponse> {
     return this.http.get<any>(
       ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'purchaseOrders/count');
   }
 
+  deleteEntryMerchandises(): Observable<HttpResponse<{}>> {
+    return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'entryMerchandises/delete',
+      { observe: 'response' });
+  }
   countEntryMerchandises(): Observable<GeneralResponse> {
     return this.http.get<any>(
       ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'entryMerchandises/count');
   }
 
+  deleteInvoiceSupplier(): Observable<HttpResponse<{}>> {
+    return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'invoiceSupplier/delete',
+      { observe: 'response' });
+  }
   countInvoiceSupplier(): Observable<GeneralResponse> {
     return this.http.get<any>(
       ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'invoiceSupplier/count');
   }
 
+  deleteRetentionSupplier(): Observable<HttpResponse<{}>> {
+    return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'retentionSupplier/delete',
+      { observe: 'response' });
+  }
   countRetentionSupplier(): Observable<GeneralResponse> {
     return this.http.get<any>(
       ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'retentionSupplier/count');
   }
 
+  deleteInvoiceClient(): Observable<HttpResponse<{}>> {
+    return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'invoiceClient/delete',
+      { observe: 'response' });
+  }
   countInvoiceClient(): Observable<GeneralResponse> {
     return this.http.get<any>(
       ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'invoiceClient/count');
   }
 
+  deleteMasterReport(): Observable<HttpResponse<{}>> {
+    return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'masterReport/delete',
+      { observe: 'response' });
+  }
   countMasterReport(): Observable<GeneralResponse> {
     return this.http.get<any>(
       ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'masterReport/count');
   }
 
+  deleteAssistantReport(): Observable<HttpResponse<{}>> {
+    return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'assistantReport/delete',
+      { observe: 'response' });
+  }
   countAssistantReport(): Observable<GeneralResponse> {
     return this.http.get<any>(
       ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'assistantReport/count');
   }
 
+  deletePaymentOriginal(): Observable<HttpResponse<{}>> {
+    return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'paymentOriginal/delete',
+      { observe: 'response' });
+  }
   countPaymentOriginal(): Observable<GeneralResponse> {
     return this.http.get<any>(
       ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'paymentOriginal/count');
+  }
+
+  deletePaymentExtra(): Observable<HttpResponse<{}>> {
+    return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'paymentExtra/delete',
+      { observe: 'response' });
+  }
+  countPaymentExtra(): Observable<GeneralResponse> {
+    return this.http.get<any>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'paymentExtra/count');
   }
 
 }

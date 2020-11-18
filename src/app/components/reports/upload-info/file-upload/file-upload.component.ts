@@ -24,10 +24,10 @@ export class FileUploadComponent implements OnInit {
   constructor(protected reportGeneratorService: ReportGeneratorService,
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
-    private notificationService: NotificationService) { 
-      this.info = config.data;  
-      console.log(this.info)
-    }
+    private notificationService: NotificationService) {
+    this.info = config.data;
+    console.log(this.info)
+  }
 
   ngOnInit(): void {
   }
@@ -48,58 +48,62 @@ export class FileUploadComponent implements OnInit {
     console.log('uploadFile', event);
     this.loading = true;
     console.log(event.files[0])
-    switch(this.info.code) { 
-      case 'CLI': { 
-         this.uploadCientesFile(event.files[0]);
-         break; 
-      } 
-      case 'PRO': { 
-        this.uploadProveedorFile(event.files[0]);
-        break; 
+    switch (this.info.code) {
+      case 'CLI': {
+        this.uploadCientesFile(event.files[0]);
+        break;
       }
-      case 'SER': { 
+      case 'PRO': {
+        this.uploadProveedorFile(event.files[0]);
+        break;
+      }
+      case 'SER': {
         this.uploadServiciosFile(event.files[0]);
-        break; 
-      } 
-      case 'MAT': { 
+        break;
+      }
+      case 'MAT': {
         this.uploadMaterialesFile(event.files[0]);
-        break; 
-      } 
-      case 'PDC': { 
+        break;
+      }
+      case 'PDC': {
         this.uploadPedidosCompraFile(event.files[0]);
-        break; 
-      } 
-      case 'EDM': { 
+        break;
+      }
+      case 'EDM': {
         this.uploadEntradaMercanciasFile(event.files[0]);
-        break; 
-      } 
-      case 'FPR': { 
+        break;
+      }
+      case 'FPR': {
         this.uploadFacturaProveedoresFile(event.files[0]);
-        break; 
-      } 
-      case 'RPR': { 
+        break;
+      }
+      case 'RPR': {
         this.uploadRetencionesProveedoresFile(event.files[0]);
-        break; 
-      } 
-      case 'FDV': { 
+        break;
+      }
+      case 'FDV': {
         this.uploadFacturasVentasFile(event.files[0]);
-        break; 
-      } 
-      case 'PYD': { 
+        break;
+      }
+      case 'PYD': {
         this.uploadPagosyDepositosFile(event.files[0]);
-        break; 
-      } 
-      case 'CCO': { 
+        break;
+      }
+      case 'CCO': {
         this.uploadCuentasContablesFile(event.files[0]);
-        break; 
-      } 
-      case 'DOF': { 
+        break;
+      }
+      case 'DOF': {
         this.uploadDocumentosFacturaFile(event.files[0]);
-        break; 
-      } 
-      default: { 
-         break; 
-      } 
+        break;
+      }
+      case 'PEX': {
+        this.uploadPagosExtraFile(event.files[0]);
+        break;
+      }
+      default: {
+        break;
+      }
     }
   }
 
@@ -113,9 +117,9 @@ export class FileUploadComponent implements OnInit {
     this.loading = true;
     this.reportGeneratorService.uploadClients(file).subscribe(
       event => {
-          console.log('File is completely uploaded! ', event);
-          this.loading = false;
-          this.ref.close(true);
+        console.log('File is completely uploaded! ', event);
+        this.loading = false;
+        this.ref.close(true);
       },
       error => {
         this.loading = false;
@@ -128,9 +132,9 @@ export class FileUploadComponent implements OnInit {
     this.loading = true;
     this.reportGeneratorService.uploadSuppliers(file).subscribe(
       event => {
-          console.log('File is completely uploaded! ', event);
-          this.loading = false;
-          this.ref.close(true);
+        console.log('File is completely uploaded! ', event);
+        this.loading = false;
+        this.ref.close(true);
       },
       error => {
         this.loading = false;
@@ -143,9 +147,9 @@ export class FileUploadComponent implements OnInit {
     this.loading = true;
     this.reportGeneratorService.uploadServices(file).subscribe(
       event => {
-          console.log('File is completely uploaded! ', event);
-          this.loading = false;
-          this.ref.close(true);
+        console.log('File is completely uploaded! ', event);
+        this.loading = false;
+        this.ref.close(true);
       },
       error => {
         this.loading = false;
@@ -158,9 +162,9 @@ export class FileUploadComponent implements OnInit {
     this.loading = true;
     this.reportGeneratorService.uploadMaterials(file).subscribe(
       event => {
-          console.log('File is completely uploaded! ', event);
-          this.loading = false;
-          this.ref.close(true);
+        console.log('File is completely uploaded! ', event);
+        this.loading = false;
+        this.ref.close(true);
       },
       error => {
         this.loading = false;
@@ -173,9 +177,9 @@ export class FileUploadComponent implements OnInit {
     this.loading = true;
     this.reportGeneratorService.uploadPurchaseOrders(file).subscribe(
       event => {
-          console.log('File is completely uploaded! ', event);
-          this.loading = false;
-          this.ref.close(true);
+        console.log('File is completely uploaded! ', event);
+        this.loading = false;
+        this.ref.close(true);
       },
       error => {
         this.loading = false;
@@ -188,9 +192,9 @@ export class FileUploadComponent implements OnInit {
     this.loading = true;
     this.reportGeneratorService.uploadEntryMerchandises(file).subscribe(
       event => {
-          console.log('File is completely uploaded! ', event);
-          this.loading = false;
-          this.ref.close(true);
+        console.log('File is completely uploaded! ', event);
+        this.loading = false;
+        this.ref.close(true);
       },
       error => {
         this.loading = false;
@@ -203,9 +207,9 @@ export class FileUploadComponent implements OnInit {
     this.loading = true;
     this.reportGeneratorService.uploadInvoiceSupplier(file).subscribe(
       event => {
-          console.log('File is completely uploaded! ', event);
-          this.loading = false;
-          this.ref.close(true);
+        console.log('File is completely uploaded! ', event);
+        this.loading = false;
+        this.ref.close(true);
       },
       error => {
         this.loading = false;
@@ -218,9 +222,9 @@ export class FileUploadComponent implements OnInit {
     this.loading = true;
     this.reportGeneratorService.uploadRetentionSupplier(file).subscribe(
       event => {
-          console.log('File is completely uploaded! ', event);
-          this.loading = false;
-          this.ref.close(true);
+        console.log('File is completely uploaded! ', event);
+        this.loading = false;
+        this.ref.close(true);
       },
       error => {
         this.loading = false;
@@ -233,9 +237,9 @@ export class FileUploadComponent implements OnInit {
     this.loading = true;
     this.reportGeneratorService.uploadInvoiceClient(file).subscribe(
       event => {
-          console.log('File is completely uploaded! ', event);
-          this.loading = false;
-          this.ref.close(true);
+        console.log('File is completely uploaded! ', event);
+        this.loading = false;
+        this.ref.close(true);
       },
       error => {
         this.loading = false;
@@ -248,9 +252,9 @@ export class FileUploadComponent implements OnInit {
     this.loading = true;
     this.reportGeneratorService.uploadMasterReport(file).subscribe(
       event => {
-          console.log('File is completely uploaded! ', event);
-          this.loading = false;
-          this.ref.close(true);
+        console.log('File is completely uploaded! ', event);
+        this.loading = false;
+        this.ref.close(true);
       },
       error => {
         this.loading = false;
@@ -263,9 +267,9 @@ export class FileUploadComponent implements OnInit {
     this.loading = true;
     this.reportGeneratorService.uploadAssistantReport(file).subscribe(
       event => {
-          console.log('File is completely uploaded! ', event);
-          this.loading = false;
-          this.ref.close(true);
+        console.log('File is completely uploaded! ', event);
+        this.loading = false;
+        this.ref.close(true);
       },
       error => {
         this.loading = false;
@@ -278,9 +282,24 @@ export class FileUploadComponent implements OnInit {
     this.loading = true;
     this.reportGeneratorService.uploadPaymentOriginal(file).subscribe(
       event => {
-          console.log('File is completely uploaded! ', event);
-          this.loading = false;
-          this.ref.close(true);
+        console.log('File is completely uploaded! ', event);
+        this.loading = false;
+        this.ref.close(true);
+      },
+      error => {
+        this.loading = false;
+        this.notificationService.error(error.error.apiError.messageUser);
+      }
+    );
+  }
+
+  uploadPagosExtraFile(file) {
+    this.loading = true;
+    this.reportGeneratorService.uploadPaymentExtra(file).subscribe(
+      event => {
+        console.log('File is completely uploaded! ', event);
+        this.loading = false;
+        this.ref.close(true);
       },
       error => {
         this.loading = false;
