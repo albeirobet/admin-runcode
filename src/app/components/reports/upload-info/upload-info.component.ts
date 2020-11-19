@@ -60,6 +60,7 @@ export class UploadInfoComponent implements OnInit {
     this.infoList.push({ type: 'Cuentas Contables', code: 'CCO', numReg: counter.find(data => data.code === 'CCO').counter, id: 11 });
     this.infoList.push({ type: 'Documentos Facturas', code: 'DOF', numReg: counter.find(data => data.code === 'DOF').counter, id: 12 });
     this.infoList.push({ type: 'Pagos Extra', code: 'PEX', numReg: counter.find(data => data.code === 'PEX').counter, id: 13 });
+    this.infoList.push({ type: 'Iva', code: 'IVA', numReg: counter.find(data => data.code === 'IVA').counter, id: 14 });
     this.loading = false;
   }
 
@@ -143,6 +144,10 @@ export class UploadInfoComponent implements OnInit {
       }
       case 'PEX': {
         this.deletePaymentExtra();
+        break;
+      }
+      case 'IVA': {
+        this.deleteIvaData();
         break;
       }
       default: {
@@ -395,5 +400,19 @@ export class UploadInfoComponent implements OnInit {
   async countPaymentExtra() {
     const value = <GeneralResponse>await this.reportGeneratorService.countPaymentExtra().toPromise();
     return value.data;
+  }
+
+  deleteIvaData() {
+    this.reportGeneratorService.deleteIva().subscribe(
+      (res: HttpResponse<GeneralResponse>) => {
+        this.notificationService.success('Información eliminada correctamente.');
+        this.loadInfo();
+      },
+      error => {
+        console.dir(error.error);
+        this.notificationService.error('Se ha presentado un error en el sistema, por favor intente nuevamente.');
+        this.loading = false;
+      }
+    );
   }
 }
