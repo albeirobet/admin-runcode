@@ -254,7 +254,7 @@ export class FileUploadComponent implements OnInit {
 
   uploadPagosyDepositosFile(file) {
     this.loading = true;
-    this.reportGeneratorService.uploadMasterReport(file).subscribe(
+    this.reportGeneratorService.uploadPaymentOriginal(file).subscribe(
       event => {
         console.log('File is completely uploaded! ', event);
         this.loading = false;
@@ -269,7 +269,7 @@ export class FileUploadComponent implements OnInit {
 
   uploadCuentasContablesFile(file) {
     this.loading = true;
-    this.reportGeneratorService.uploadAssistantReport(file).subscribe(
+    this.reportGeneratorService.uploadMasterReport(file).subscribe(
       event => {
         console.log('File is completely uploaded! ', event);
         this.loading = false;
@@ -284,7 +284,7 @@ export class FileUploadComponent implements OnInit {
 
   uploadDocumentosFacturaFile(file) {
     this.loading = true;
-    this.reportGeneratorService.uploadPaymentOriginal(file).subscribe(
+    this.reportGeneratorService.uploadAssistantReport(file).subscribe(
       event => {
         console.log('File is completely uploaded! ', event);
         this.loading = false;
