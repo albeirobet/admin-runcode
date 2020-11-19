@@ -4,7 +4,7 @@ import { LazyLoadEvent, SelectItem } from 'primeng/api';
 import { GeneralResponse } from 'src/app/model/commons/response/general-response';
 import { DialogService } from 'primeng/dynamicdialog';
 import { NotificationService } from 'src/app/services/common/notification.service';
-import {ConfirmationService} from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { AppConstants } from 'src/app/utils/constants/app-constants';
 
 @Component({
@@ -16,7 +16,7 @@ import { AppConstants } from 'src/app/utils/constants/app-constants';
 export class ViewReportsComponent implements OnInit {
 
   // --- Titulo de los componentes
-  titleComponent = 'Reportes';
+  titleComponent = 'Visualización de Información';
 
   report = '';
 

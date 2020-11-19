@@ -8,7 +8,7 @@ import { PagedRequest } from 'src/app/model/commons/request/paged-request';
 import { GeneralResponse } from 'src/app/model/commons/response/general-response';
 import { DialogService } from 'primeng/dynamicdialog';
 import { NotificationService } from 'src/app/services/common/notification.service';
-import {ConfirmationService} from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { IClient } from 'src/app/model/reports/client';
 import { ReportGeneratorService } from 'src/app/services/report-generator/report-generator.service';
 import { ISupplier } from 'src/app/model/reports/supplier';
@@ -22,7 +22,7 @@ import { ISupplier } from 'src/app/model/reports/supplier';
 export class SupplierReportComponent implements OnInit {
 
   // --- Titulo de los componentes
-  titleComponent = 'Reporte de Proveedores';
+  titleComponent = 'Proveedores';
 
   // --- Lista de registros de Proveedores
   suppliers?: ISupplier[];
@@ -46,7 +46,7 @@ export class SupplierReportComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
     public dialogService: DialogService
-    ) {
+  ) {
   }
 
   ngOnInit(): void {
@@ -69,10 +69,10 @@ export class SupplierReportComponent implements OnInit {
     this.pagedRequest.page = pageNumber + 1;
     this.pagedRequest.limit = rowsNumber;
 
-    if(event.globalFilter) {
+    if (event.globalFilter) {
       this.pagedRequest.filter = event.globalFilter;
     }
-    
+
     this.getSuppliers();
   }
 
@@ -103,7 +103,7 @@ export class SupplierReportComponent implements OnInit {
   aplicarFiltro(filterValue) {
     console.log(filterValue)
     filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase();    
+    filterValue = filterValue.toLowerCase();
     this.pagedRequest = new PagedRequest;
     this.pagedRequest.order = 'desc';
     this.pagedRequest.sort = 'name';

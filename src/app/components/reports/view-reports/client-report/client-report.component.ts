@@ -8,7 +8,7 @@ import { PagedRequest } from 'src/app/model/commons/request/paged-request';
 import { GeneralResponse } from 'src/app/model/commons/response/general-response';
 import { DialogService } from 'primeng/dynamicdialog';
 import { NotificationService } from 'src/app/services/common/notification.service';
-import {ConfirmationService} from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { IClient } from 'src/app/model/reports/client';
 import { ReportGeneratorService } from 'src/app/services/report-generator/report-generator.service';
 
@@ -21,7 +21,7 @@ import { ReportGeneratorService } from 'src/app/services/report-generator/report
 export class ClientReportComponent implements OnInit {
 
   // --- Titulo de los componentes
-  titleComponent = 'Reporte de Clientes';
+  titleComponent = 'Clientes';
 
   // --- Lista de registros de clientes
   clients?: IClient[];
@@ -47,7 +47,7 @@ export class ClientReportComponent implements OnInit {
     public dialogService: DialogService,
     private notificationService: NotificationService,
     private confirmationService: ConfirmationService
-    ) {
+  ) {
   }
 
   ngOnInit(): void {
@@ -71,10 +71,10 @@ export class ClientReportComponent implements OnInit {
     this.pagedRequest.page = pageNumber + 1;
     this.pagedRequest.limit = rowsNumber;
 
-    if(event.globalFilter) {
+    if (event.globalFilter) {
       this.pagedRequest.filter = event.globalFilter;
     }
-    
+
     this.getClients();
   }
 
@@ -105,7 +105,7 @@ export class ClientReportComponent implements OnInit {
   aplicarFiltro(filterValue) {
     console.log(filterValue)
     filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase();    
+    filterValue = filterValue.toLowerCase();
     this.pagedRequest = new PagedRequest;
     this.pagedRequest.order = 'desc';
     this.pagedRequest.sort = 'name';

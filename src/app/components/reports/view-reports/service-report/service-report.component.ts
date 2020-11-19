@@ -19,7 +19,7 @@ import { IService } from 'src/app/model/reports/service';
 export class ServiceReportComponent implements OnInit {
 
   // --- Titulo de los componentes
-  titleComponent = 'Reporte de Servicios';
+  titleComponent = 'Servicios';
 
   // --- Lista de registros de Servicios
   services?: IService[];
@@ -43,7 +43,7 @@ export class ServiceReportComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
     public dialogService: DialogService
-    ) {
+  ) {
   }
 
   ngOnInit(): void {
@@ -66,10 +66,10 @@ export class ServiceReportComponent implements OnInit {
     this.pagedRequest.page = pageNumber + 1;
     this.pagedRequest.limit = rowsNumber;
 
-    if(event.globalFilter) {
+    if (event.globalFilter) {
       this.pagedRequest.filter = event.globalFilter;
     }
-    
+
     this.getServices();
   }
 
@@ -100,7 +100,7 @@ export class ServiceReportComponent implements OnInit {
   aplicarFiltro(filterValue) {
     console.log(filterValue)
     filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase();    
+    filterValue = filterValue.toLowerCase();
     this.pagedRequest = new PagedRequest;
     this.pagedRequest.order = 'desc';
     this.pagedRequest.sort = 'name';
