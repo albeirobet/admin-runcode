@@ -1,0 +1,54 @@
+
+<div class="alert alert-warning" id="no-result" *ngIf="services?.length === 0">
+    <span>No se encontraron servicios en el sistema</span>
+</div>
+<p-table #dt [value]="services" [lazy]="true" (onLazyLoad)="loadServicesList($event)"
+    [loading]="loading" loadingIcon="loaderIcon" [scrollable]="true" scrollHeight="250px">
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+            <h5 class="p-m-0">{{titleComponent}}</h5>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+        </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+        <th >ID </th>
+        <th >Nombre </th>
+        <th >Unidad de Medida Base </th>
+        <th >Categoría de Producto </th>
+        <th >Tipo </th>
+        <th >Fecha Creación </th>
+        <th >Fecha Modificación </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-service>
+        <tr>
+            <td>{{service.serviceId}}</td>
+            <td>{{service.name}}</td>
+            <td>{{service.baseUnitMeasure}}</td>
+            <td>{{service.productCategory}}</td>
+            <td>{{service.type}}</td>
+            <td>{{service.createdAt}}</td>
+            <td>{{service.modifiedAt}}</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+    </ng-template>
+</p-table>
+<div style="position: relative;">
+    <p-paginator rows="10" (onLazyLoad)="loadServicesList($event)"
+        (onPageChange)="loadServicesList($event)"
+        [totalRecords]="totalRecords"  
+        [rowsPerPageOptions]="[10,20,30]"></p-paginator>
+        <span style="position: absolute; top:3px; right:5px; margin: 5px;">Total de Servicios: {{totalRecords}} </span>
+</div>

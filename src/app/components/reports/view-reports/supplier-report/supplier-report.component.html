@@ -1,0 +1,72 @@
+
+<div class="alert alert-warning" id="no-result" *ngIf="suppliers?.length === 0">
+    <span>No se encontraron proveedores en el sistema</span>
+</div>
+<p-table #dt [value]="suppliers" [lazy]="true" (onLazyLoad)="loadSuppliersList($event)"
+    [loading]="loading" loadingIcon="loaderIcon" [scrollable]="true" scrollHeight="250px">
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+            <h5 class="p-m-0">{{titleComponent}}</h5>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+        </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+        <th >Estado </th>
+        <th >Proveedor </th>
+        <th >Nombre </th>
+        <th >Dirección </th>
+        <th >Condiciones de Pago </th>
+        <th >Ciudad </th>
+        <th >Email </th>
+        <th >Departamento </th>
+        <th >Nombre de Banco </th>
+        <th >Número de Cuenta </th>
+        <th >Tipo ID </th>
+        <th >Número ID </th>
+        <th >País </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-supplier>
+        <tr>
+            <td>{{supplier.state}}</td>
+            <td>{{supplier.supplier}}</td>
+            <td>{{supplier.name}}</td>
+            <td>{{supplier.address}}</td>
+            <td>{{supplier.paymentConditions}}</td>
+            <td>{{supplier.city}}</td>
+            <td>{{supplier.email}}</td>
+            <td>{{supplier.department}}</td>
+            <td>{{supplier.bankName}}</td>
+            <td>{{supplier.bankAccountNumber}}</td>
+            <td>{{supplier.identificationType}}</td>
+            <td>{{supplier.identificationNumber}}</td>
+            <td>{{supplier.country}}</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+    </ng-template>
+</p-table>
+<div style="position: relative;">
+    <p-paginator rows="10" (onLazyLoad)="loadSuppliersList($event)"
+        (onPageChange)="loadSuppliersList($event)"
+        [totalRecords]="totalRecords"  
+        [rowsPerPageOptions]="[10,20,30]"></p-paginator>
+        <span style="position: absolute; top:3px; right:5px; margin: 5px;">Total de Proveedores: {{totalRecords}} </span>
+</div>

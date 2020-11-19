@@ -253,4 +253,25 @@ export class ReportGeneratorService {
       ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'paymentExtra/count');
   }
 
+  getClients(req?: any, search?: string): Observable<any> {
+    const options = req;
+    return this.http.get<any>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'clients/all', 
+        { params: options, observe: 'response' });
+  }
+
+  getSuppliers(req?: any, search?: string): Observable<any> {
+    const options = req;
+    return this.http.get<any>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'suppliers/all', 
+        { params: options, observe: 'response' });
+  }
+
+  getServices(req?: any, search?: string): Observable<any> {
+    const options = req;
+    return this.http.get<any>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'services/all', 
+        { params: options, observe: 'response' });
+  }
+
 }

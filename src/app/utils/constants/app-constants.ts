@@ -48,4 +48,15 @@ export class AppConstants {
             { label: 'CE', value: 'CEDULA EXTRANJERIA' }];
     }
 
+    /**
+     * Lista de tipos de reportes
+     */
+    public static get REPORTS_TYPE_LIST(): SelectItem[] {
+        return [
+            { label: 'CLIENTES', value: 'CLI' },
+            { label: 'PROVEEDORES', value: 'PRO' },
+            { label: 'SERVICIOS', value: 'SER' },
+        ];
+    }
+
 }
