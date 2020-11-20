@@ -12,6 +12,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { ClientReportModule } from './client-report/client-report.module';
 import { SupplierReportModule } from './supplier-report/supplier-report.module';
 import { ServiceReportModule } from './service-report/service-report.module';
+import { MaterialsReportModule } from './materials-report/materials-report.module';
 
 @NgModule({
   declarations: [ViewReportsComponent],
@@ -27,7 +28,8 @@ import { ServiceReportModule } from './service-report/service-report.module';
     ConfirmDialogModule,
     ClientReportModule,
     SupplierReportModule,
-    ServiceReportModule
+    ServiceReportModule,
+    MaterialsReportModule
   ],
   exports: [ViewReportsComponent]
 })

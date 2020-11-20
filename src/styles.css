@@ -137,3 +137,9 @@ label {
   margin-bottom: 0.2rem;
 }
 
+.p-calendar {
+  display: inline-flex;
+  position: relative;
+  height: 42px;
+}
+

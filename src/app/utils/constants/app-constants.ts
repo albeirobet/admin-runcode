@@ -56,6 +56,17 @@ export class AppConstants {
             { label: 'CLIENTES', value: 'CLI' },
             { label: 'PROVEEDORES', value: 'PRO' },
             { label: 'SERVICIOS', value: 'SER' },
+            { label: 'MATERIALES', value: 'MAT' },
+            { label: 'PEDIDOS DE COMPRA', value: 'PDC' },
+            { label: 'ENTRADA DE MERCANCIAS', value: 'EDM' },
+            { label: 'FACTURA PROVEEDORES', value: 'FPR' },
+            { label: 'RETENCIONES PROVEEDORES', value: 'RPR' },
+            { label: 'FACTURAS DE VENTAS', value: 'FDV' },
+            { label: 'PAGOS Y DEPOSITOS', value: 'PYD' },
+            { label: 'CUENTAS CONTABLES', value: 'CCO' },
+            { label: 'DOCUMENTOS FACTURAS', value: 'DOF' },
+            { label: 'PAGOS EXTRA', value: 'PEX' },
+            { label: 'IVA', value: 'IVA' },
         ];
     }
 

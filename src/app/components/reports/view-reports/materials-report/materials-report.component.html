@@ -1,0 +1,54 @@
+
+<div class="alert alert-warning" id="no-result" *ngIf="materials?.length === 0">
+    <span>No se encontraron servicios en el sistema</span>
+</div>
+<p-table #dt [value]="materials" [lazy]="true" (onLazyLoad)="loadMaterialsList($event)"
+    [loading]="loading" loadingIcon="loaderIcon" [scrollable]="true" >
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+            <h5 class="p-m-0">{{titleComponent}}</h5>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+        </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+        <th >ID </th>
+        <th >Nombre </th>
+        <th >Unidad de Medida Base </th>
+        <th >Categoría de Producto </th>
+        <th >Tipo </th>
+        <th >Fecha Creación </th>
+        <th >Fecha Modificación </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-material>
+        <tr>
+            <td>{{material.materialId}}</td>
+            <td>{{material.name}}</td>
+            <td>{{material.baseUnitMeasure}}</td>
+            <td>{{material.productCategory}}</td>
+            <td>{{material.type}}</td>
+            <td>{{material.createdAt}}</td>
+            <td>{{material.modifiedAt}}</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+    </ng-template>
+</p-table>
+<div style="position: relative;">
+    <p-paginator rows="10" (onLazyLoad)="loadMaterialsList($event)"
+        (onPageChange)="loadMaterialsList($event)"
+        [totalRecords]="totalRecords"  
+        [rowsPerPageOptions]="[10,20,30]"></p-paginator>
+        <span style="position: absolute; top:3px; right:5px; margin: 5px;">Total de Materiales: {{totalRecords}} </span>
+</div>

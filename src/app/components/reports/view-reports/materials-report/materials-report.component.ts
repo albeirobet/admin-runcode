@@ -9,26 +9,26 @@ import { GeneralResponse } from 'src/app/model/commons/response/general-response
 import { DialogService } from 'primeng/dynamicdialog';
 import { ReportGeneratorService } from 'src/app/services/report-generator/report-generator.service';
 import { IService } from 'src/app/model/reports/service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { IMaterial } from 'src/app/model/reports/material';
 
 @Component({
-  selector: 'app-service-report',
-  templateUrl: './service-report.component.html',
-  styleUrls: ['./service-report.component.css'],
+  selector: 'app-materials-report',
+  templateUrl: './materials-report.component.html',
+  styleUrls: ['./materials-report.component.css'],
   providers: [DialogService]
 })
-export class ServiceReportComponent implements OnInit {
+export class MaterialsReportComponent implements OnInit {
 
   // --- Titulo de los componentes
-  titleComponent = 'Servicios';
+  titleComponent = 'Materiales';
 
-  // --- Lista de registros de Servicios
-  services?: IService[];
+  // --- Lista de registros de materiales
+  materials?: IMaterial[];
 
   // --- Total de registros 
   totalRecords: number;
 
-  // --- Loading para tabla de Servicios
+  // --- Loading para tabla de materiales
   pagedRequest: PagedRequest;
   search: string;
   loading: boolean = true;
@@ -40,18 +40,6 @@ export class ServiceReportComponent implements OnInit {
   ascending!: boolean;
   ngbPaginationPage = 1;
 
-  // --- Fecha Maxima de seleccion
-  maxDate = new Date();
-
-  /**
-   * Formulario de filtros
-   */
-  filterServicesForm = new FormGroup({
-    initDate: new FormControl(null, Validators.nullValidator),
-    endDate: new FormControl(null, Validators.nullValidator),
-    filter: new FormControl(null, Validators.nullValidator),
-  });
-
   constructor(protected reportGeneratorService: ReportGeneratorService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
@@ -62,15 +50,11 @@ export class ServiceReportComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  cleanServicesForm() {
-    this.filterServicesForm.reset();
-  }
-
   /**
    * Metodo que se lanza en los eventos de la tabla
    * de servicios
    */
-  loadServicesList(event: LazyLoadEvent) {
+  loadMaterialsList(event: LazyLoadEvent) {
     console.log(event);
     let pageNumber = 0;
     let rowsNumber = event.rows ? event.rows : 10;
@@ -87,18 +71,18 @@ export class ServiceReportComponent implements OnInit {
       this.pagedRequest.filter = event.globalFilter;
     }
 
-    this.getServices();
+    this.getMaterials();
   }
 
   /**
    * Obtiene todos los servicios
    */
-  getServices() {
+  getMaterials() {
     this.loading = true;
     console.log(this.pagedRequest)
-    this.reportGeneratorService.getServices(this.pagedRequest).subscribe(
+    this.reportGeneratorService.getMaterials(this.pagedRequest, this.search).subscribe(
       (res: HttpResponse<GeneralResponse>) => {
-        this.services = res.body.data.dataLst;
+        this.materials = res.body.data.dataLst;
         this.totalRecords = res.body.data.total;
         this.loading = false;
 
@@ -112,38 +96,19 @@ export class ServiceReportComponent implements OnInit {
 
   /**
    * 
+   * @param filterValue 
    */
-  onSearchServicesFormSubmit() {
-    let filterForm = this.filterServicesForm.value;
-
+  aplicarFiltro(filterValue) {
+    console.log(filterValue)
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase();
     this.pagedRequest = new PagedRequest;
     this.pagedRequest.order = 'desc';
     this.pagedRequest.sort = 'name';
     this.pagedRequest.page = 1;
     this.pagedRequest.limit = 10;
-
-    if(filterForm.filter) {
-      filterForm.filter = filterForm.filter.trim(); // Remove whitespace
-      filterForm.filter = filterForm.filter.toLowerCase();
-      this.pagedRequest.filter = filterForm.filter;
-    }
-    if(filterForm.initDate) {
-      const auxInitDate = new Date(filterForm.initDate);
-      const yearInit = auxInitDate.getFullYear();
-      const monthInit = auxInitDate.getMonth();
-      const dayInit = auxInitDate.getDate();
-      var formattedInitDate = new Date(yearInit,monthInit,dayInit).toISOString().split('T')[0];
-      this.pagedRequest.initDate = formattedInitDate;
-    }
-    if(filterForm.endDate) {
-      const auxEndDate = new Date(filterForm.endDate);
-      const yearEnd = auxEndDate.getFullYear();
-      const monthEnd = auxEndDate.getMonth();
-      const dayEnd = auxEndDate.getDate();
-      var formattedEndDate = new Date(yearEnd,monthEnd,dayEnd).toISOString().split('T')[0];
-      this.pagedRequest.endDate = formattedEndDate;
-    }
-    this.getServices();
+    this.pagedRequest.filter = filterValue;
+    this.getMaterials();
   }
 
 }

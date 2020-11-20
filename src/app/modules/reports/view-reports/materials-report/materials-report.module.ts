@@ -6,27 +6,23 @@ import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
 import {DynamicDialogModule} from 'primeng/dynamicdialog';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
-import { ServiceReportRoutingModule } from './service-report-routing.module';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
-import { ServiceReportComponent } from 'src/app/components/reports/view-reports/service-report/service-report.component';
-import {CalendarModule} from 'primeng/calendar';
-import {AccordionModule} from 'primeng/accordion';
+import { MaterialsReportRoutingModule } from './materials-report-routing.module';
+import { MaterialsReportComponent } from 'src/app/components/reports/view-reports/materials-report/materials-report.component';
 
 @NgModule({
-  declarations: [ServiceReportComponent],
+  declarations: [MaterialsReportComponent],
   imports: [
     SharedModule,
-    ServiceReportRoutingModule,
+    MaterialsReportRoutingModule,
     PaginatorModule,
     TableModule,
     ToolbarModule,
     ButtonModule,
     InputTextModule,
     DynamicDialogModule,
-    ConfirmDialogModule,
-    CalendarModule,
-    AccordionModule
+    ConfirmDialogModule
   ],
-  exports: [ServiceReportComponent]
+  exports: [MaterialsReportComponent]
 })
-export class ServiceReportModule { }
+export class MaterialsReportModule { }

@@ -3,6 +3,7 @@ import { HttpClient, HttpEvent, HttpHeaders, HttpRequest, HttpResponse } from '@
 import { Observable } from 'rxjs';
 import { GeneralResponse } from 'src/app/model/commons/response/general-response';
 import { ReportGeneratorConstants } from 'src/app/utils/constants/report-generator.constants';
+import { FilterRequest } from 'src/app/model/commons/request/filter-request';
 
 type EntityResponseType = HttpResponse<GeneralResponse>;
 type EntityArrayResponseType = HttpResponse<GeneralResponse>;
@@ -281,10 +282,17 @@ export class ReportGeneratorService {
       { params: options, observe: 'response' });
   }
 
-  getServices(req?: any, search?: string): Observable<any> {
+  getServices(req?: any): Observable<any> {
     const options = req;
     return this.http.get<any>(
       ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'services/all',
+      { params: options, observe: 'response' });
+  }
+
+  getMaterials(req?: any, search?: string): Observable<any> {
+    const options = req;
+    return this.http.get<any>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'materials/all',
       { params: options, observe: 'response' });
   }
 
