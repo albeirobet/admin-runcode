@@ -77,7 +77,7 @@ export class EntryMerchandisesExtraReportComponent implements OnInit {
   getEntryMerchandisesExtra() {
     this.loading = true;
     console.log(this.pagedRequest)
-    this.reportGeneratorService.getEntryMerchandises(this.pagedRequest, this.search).subscribe(
+    this.reportGeneratorService.getEntryMerchandisesExtra(this.pagedRequest, this.search).subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.entryMerchandisesExtra = res.body.data.dataLst;
         this.totalRecords = res.body.data.total;

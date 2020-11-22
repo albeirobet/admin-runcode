@@ -73,6 +73,10 @@ export class FileUploadComponent implements OnInit {
         this.uploadEntradaMercanciasFile(event.files[0]);
         break;
       }
+      case 'EDE': {
+        this.uploadEntradaMercanciasExtraFile(event.files[0]);
+        break;
+      }
       case 'FPR': {
         this.uploadFacturaProveedoresFile(event.files[0]);
         break;
@@ -195,6 +199,21 @@ export class FileUploadComponent implements OnInit {
   uploadEntradaMercanciasFile(file) {
     this.loading = true;
     this.reportGeneratorService.uploadEntryMerchandises(file).subscribe(
+      event => {
+        console.log('File is completely uploaded! ', event);
+        this.loading = false;
+        this.ref.close(true);
+      },
+      error => {
+        this.loading = false;
+        this.notificationService.error(error.error.apiError.messageUser);
+      }
+    );
+  }
+
+  uploadEntradaMercanciasExtraFile(file) {
+    this.loading = true;
+    this.reportGeneratorService.uploadEntryMerchandiseExtra(file).subscribe(
       event => {
         console.log('File is completely uploaded! ', event);
         this.loading = false;

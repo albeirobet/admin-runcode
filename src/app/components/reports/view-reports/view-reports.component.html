@@ -17,7 +17,7 @@
 
 <div class="card">
     <!-- Clientes -->
-    <app-assistant-report *ngIf="report === 'CLI'"></app-assistant-report>
+    <app-assistant-report *ngIf="report === 'DOF'"></app-assistant-report>
     <!-- Clientes -->
     <app-client-report *ngIf="report === 'CLI'"></app-client-report>
     <!-- Entrada de Mercancias Extra-->
@@ -31,13 +31,13 @@
     <!-- IVA -->
     <app-iva-report *ngIf="report === 'IVA'"></app-iva-report>
     <!-- Pagos y Deposito: Master report -->
-    <app-master-report *ngIf="report === 'PYD'"></app-master-report>
+    <app-master-report *ngIf="report === 'CCO'"></app-master-report>
     <!-- Materiales -->
     <app-materials-report *ngIf="report === 'MAT'"></app-materials-report>
     <!-- Pago Proveedores -->
     <app-payment-extra-report *ngIf="report === 'PEX'"></app-payment-extra-report>
     <!-- Pago Proveedores -->
-    <app-payment-original-report *ngIf="report === 'MAT'"></app-payment-original-report>
+    <app-payment-original-report *ngIf="report === 'PYD'"></app-payment-original-report>
     <!-- Pedidos de Compra -->
     <app-purchase-orders-report *ngIf="report === 'PDC'"></app-purchase-orders-report>
     <!-- Retencion de proveedores -->

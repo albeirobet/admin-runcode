@@ -19,29 +19,51 @@
             <col style="width:250px">
             <col style="width:250px">
             <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
         </colgroup>
     </ng-template>
     <ng-template pTemplate="header" let-columns>
         <tr>
-            <th>Estado </th>
-            <th>ID de Documento</th>
-            <th>Referencia Externa </th>
-            <th>Fecha Creación </th>
-            <th>Modalidad de Pago </th>
-            <th>Nombre Socio Comercials </th>
-            <th>Impuesto </th>
-            <th>Valor Neto Facturado </th>
+            <th>Cuenta Mayor </th>
+            <th>Nombre Cuenta</th>
+            <th>Fecha de Contabilización </th>
+            <th>Asiento Contable </th>
+            <th>ID Referencia Externa </th>
+            <th>ID Documento original </th>
+            <th>Tipo de Asiento Contable </th>
+            <th>Asiento Contable Anulado </th>
+            <th>ID Documento Original </th>
+            <th>Asiento Contable Anulación </th>
+            <th>ID de Documento Original </th>
+            <th>ID doc. Original </th>
+            <th>Posicion Doc. Original</th>
+            <th>Importe en debe en moneda empresa </th>
+            <th>Importe en haber en moneda empresa </th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-masterreport>
         <tr>
-            <td>{{masterreport.clientName}}</td>
-            <td>{{masterreport.clientId}}</td>
-            <td>{{masterreport.invoiceId}}</td>
-            <td>{{masterreport.invoiceDate}}</td>
-            <td>{{masterreport.netValueInvoice}}</td>
-            <td>{{masterreport.tax}}</td>
-            <td>{{masterreport.netInvoicedValue}}</td>
+            <td>{{masterreport.seniorAccountantId}}</td>
+            <td>{{masterreport.seniorAccountantName}}</td>
+            <td>{{masterreport.postingDate}}</td>
+            <td>{{masterreport.accountingSeat}}</td>
+            <td>{{masterreport.externalReferenceId}}</td>
+            <td>{{masterreport.originalDocumentId}}</td>
+            <td>{{masterreport.accountingSeatType}}</td>
+            <td>{{masterreport.accountingSeatAnnulled}}</td>
+            <td>{{masterreport.originalDocumentAnnulledId}}</td>
+            <td>{{masterreport.accountingSeatAnnulment}}</td>
+            <td>{{masterreport.extraOriginalDocumentAnulledId}}</td>
+            <td>{{masterreport.extraOriginalDocumentId}}</td>
+            <td>{{masterreport.originalDocumentPosition}}</td>
+            <td>{{masterreport.debtAmountCompanyCurrency}}</td>
+            <td>{{masterreport.creditAmountCompanyCurrency}}</td>
         </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
@@ -50,5 +72,5 @@
 <div style="position: relative;">
     <p-paginator rows="10" (onLazyLoad)="loadMasterReportList($event)" (onPageChange)="loadMasterReportList($event)"
         [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,20,30]"></p-paginator>
-    <span style="position: absolute; top:3px; right:5px; margin: 5px;">Total de Cuentas Contables y Documentos: {{totalRecords}} </span>
+    <span style="position: absolute; top:3px; right:5px; margin: 5px;">Total de Cuentas Contables y Doc: {{totalRecords}} </span>
 </div>
