@@ -1,0 +1,63 @@
+<div class="alert alert-warning" id="no-result" *ngIf="paymentExtras?.length === 0">
+    <span>No se encontraron pagos en el sistema</span>
+</div>
+<p-table #dt [value]="paymentExtras" [lazy]="true" (onLazyLoad)="loadPaymentExtraList($event)" [loading]="loading"
+    loadingIcon="loaderIcon" [scrollable]="true">
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+            <h5 class="p-m-0">{{titleComponent}}</h5>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+        </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th>ID Socio Comercial </th>
+            <th>Socio Comercial </th>
+            <th>ID de Documento </th>
+            <th>Fecha de Documento </th>
+            <th>Tipo de Documento </th>
+            <th>ID Doc. Original </th>
+            <th>Tipo de Doc. Original </th>
+            <th>Fecha de Contabilización </th>
+            <th>ID de Asiento Contable </th>
+            <th>Importe en Moneda de Empresa </th>
+            <th>Importe en Moneda de Transacción </th>
+            <th>Contador </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-paymentextra>
+        <tr>
+            <td>{{paymentextra.businessPartnerId}}</td>
+            <td>{{paymentextra.businessPartnerName}}</td>
+            <td>{{paymentextra.documentId}}</td>
+            <td>{{paymentextra.documentDate}}</td>
+            <td>{{paymentextra.documentType}}</td>
+            <td>{{paymentextra.originalDocumentId}}</td>
+            <td>{{paymentextra.originalDocumentType}}</td>
+            <td>{{paymentextra.postingDate}}</td>
+            <td>{{paymentextra.accountingSeatId}}</td>
+            <td>{{paymentextra.amountCompanyCurrency}}</td>
+            <td>{{paymentextra.amountTransactionCurrency}}</td>
+            <td>{{paymentextra.counter}}</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+    </ng-template>
+</p-table>
+<div style="position: relative;">
+    <p-paginator rows="10" (onLazyLoad)="loadPaymentExtraList($event)" (onPageChange)="loadPaymentExtraList($event)"
+        [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,20,30]"></p-paginator>
+    <span style="position: absolute; top:3px; right:5px; margin: 5px;">Total de Pagos: {{totalRecords}} </span>
+</div>

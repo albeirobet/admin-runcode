@@ -1,0 +1,70 @@
+<div class="alert alert-warning" id="no-result" *ngIf="retentionSupplier?.length === 0">
+    <span>No se encontraron retenciones a proveedores en el sistema</span>
+</div>
+<p-table #dt [value]="retentionSupplier" [lazy]="true" 
+    (onLazyLoad)="loadRetentionSupplierList($event)" [loading]="loading"
+    loadingIcon="loaderIcon" [scrollable]="true">
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+            <h5 class="p-m-0">{{titleComponent}}</h5>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+        </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th>Empresa </th>
+            <th>ID Proveedor</th>
+            <th>Proveedor </th>
+            <th>Fecha Contabilización </th>
+            <th>ID Factura </th>
+            <th>Posición Factura </th>
+            <th>Importe moneda de empresa </th>
+            <th>% Retención Fuente </th>
+            <th>Retención Fuente </th>
+            <th>% Rete ICA </th>
+            <th>ICA </th>
+            <th>% Rete IVA</th>
+            <th>IVA</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-retentionsupplier>
+        <tr>
+            <td>{{retentionsupplier.company}}</td>
+            <td>{{retentionsupplier.supplierId}}</td>
+            <td>{{retentionsupplier.supplierName}}</td>
+            <td>{{retentionsupplier.postingDate}}</td>
+            <td>{{retentionsupplier.invoiceId}}</td>
+            <td>{{retentionsupplier.invoicePosition}}</td>
+            <td>{{retentionsupplier.amountCompanyCurrency}}</td>
+            <td>{{retentionsupplier.reteFuentePercentage}}</td>
+            <td>{{retentionsupplier.reteFuenteValue}}</td>
+            <td>{{retentionsupplier.reteIcaPercentage}}</td>
+            <td>{{retentionsupplier.reteIcaValue}}</td>
+            <td>{{retentionsupplier.reteIvaPercentage}}</td>
+            <td>{{retentionsupplier.reteIvaValue}}</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+    </ng-template>
+</p-table>
+<div style="position: relative;">
+    <p-paginator rows="10" (onLazyLoad)="loadRetentionSupplierList($event)" (onPageChange)="loadRetentionSupplierList($event)"
+        [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,20,30]"></p-paginator>
+    <span style="position: absolute; top:3px; right:5px; margin: 5px;">Total de Retenciones a Proveedores: {{totalRecords}} </span>
+</div>

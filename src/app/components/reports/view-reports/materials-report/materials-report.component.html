@@ -1,6 +1,6 @@
 
 <div class="alert alert-warning" id="no-result" *ngIf="materials?.length === 0">
-    <span>No se encontraron servicios en el sistema</span>
+    <span>No se encontraron materiales en el sistema</span>
 </div>
 <p-table #dt [value]="materials" [lazy]="true" (onLazyLoad)="loadMaterialsList($event)"
     [loading]="loading" loadingIcon="loaderIcon" [scrollable]="true" >

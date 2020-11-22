@@ -1,0 +1,82 @@
+<div class="alert alert-warning" id="no-result" *ngIf="ivaReports?.length === 0">
+    <span>No se encontraron registros de IVA en el sistema</span>
+</div>
+<p-table #dt [value]="ivaReports" [lazy]="true" 
+    (onLazyLoad)="loadIvaReportList($event)" [loading]="loading"
+    loadingIcon="loaderIcon" [scrollable]="true">
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+            <h5 class="p-m-0">{{titleComponent}}</h5>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+        </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th>ID Cuenta de Mayor (Neta) </th>
+            <th>Cuenta de Mayor (Neta)</th>
+            <th>ID de Asiento Contable</th>
+            <th>ID de documento original </th>
+            <th>Tipo de Documento Original </th>
+            <th>Código de Impuesto</th>
+            <th>Tasa de Impuesto </th>
+            <th>Tipo de Impuesto </th>
+            <th>Importe Neto Moneda de Empresa </th>
+            <th>Importe Deducible Moneda Transacción </th>
+            <th>Importe Impuesto Interno Moneda Transacción </th>
+            <th>Importe Neto Moneda Transacción </th>
+            <th>Importe Impuesto Moneda Transacción </th>
+            <th>Importe Base Impuesto Moneda Transaccion </th>
+            <th>Importe Impuesto Interno Moneda Decl. Impuesto </th>
+            <th>Importe no Deducible Moneda Transaccion </th>
+            <th>Contador </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-ivareport>
+        <tr>
+            <td>{{ivareport.mayorAccountNetId}}</td>
+            <td>{{ivareport.mayorAccountNetName}}</td>
+            <td>{{ivareport.accountingSeatId}}</td>
+            <td>{{ivareport.originalDocumentId}}</td>
+            <td>{{ivareport.originalDocumentType}}</td>
+            <td>{{ivareport.taxCode}}</td>
+            <td>{{ivareport.taxRate}}</td>
+            <td>{{ivareport.taxType}}</td>
+            <td>{{ivareport.netAmountCompanyCurrency}}</td>
+            <td>{{ivareport.deductibleAmountTransactionCurrency}}</td>
+            <td>{{ivareport.internalTaxAmountTransactionCurrency}}</td>
+            <td>{{ivareport.netAmountTransactionCurrency}}</td>
+            <td>{{ivareport.taxAmountTransactionCurrency}}</td>
+            <td>{{ivareport.taxBaseAmountTransactionCurrency}}</td>
+            <td>{{ivareport.internalTaxAmountTaxDlecarationCurrency}}</td>
+            <td>{{ivareport.noDeductibleAmountTransactionCurrency}}</td>
+            <td>{{ivareport.counter}}</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+    </ng-template>
+</p-table>
+<div style="position: relative;">
+    <p-paginator rows="10" (onLazyLoad)="loadIvaReportList($event)" (onPageChange)="loadIvaReportList($event)"
+        [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,20,30]"></p-paginator>
+    <span style="position: absolute; top:3px; right:5px; margin: 5px;">Total de registros IVA: {{totalRecords}} </span>
+</div>

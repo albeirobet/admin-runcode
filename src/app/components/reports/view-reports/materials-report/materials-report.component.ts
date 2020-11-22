@@ -8,7 +8,6 @@ import { PagedRequest } from 'src/app/model/commons/request/paged-request';
 import { GeneralResponse } from 'src/app/model/commons/response/general-response';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ReportGeneratorService } from 'src/app/services/report-generator/report-generator.service';
-import { IService } from 'src/app/model/reports/service';
 import { IMaterial } from 'src/app/model/reports/material';
 
 @Component({
@@ -62,8 +61,6 @@ export class MaterialsReportComponent implements OnInit {
       pageNumber = (event.first / rowsNumber);
     }
     this.pagedRequest = new PagedRequest;
-    this.pagedRequest.order = 'desc';
-    this.pagedRequest.sort = 'name';
     this.pagedRequest.page = pageNumber + 1;
     this.pagedRequest.limit = rowsNumber;
 
@@ -103,8 +100,6 @@ export class MaterialsReportComponent implements OnInit {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase();
     this.pagedRequest = new PagedRequest;
-    this.pagedRequest.order = 'desc';
-    this.pagedRequest.sort = 'name';
     this.pagedRequest.page = 1;
     this.pagedRequest.limit = 10;
     this.pagedRequest.filter = filterValue;

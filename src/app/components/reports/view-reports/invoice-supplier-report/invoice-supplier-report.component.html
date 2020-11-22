@@ -1,0 +1,58 @@
+<div class="alert alert-warning" id="no-result" *ngIf="invoiceSuppliers?.length === 0">
+    <span>No se encontraron facturas de proveedores en el sistema</span>
+</div>
+<p-table #dt [value]="invoiceSuppliers" [lazy]="true" 
+    (onLazyLoad)="loadInvoiceSupplierList($event)" [loading]="loading"
+    loadingIcon="loaderIcon" [scrollable]="true">
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+            <h5 class="p-m-0">{{titleComponent}}</h5>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+        </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th>Estado </th>
+            <th>ID Documento</th>
+            <th>ID Documento Externo </th>
+            <th>Fecha Documento </th>
+            <th>Fecha Vencimiento </th>
+            <th>Importe de Factura </th>
+            <th>Importe Neto </th>
+            <th>Importe de Impuesto </th>
+            <th>Importe Bruto </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-invoicesupplier>
+        <tr>
+            <td>{{invoicesupplier.state}}</td>
+            <td>{{invoicesupplier.documentId}}</td>
+            <td>{{invoicesupplier.externalDocumentId}}</td>
+            <td>{{invoicesupplier.documentDate}}</td>
+            <td>{{invoicesupplier.expirationDate}}</td>
+            <td>{{invoicesupplier.invoiceAmount}}</td>
+            <td>{{invoicesupplier.netAmount}}</td>
+            <td>{{invoicesupplier.taxAmount}}</td>
+            <td>{{invoicesupplier.grossAmount}}</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+    </ng-template>
+</p-table>
+<div style="position: relative;">
+    <p-paginator rows="10" (onLazyLoad)="loadInvoiceSupplierList($event)" (onPageChange)="loadInvoiceSupplierList($event)"
+        [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,20,30]"></p-paginator>
+    <span style="position: absolute; top:3px; right:5px; margin: 5px;">Total de Facturas de proveedores: {{totalRecords}} </span>
+</div>

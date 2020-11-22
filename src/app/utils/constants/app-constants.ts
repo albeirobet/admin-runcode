@@ -59,6 +59,7 @@ export class AppConstants {
             { label: 'MATERIALES', value: 'MAT' },
             { label: 'PEDIDOS DE COMPRA', value: 'PDC' },
             { label: 'ENTRADA DE MERCANCIAS', value: 'EDM' },
+            { label: 'ENTRADA DE MERCANCIAS', value: 'EDE' },
             { label: 'FACTURA PROVEEDORES', value: 'FPR' },
             { label: 'RETENCIONES PROVEEDORES', value: 'RPR' },
             { label: 'FACTURAS DE VENTAS', value: 'FDV' },

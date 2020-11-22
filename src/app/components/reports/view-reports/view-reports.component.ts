@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router, Data } from '@angular/router';
 import { LazyLoadEvent, SelectItem } from 'primeng/api';
 import { GeneralResponse } from 'src/app/model/commons/response/general-response';
 import { DialogService } from 'primeng/dynamicdialog';
-import { NotificationService } from 'src/app/services/common/notification.service';
-import { ConfirmationService } from 'primeng/api';
 import { AppConstants } from 'src/app/utils/constants/app-constants';
 
 @Component({

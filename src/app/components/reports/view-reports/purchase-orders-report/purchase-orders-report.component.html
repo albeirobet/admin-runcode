@@ -1,0 +1,57 @@
+<div class="alert alert-warning" id="no-result" *ngIf="purchaseOrders?.length === 0">
+    <span>No se encontraron pedidos de compra en el sistema</span>
+</div>
+<p-table #dt [value]="purchaseOrders" [lazy]="true" (onLazyLoad)="loadPurchaseOrdersList($event)" [loading]="loading"
+    loadingIcon="loaderIcon" [scrollable]="true">
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+            <h5 class="p-m-0">{{titleComponent}}</h5>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+        </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th>Estado </th>
+            <th>ID </th>
+            <th>ID de Documento </th>
+            <th>Tipo de Documento </th>
+            <th>Fecha de Factura </th>
+            <th>Fecha de Pedido </th>
+            <th>Cantidad Solicitada </th>
+            <th>Cantidad Entregada </th>
+            <th>Valor Facturado </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-purchaseorder>
+        <tr>
+            <td>{{purchaseorder.state}}</td>
+            <td>{{purchaseorder.purchaseOrderId}}</td>
+            <td>{{purchaseorder.documentId}}</td>
+            <td>{{purchaseorder.documentType}}</td>
+            <td>{{purchaseorder.invoiceDate}}</td>
+            <td>{{purchaseorder.orderDate}}</td>
+            <td>{{purchaseorder.requestedQuantity}}</td>
+            <td>{{purchaseorder.deliveredQuantity}}</td>
+            <td>{{purchaseorder.invoicedValue}}</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+    </ng-template>
+</p-table>
+<div style="position: relative;">
+    <p-paginator rows="10" (onLazyLoad)="loadPurchaseOrdersList($event)" (onPageChange)="loadPurchaseOrdersList($event)"
+        [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,20,30]"></p-paginator>
+    <span style="position: absolute; top:3px; right:5px; margin: 5px;">Total de Pedidos de Compra: {{totalRecords}} </span>
+</div>

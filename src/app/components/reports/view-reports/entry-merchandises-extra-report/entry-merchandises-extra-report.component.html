@@ -1,0 +1,58 @@
+<div class="alert alert-warning" id="no-result" *ngIf="entryMerchandisesExtra?.length === 0">
+    <span>No se encontraron entradas de mercancias extra en el sistema</span>
+</div>
+<p-table #dt [value]="entryMerchandisesExtra" [lazy]="true" 
+    (onLazyLoad)="loadEntryMerchandisesExtraList($event)" [loading]="loading"
+    loadingIcon="loaderIcon" [scrollable]="true">
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+            <h5 class="p-m-0">{{titleComponent}}</h5>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+        </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th>Estado </th>
+            <th>ID Proveedor</th>
+            <th>Proveedor </th>
+            <th>ID Entrada de Mercancias </th>
+            <th>ID Pedido de Compra </th>
+            <th>Cantidad </th>
+            <th>Valor Neto Moneda Empresa</th>
+            <th>Precio</th>
+            <th>Unidad Precio</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-entrymerchandisesextra>
+        <tr>
+            <td>{{entrymerchandisesextra.entryMerchandiseState}}</td>
+            <td>{{entrymerchandisesextra.supplierId}}</td>
+            <td>{{entrymerchandisesextra.supplierName}}</td>
+            <td>{{entrymerchandisesextra.entryMerchandiseId}}</td>
+            <td>{{entrymerchandisesextra.purchaseOrderId}}</td>
+            <td>{{entrymerchandisesextra.quantity}}</td>
+            <td>{{entrymerchandisesextra.netValueCompanyCurrency}}</td>
+            <td>{{entrymerchandisesextra.price}}</td>
+            <td>{{entrymerchandisesextra.priceUnit}}</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+    </ng-template>
+</p-table>
+<div style="position: relative;">
+    <p-paginator rows="10" (onLazyLoad)="loadEntryMerchandisesExtraList($event)" (onPageChange)="loadEntryMerchandisesExtraList($event)"
+        [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,20,30]"></p-paginator>
+    <span style="position: absolute; top:3px; right:5px; margin: 5px;">Total de Entrada de Mercancias Extra: {{totalRecords}} </span>
+</div>

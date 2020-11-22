@@ -1,0 +1,60 @@
+<div class="alert alert-warning" id="no-result" *ngIf="paymentOriginals?.length === 0">
+    <span>No se encontraron pagos y depositos en el sistema</span>
+</div>
+<p-table #dt [value]="paymentOriginals" [lazy]="true" (onLazyLoad)="loadPaymentOriginalList($event)" [loading]="loading"
+    loadingIcon="loaderIcon" [scrollable]="true">
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+            <h5 class="p-m-0">{{titleComponent}}</h5>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+        </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th>Estado </th>
+            <th>ID de Documento </th>
+            <th>Referencia Externa </th>
+            <th>Fecha de Creación </th>
+            <th>Modalidad de Pago </th>
+            <th>Nombre de Socio Comercial </th>
+            <th>ID de Cuenta Bancaria </th>
+            <th>ID de Gastos Menores </th>
+            <th>Importe de Pago </th>
+            <th>ID de Empresa </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-paymentoriginal>
+        <tr>
+            <td>{{paymentoriginal.state}}</td>
+            <td>{{paymentoriginal.documentId}}</td>
+            <td>{{paymentoriginal.externalReferenceId}}</td>
+            <td>{{paymentoriginal.createdAt}}</td>
+            <td>{{paymentoriginal.pyamentMethod}}</td>
+            <td>{{paymentoriginal.businessPartnerName}}</td>
+            <td>{{paymentoriginal.bankAccountId}}</td>
+            <td>{{paymentoriginal.minorExpensesId}}</td>
+            <td>{{paymentoriginal.paymentAmount}}</td>
+            <td>{{paymentoriginal.companyIdFile}}</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+    </ng-template>
+</p-table>
+<div style="position: relative;">
+    <p-paginator rows="10" (onLazyLoad)="loadPaymentOriginalList($event)" (onPageChange)="loadPaymentOriginalList($event)"
+        [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,20,30]"></p-paginator>
+    <span style="position: absolute; top:3px; right:5px; margin: 5px;">Total de Pagos y Depositos: {{totalRecords}} </span>
+</div>

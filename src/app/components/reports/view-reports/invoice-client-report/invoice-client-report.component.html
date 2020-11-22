@@ -1,0 +1,54 @@
+<div class="alert alert-warning" id="no-result" *ngIf="invoiceClients?.length === 0">
+    <span>No se encontraron facturas de ventas en el sistema</span>
+</div>
+<p-table #dt [value]="invoiceClients" [lazy]="true" 
+    (onLazyLoad)="loadInvoiceClientList($event)" [loading]="loading"
+    loadingIcon="loaderIcon" [scrollable]="true">
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+            <h5 class="p-m-0">{{titleComponent}}</h5>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+        </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th>Cliente </th>
+            <th>ID Cliente</th>
+            <th>Factura </th>
+            <th>Fecha Factura </th>
+            <th>Valor Bruto </th>
+            <th>Valor Neto </th>
+            <th>Impuesto </th>
+            <th>Valor Neto Facturado </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-invoiceclient>
+        <tr>
+            <td>{{invoiceclient.clientName}}</td>
+            <td>{{invoiceclient.clientId}}</td>
+            <td>{{invoiceclient.invoiceId}}</td>
+            <td>{{invoiceclient.invoiceDate}}</td>
+            <td>{{invoiceclient.netValueInvoice}}</td>
+            <td>{{invoiceclient.tax}}</td>
+            <td>{{invoiceclient.netInvoicedValue}}</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+    </ng-template>
+</p-table>
+<div style="position: relative;">
+    <p-paginator rows="10" (onLazyLoad)="loadInvoiceClientList($event)" (onPageChange)="loadInvoiceClientList($event)"
+        [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,20,30]"></p-paginator>
+    <span style="position: absolute; top:3px; right:5px; margin: 5px;">Total de Factura de Ventas: {{totalRecords}} </span>
+</div>

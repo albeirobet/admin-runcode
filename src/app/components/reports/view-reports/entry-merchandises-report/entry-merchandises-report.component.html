@@ -1,0 +1,73 @@
+<div class="alert alert-warning" id="no-result" *ngIf="entryMerchandises?.length === 0">
+    <span>No se encontraron entradas de mercancias en el sistema</span>
+</div>
+<p-table #dt [value]="entryMerchandises" [lazy]="true" 
+    (onLazyLoad)="loadEntryMerchandisesList($event)" [loading]="loading"
+    loadingIcon="loaderIcon" [scrollable]="true">
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+            <h5 class="p-m-0">{{titleComponent}}</h5>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+        </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th>Estado </th>
+            <th>ID Proveedor</th>
+            <th>Proveedor </th>
+            <th>ID Producto </th>
+            <th>Producto </th>
+            <th>ID </th>
+            <th>ID Posición </th>
+            <th>ID Pedido de Compra </th>
+            <th>Cantidad UMB </th>
+            <th>Cantidad </th>
+            <th>Valor </th>
+            <th>Valor Moneda Empresa</th>
+            <th>Precio</th>
+            <th>Unidad Precio</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-purchaseorder>
+        <tr>
+            <td>{{purchaseorder.state}}</td>
+            <td>{{purchaseorder.supplier}}</td>
+            <td>{{purchaseorder.supplierName}}</td>
+            <td>{{purchaseorder.productId}}</td>
+            <td>{{purchaseorder.productName}}</td>
+            <td>{{purchaseorder.entryMerchandiseId}}</td>
+            <td>{{purchaseorder.positionEntryMerchandiseId}}</td>
+            <td>{{purchaseorder.purchaseOrderId}}</td>
+            <td>{{purchaseorder.quantityBaseUnitMeasure}}</td>
+            <td>{{purchaseorder.quantity}}</td>
+            <td>{{purchaseorder.netValue}}</td>
+            <td>{{purchaseorder.netValueCompanyCurrency}}</td>
+            <td>{{purchaseorder.price}}</td>
+            <td>{{purchaseorder.priceUnit}}</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+    </ng-template>
+</p-table>
+<div style="position: relative;">
+    <p-paginator rows="10" (onLazyLoad)="loadEntryMerchandisesList($event)" (onPageChange)="loadEntryMerchandisesList($event)"
+        [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,20,30]"></p-paginator>
+    <span style="position: absolute; top:3px; right:5px; margin: 5px;">Total de Entrada de Mercancias: {{totalRecords}} </span>
+</div>

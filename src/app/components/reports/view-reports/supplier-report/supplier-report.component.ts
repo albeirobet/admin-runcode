@@ -64,8 +64,6 @@ export class SupplierReportComponent implements OnInit {
       pageNumber = (event.first / rowsNumber);
     }
     this.pagedRequest = new PagedRequest;
-    this.pagedRequest.order = 'desc';
-    this.pagedRequest.sort = 'name';
     this.pagedRequest.page = pageNumber + 1;
     this.pagedRequest.limit = rowsNumber;
 
@@ -105,8 +103,6 @@ export class SupplierReportComponent implements OnInit {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase();
     this.pagedRequest = new PagedRequest;
-    this.pagedRequest.order = 'desc';
-    this.pagedRequest.sort = 'name';
     this.pagedRequest.page = 1;
     this.pagedRequest.limit = 10;
     this.pagedRequest.filter = filterValue;

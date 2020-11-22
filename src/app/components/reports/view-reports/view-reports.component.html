@@ -17,11 +17,34 @@
 
 <div class="card">
     <!-- Clientes -->
+    <app-assistant-report *ngIf="report === 'CLI'"></app-assistant-report>
+    <!-- Clientes -->
     <app-client-report *ngIf="report === 'CLI'"></app-client-report>
-    <!-- Proveedores -->
-    <app-supplier-report *ngIf="report === 'PRO'"></app-supplier-report>
-    <!-- Servicios -->
-    <app-service-report *ngIf="report === 'SER'"></app-service-report>
+    <!-- Entrada de Mercancias Extra-->
+    <app-entry-merchandises-extra-report *ngIf="report === 'EDE'"></app-entry-merchandises-extra-report>
+    <!-- Entrada de Mercancias -->
+    <app-entry-merchandises-report *ngIf="report === 'EDM'"></app-entry-merchandises-report>
+    <!-- Factura de ventas -->
+    <app-invoice-client-report *ngIf="report === 'FDV'"></app-invoice-client-report>
+    <!-- Factura de proveedores -->
+    <app-invoice-supplier-report *ngIf="report === 'FPR'"></app-invoice-supplier-report>
+    <!-- IVA -->
+    <app-iva-report *ngIf="report === 'IVA'"></app-iva-report>
+    <!-- Pagos y Deposito: Master report -->
+    <app-master-report *ngIf="report === 'PYD'"></app-master-report>
     <!-- Materiales -->
     <app-materials-report *ngIf="report === 'MAT'"></app-materials-report>
+    <!-- Pago Proveedores -->
+    <app-payment-extra-report *ngIf="report === 'PEX'"></app-payment-extra-report>
+    <!-- Pago Proveedores -->
+    <app-payment-original-report *ngIf="report === 'MAT'"></app-payment-original-report>
+    <!-- Pedidos de Compra -->
+    <app-purchase-orders-report *ngIf="report === 'PDC'"></app-purchase-orders-report>
+    <!-- Retencion de proveedores -->
+    <app-retention-supplier-report *ngIf="report === 'RPR'"></app-retention-supplier-report>
+    <!-- Servicios -->
+    <app-service-report *ngIf="report === 'SER'"></app-service-report>
+    <!-- Proveedores -->
+    <app-supplier-report *ngIf="report === 'PRO'"></app-supplier-report>
+
 </div>  

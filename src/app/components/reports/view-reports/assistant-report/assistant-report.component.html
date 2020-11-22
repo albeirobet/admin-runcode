@@ -1,0 +1,81 @@
+<div class="alert alert-warning" id="no-result" *ngIf="assistantReports?.length === 0">
+    <span>No se encontraron documentos facturas en el sistema</span>
+</div>
+<p-table #dt [value]="assistantReports" [lazy]="true" (onLazyLoad)="loadAssistantReportList($event)" [loading]="loading"
+    loadingIcon="loaderIcon" [scrollable]="true">
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+            <h5 class="p-m-0">{{titleComponent}}</h5>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+        </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th>ID Factura </th>
+            <th>Fecha Factura </th>
+            <th>Proveedor </th>
+            <th>Nombre Proveedor </th>
+            <th>ID Entrada Mercancias </th>
+            <th>ID Entrega Entrante Confirmada </th>
+            <th>ID Pedido de Compra </th>
+            <th>Nombre Proveedor CO </th>
+            <th>Proveedor CO </th>
+            <th>Reembolso CO </th>
+            <th>ID Documento Externo </th>
+            <th>Posición de Factura </th>
+            <th>Contador </th>
+            <th>Importe Bruto Moneda Empresa </th>
+            <th>Importe Neto Moneda Empresa </th>
+            <th>Importe Bruto </th>
+            <th>Importe Neto </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-assistantreport>
+        <tr>
+            <td>{{assistantreport.invoiceId}}</td>
+            <td>{{assistantreport.invoiceDate}}</td>
+            <td>{{assistantreport.supplierId}}</td>
+            <td>{{assistantreport.supplierName}}</td>
+            <td>{{assistantreport.entryMerchandiseId}}</td>
+            <td>{{assistantreport.inboundDeliveryConfirmedId}}</td>
+            <td>{{assistantreport.purchaseOrderId}}</td>
+            <td>{{assistantreport.supplierCoName}}</td>
+            <td>{{assistantreport.supplierCoId}}</td>
+            <td>{{assistantreport.refundCo}}</td>
+            <td>{{assistantreport.externalDocumentId}}</td>
+            <td>{{assistantreport.invoicePosition}}</td>
+            <td>{{assistantreport.counter}}</td>
+            <td>{{assistantreport.grossAmountCompanyCurrency}}</td>
+            <td>{{assistantreport.netAmountCompanyCurrency}}</td>
+            <td>{{assistantreport.grossValue}}</td>
+            <td>{{assistantreport.netValue}}</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+    </ng-template>
+</p-table>
+<div style="position: relative;">
+    <p-paginator rows="10" (onLazyLoad)="loadAssistantReportList($event)" (onPageChange)="loadAssistantReportList($event)"
+        [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,20,30]"></p-paginator>
+    <span style="position: absolute; top:3px; right:5px; margin: 5px;">Total de Documentos Facturas: {{totalRecords}} </span>
+</div>

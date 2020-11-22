@@ -268,10 +268,31 @@ export class ReportGeneratorService {
       { observe: 'response' });
   }
 
+  getAssistantReport(req?: any, search?: string): Observable<any> {
+    const options = req;
+    return this.http.get<any>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'assistantReport/all',
+      { params: options, observe: 'response' });
+  }
+
   getClients(req?: any, search?: string): Observable<any> {
     const options = req;
     return this.http.get<any>(
       ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'clients/all',
+      { params: options, observe: 'response' });
+  }
+
+  getEntryMerchandisesExtra(req?: any, search?: string): Observable<any> {
+    const options = req;
+    return this.http.get<any>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'entryMerchandisesExtra/all',
+      { params: options, observe: 'response' });
+  }
+
+  getEntryMerchandises(req?: any, search?: string): Observable<any> {
+    const options = req;
+    return this.http.get<any>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'entryMerchandises/all',
       { params: options, observe: 'response' });
   }
 
@@ -282,17 +303,72 @@ export class ReportGeneratorService {
       { params: options, observe: 'response' });
   }
 
-  getServices(req?: any): Observable<any> {
-    const options = req;
+  getServices(params): Observable<any> {
     return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'services/all',
-      { params: options, observe: 'response' });
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'services/all' + params,
+      { observe: 'response' });
   }
 
   getMaterials(req?: any, search?: string): Observable<any> {
     const options = req;
     return this.http.get<any>(
       ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'materials/all',
+      { params: options, observe: 'response' });
+  }
+
+  getPaymentOriginal(req?: any, search?: string): Observable<any> {
+    const options = req;
+    return this.http.get<any>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'paymentOriginal/all',
+      { params: options, observe: 'response' });
+  }
+
+  getPaymentExtra(req?: any, search?: string): Observable<any> {
+    const options = req;
+    return this.http.get<any>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'paymentExtra/all',
+      { params: options, observe: 'response' });
+  }
+  
+  getPurchaseOrders(req?: any, search?: string): Observable<any> {
+    const options = req;
+    return this.http.get<any>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'purchaseOrders/all',
+      { params: options, observe: 'response' });
+  }
+
+  getInvoiceSupplier(req?: any, search?: string): Observable<any> {
+    const options = req;
+    return this.http.get<any>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'invoiceSupplier/all',
+      { params: options, observe: 'response' });
+  }
+
+  getIvaReport(req?: any, search?: string): Observable<any> {
+    const options = req;
+    return this.http.get<any>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'iva/all',
+      { params: options, observe: 'response' });
+  }
+
+  getRetentionSupplier(req?: any, search?: string): Observable<any> {
+    const options = req;
+    return this.http.get<any>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'retentionSupplier/all',
+      { params: options, observe: 'response' });
+  }
+
+  getInvoiceClient(req?: any, search?: string): Observable<any> {
+    const options = req;
+    return this.http.get<any>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'invoiceClient/all',
+      { params: options, observe: 'response' });
+  }
+
+  getMasterReport(req?: any, search?: string): Observable<any> {
+    const options = req;
+    return this.http.get<any>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'masterReport/all',
       { params: options, observe: 'response' });
   }
 

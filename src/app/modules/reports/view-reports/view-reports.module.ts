@@ -13,6 +13,17 @@ import { ClientReportModule } from './client-report/client-report.module';
 import { SupplierReportModule } from './supplier-report/supplier-report.module';
 import { ServiceReportModule } from './service-report/service-report.module';
 import { MaterialsReportModule } from './materials-report/materials-report.module';
+import { PurchaseOrdersReportModule } from './purchase-orders-report/purchase-orders-report.module';
+import { EntryMerchandisesReportModule } from './entry-merchandises-report/entry-merchandises-report.module';
+import { InvoiceSupplierReportModule } from './invoice-supplier-report/invoice-supplier-report.module';
+import { RetentionSupplierReportModule } from './retention-supplier-report/retention-supplier-report.module';
+import { InvoiceClientReportModule } from './invoice-client-report/invoice-client-report.module';
+import { MasterReportModule } from './master-report/master-report.module';
+import { AssistantReportModule } from './assistant-report/assistant-report.module';
+import { EntryMerchandisesExtraReportModule } from './entry-merchandises-extra-report/entry-merchandises-extra-report.module';
+import { IvaReportModule } from './iva-report/iva-report.module';
+import { PaymentExtraReportModule } from './payment-extra-report/payment-extra-report.module';
+import { PaymentOriginalReportModule } from './payment-original-report/payment-original-report.module';
 
 @NgModule({
   declarations: [ViewReportsComponent],
@@ -29,7 +40,18 @@ import { MaterialsReportModule } from './materials-report/materials-report.modul
     ClientReportModule,
     SupplierReportModule,
     ServiceReportModule,
-    MaterialsReportModule
+    MaterialsReportModule,
+    PurchaseOrdersReportModule,
+    EntryMerchandisesReportModule,
+    InvoiceSupplierReportModule,
+    RetentionSupplierReportModule,
+    InvoiceClientReportModule,
+    MasterReportModule,
+    AssistantReportModule,
+    EntryMerchandisesExtraReportModule,
+    IvaReportModule,
+    PaymentExtraReportModule,
+    PaymentOriginalReportModule,
   ],
   exports: [ViewReportsComponent]
 })

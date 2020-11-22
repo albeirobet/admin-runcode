@@ -10,6 +10,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { ReportGeneratorService } from 'src/app/services/report-generator/report-generator.service';
 import { IService } from 'src/app/model/reports/service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Utilities } from 'src/app/utils/utilities';
 
 @Component({
   selector: 'app-service-report',
@@ -42,6 +43,7 @@ export class ServiceReportComponent implements OnInit {
 
   // --- Fecha Maxima de seleccion
   maxDate = new Date();
+  es: any;
 
   /**
    * Formulario de filtros
@@ -60,10 +62,21 @@ export class ServiceReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.es = {
+      firstDayOfWeek: 1,
+      dayNames: [ "domingo","lunes","martes","miércoles","jueves","viernes","sábado" ],
+      dayNamesShort: [ "dom","lun","mar","mié","jue","vie","sáb" ],
+      dayNamesMin: [ "D","L","M","X","J","V","S" ],
+      monthNames: [ "enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre" ],
+      monthNamesShort: [ "ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic" ],
+      today: 'Hoy',
+      clear: 'Borrar'
+    }
   }
 
   cleanServicesForm() {
     this.filterServicesForm.reset();
+    this.onSearchServicesFormSubmit();
   }
 
   /**
@@ -78,8 +91,6 @@ export class ServiceReportComponent implements OnInit {
       pageNumber = (event.first / rowsNumber);
     }
     this.pagedRequest = new PagedRequest;
-    this.pagedRequest.order = 'desc';
-    this.pagedRequest.sort = 'name';
     this.pagedRequest.page = pageNumber + 1;
     this.pagedRequest.limit = rowsNumber;
 
@@ -96,12 +107,24 @@ export class ServiceReportComponent implements OnInit {
   getServices() {
     this.loading = true;
     console.log(this.pagedRequest)
-    this.reportGeneratorService.getServices(this.pagedRequest).subscribe(
+
+    let filterForm = this.filterServicesForm.value;
+
+    let params = '?page='+this.pagedRequest.page;
+    params = params + '&limit='+this.pagedRequest.limit;
+
+    if(filterForm.initDate && filterForm.endDate) {
+      params = params + '&createdAt[gte]='+Utilities.getFormattedDate(filterForm.initDate);
+      params = params + '&createdAt[lt]='+Utilities.getFormattedFinalDate(filterForm.endDate);
+    }
+    if(filterForm.filter) {
+      params = params + '&filter='+filterForm.filter.trim();
+    }
+    this.reportGeneratorService.getServices(params).subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.services = res.body.data.dataLst;
         this.totalRecords = res.body.data.total;
         this.loading = false;
-
       },
       error => {
         console.dir(error.error);
@@ -114,35 +137,10 @@ export class ServiceReportComponent implements OnInit {
    * 
    */
   onSearchServicesFormSubmit() {
-    let filterForm = this.filterServicesForm.value;
-
     this.pagedRequest = new PagedRequest;
-    this.pagedRequest.order = 'desc';
-    this.pagedRequest.sort = 'name';
     this.pagedRequest.page = 1;
     this.pagedRequest.limit = 10;
 
-    if(filterForm.filter) {
-      filterForm.filter = filterForm.filter.trim(); // Remove whitespace
-      filterForm.filter = filterForm.filter.toLowerCase();
-      this.pagedRequest.filter = filterForm.filter;
-    }
-    if(filterForm.initDate) {
-      const auxInitDate = new Date(filterForm.initDate);
-      const yearInit = auxInitDate.getFullYear();
-      const monthInit = auxInitDate.getMonth();
-      const dayInit = auxInitDate.getDate();
-      var formattedInitDate = new Date(yearInit,monthInit,dayInit).toISOString().split('T')[0];
-      this.pagedRequest.initDate = formattedInitDate;
-    }
-    if(filterForm.endDate) {
-      const auxEndDate = new Date(filterForm.endDate);
-      const yearEnd = auxEndDate.getFullYear();
-      const monthEnd = auxEndDate.getMonth();
-      const dayEnd = auxEndDate.getDate();
-      var formattedEndDate = new Date(yearEnd,monthEnd,dayEnd).toISOString().split('T')[0];
-      this.pagedRequest.endDate = formattedEndDate;
-    }
     this.getServices();
   }
 
