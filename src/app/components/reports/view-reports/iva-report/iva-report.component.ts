@@ -77,7 +77,11 @@ export class IvaReportComponent implements OnInit {
   getIvaReport() {
     this.loading = true;
     console.log(this.pagedRequest)
-    this.reportGeneratorService.getIvaReport(this.pagedRequest, this.search).subscribe(
+
+    let params = '?page='+this.pagedRequest.page;
+    params = params + '&limit='+this.pagedRequest.limit;
+
+    this.reportGeneratorService.getIvaReport(params).subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.ivaReports = res.body.data.dataLst;
         this.totalRecords = res.body.data.total;

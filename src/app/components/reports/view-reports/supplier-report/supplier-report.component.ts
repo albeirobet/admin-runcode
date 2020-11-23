@@ -12,6 +12,7 @@ import { ConfirmationService } from 'primeng/api';
 import { IClient } from 'src/app/model/reports/client';
 import { ReportGeneratorService } from 'src/app/services/report-generator/report-generator.service';
 import { ISupplier } from 'src/app/model/reports/supplier';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-supplier-report',
@@ -42,6 +43,13 @@ export class SupplierReportComponent implements OnInit {
   ascending!: boolean;
   ngbPaginationPage = 1;
 
+  /**
+   * Formulario de filtros
+   */
+  filterSuppliersForm = new FormGroup({
+    filter: new FormControl(null, Validators.nullValidator),
+  });
+
   constructor(protected reportGeneratorService: ReportGeneratorService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
@@ -50,6 +58,11 @@ export class SupplierReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  cleanSuppliersForm() {
+    this.filterSuppliersForm.reset();
+    this.onSearchSuppliersFormSubmit();
   }
 
   /**
@@ -80,7 +93,16 @@ export class SupplierReportComponent implements OnInit {
   getSuppliers() {
     this.loading = true;
     console.log(this.pagedRequest)
-    this.reportGeneratorService.getSuppliers(this.pagedRequest, this.search).subscribe(
+
+    let filterForm = this.filterSuppliersForm.value;
+
+    let params = '?page='+this.pagedRequest.page;
+    params = params + '&limit='+this.pagedRequest.limit;
+    if(filterForm.filter) {
+      params = params + '&filter='+filterForm.filter.trim();
+    }
+
+    this.reportGeneratorService.getSuppliers(params).subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.suppliers = res.body.data.dataLst;
         this.totalRecords = res.body.data.total;
@@ -96,16 +118,12 @@ export class SupplierReportComponent implements OnInit {
 
   /**
    * 
-   * @param filterValue 
    */
-  aplicarFiltro(filterValue) {
-    console.log(filterValue)
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase();
+  onSearchSuppliersFormSubmit() {
     this.pagedRequest = new PagedRequest;
     this.pagedRequest.page = 1;
     this.pagedRequest.limit = 10;
-    this.pagedRequest.filter = filterValue;
+
     this.getSuppliers();
   }
 

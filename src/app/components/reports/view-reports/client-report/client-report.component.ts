@@ -11,6 +11,7 @@ import { NotificationService } from 'src/app/services/common/notification.servic
 import { ConfirmationService } from 'primeng/api';
 import { IClient } from 'src/app/model/reports/client';
 import { ReportGeneratorService } from 'src/app/services/report-generator/report-generator.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-client-report',
@@ -41,6 +42,13 @@ export class ClientReportComponent implements OnInit {
   ascending!: boolean;
   ngbPaginationPage = 1;
 
+  /**
+   * Formulario de filtros
+   */
+  filterClientsForm = new FormGroup({
+    filter: new FormControl(null, Validators.nullValidator),
+  });
+
   constructor(protected reportGeneratorService: ReportGeneratorService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
@@ -52,6 +60,11 @@ export class ClientReportComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('entro a clientes')
+  }
+
+  cleanClientsForm() {
+    this.filterClientsForm.reset();
+    this.onSearchClientsFormSubmit();
   }
 
   /**
@@ -82,7 +95,16 @@ export class ClientReportComponent implements OnInit {
   getClients() {
     this.loading = true;
     console.log(this.pagedRequest)
-    this.reportGeneratorService.getClients(this.pagedRequest, this.search).subscribe(
+
+    let filterForm = this.filterClientsForm.value;
+
+    let params = '?page='+this.pagedRequest.page;
+    params = params + '&limit='+this.pagedRequest.limit;
+    if(filterForm.filter) {
+      params = params + '&filter='+filterForm.filter.trim();
+    }
+
+    this.reportGeneratorService.getClients(params).subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.clients = res.body.data.dataLst;
         this.totalRecords = res.body.data.total;
@@ -98,16 +120,12 @@ export class ClientReportComponent implements OnInit {
 
   /**
    * 
-   * @param filterValue 
    */
-  aplicarFiltro(filterValue) {
-    console.log(filterValue)
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase();
+  onSearchClientsFormSubmit() {
     this.pagedRequest = new PagedRequest;
     this.pagedRequest.page = 1;
     this.pagedRequest.limit = 10;
-    this.pagedRequest.filter = filterValue;
+
     this.getClients();
   }
 

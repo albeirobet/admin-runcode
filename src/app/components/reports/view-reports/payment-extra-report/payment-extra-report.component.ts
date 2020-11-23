@@ -76,7 +76,11 @@ export class PaymentExtraReportComponent implements OnInit {
   getPaymentExtra() {
     this.loading = true;
     console.log(this.pagedRequest)
-    this.reportGeneratorService.getPaymentExtra(this.pagedRequest, this.search).subscribe(
+
+    let params = '?page='+this.pagedRequest.page;
+    params = params + '&limit='+this.pagedRequest.limit;
+
+    this.reportGeneratorService.getPaymentExtra(params).subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.paymentExtras = res.body.data.dataLst;
         this.totalRecords = res.body.data.total;

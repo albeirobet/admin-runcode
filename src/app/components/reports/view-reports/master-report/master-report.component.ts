@@ -77,7 +77,11 @@ export class MasterReportComponent implements OnInit {
   getMasterReport() {
     this.loading = true;
     console.log(this.pagedRequest)
-    this.reportGeneratorService.getMasterReport(this.pagedRequest, this.search).subscribe(
+
+    let params = '?page='+this.pagedRequest.page;
+    params = params + '&limit='+this.pagedRequest.limit;
+
+    this.reportGeneratorService.getMasterReport(params).subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.masterReports = res.body.data.dataLst;
         this.totalRecords = res.body.data.total;

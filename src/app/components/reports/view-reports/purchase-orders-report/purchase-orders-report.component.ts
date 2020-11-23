@@ -77,7 +77,11 @@ export class PurchaseOrdersReportComponent implements OnInit {
   getPurchaseOrders() {
     this.loading = true;
     console.log(this.pagedRequest)
-    this.reportGeneratorService.getPurchaseOrders(this.pagedRequest, this.search).subscribe(
+
+    let params = '?page='+this.pagedRequest.page;
+    params = params + '&limit='+this.pagedRequest.limit;
+
+    this.reportGeneratorService.getPurchaseOrders(params).subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.purchaseOrders = res.body.data.dataLst;
         this.totalRecords = res.body.data.total;

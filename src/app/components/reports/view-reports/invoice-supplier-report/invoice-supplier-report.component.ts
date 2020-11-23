@@ -79,7 +79,11 @@ export class InvoiceSupplierReportComponent implements OnInit {
   getInvoiceSupplier() {
     this.loading = true;
     console.log(this.pagedRequest)
-    this.reportGeneratorService.getInvoiceSupplier(this.pagedRequest, this.search).subscribe(
+
+    let params = '?page='+this.pagedRequest.page;
+    params = params + '&limit='+this.pagedRequest.limit;
+
+    this.reportGeneratorService.getInvoiceSupplier(params).subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.invoiceSuppliers = res.body.data.dataLst;
         this.totalRecords = res.body.data.total;

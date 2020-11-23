@@ -76,7 +76,11 @@ export class RetentionSupplierReportComponent implements OnInit {
   getRetentionSupplier() {
     this.loading = true;
     console.log(this.pagedRequest)
-    this.reportGeneratorService.getRetentionSupplier(this.pagedRequest, this.search).subscribe(
+
+    let params = '?page='+this.pagedRequest.page;
+    params = params + '&limit='+this.pagedRequest.limit;
+
+    this.reportGeneratorService.getRetentionSupplier(params).subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.retentionSupplier = res.body.data.dataLst;
         this.totalRecords = res.body.data.total;

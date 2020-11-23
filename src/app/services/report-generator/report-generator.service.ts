@@ -286,39 +286,34 @@ export class ReportGeneratorService {
       { observe: 'response' });
   }
 
-  getAssistantReport(req?: any, search?: string): Observable<any> {
-    const options = req;
+  getAssistantReport(params): Observable<any> {
     return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'assistantReport/all',
-      { params: options, observe: 'response' });
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'assistantReport/all' + params,
+      { observe: 'response' });
   }
 
-  getClients(req?: any, search?: string): Observable<any> {
-    const options = req;
+  getClients(params): Observable<any> {
     return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'clients/all',
-      { params: options, observe: 'response' });
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'clients/all' + params,
+      { observe: 'response' });
   }
 
-  getEntryMerchandisesExtra(req?: any, search?: string): Observable<any> {
-    const options = req;
+  getEntryMerchandisesExtra(params): Observable<any> {
     return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'entryMerchandiseExtra/all',
-      { params: options, observe: 'response' });
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'entryMerchandiseExtra/all' + params,
+      { observe: 'response' });
   }
 
-  getEntryMerchandises(req?: any, search?: string): Observable<any> {
-    const options = req;
+  getEntryMerchandises(params): Observable<any> {
     return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'entryMerchandises/all',
-      { params: options, observe: 'response' });
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'entryMerchandises/all' + params,
+      { observe: 'response' });
   }
 
-  getSuppliers(req?: any, search?: string): Observable<any> {
-    const options = req;
+  getSuppliers(params): Observable<any> {
     return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'suppliers/all',
-      { params: options, observe: 'response' });
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'suppliers/all' + params,
+      { observe: 'response' });
   }
 
   getServices(params): Observable<any> {
@@ -327,67 +322,58 @@ export class ReportGeneratorService {
       { observe: 'response' });
   }
 
-  getMaterials(req?: any, search?: string): Observable<any> {
-    const options = req;
+  getMaterials(params): Observable<any> {
     return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'materials/all',
-      { params: options, observe: 'response' });
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'materials/all' + params,
+      { observe: 'response' });
   }
 
-  getPaymentOriginal(req?: any, search?: string): Observable<any> {
-    const options = req;
+  getPaymentOriginal(params): Observable<any> {
     return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'paymentOriginal/all',
-      { params: options, observe: 'response' });
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'paymentOriginal/all' + params,
+      { observe: 'response' });
   }
 
-  getPaymentExtra(req?: any, search?: string): Observable<any> {
-    const options = req;
+  getPaymentExtra(params): Observable<any> {
     return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'paymentExtra/all',
-      { params: options, observe: 'response' });
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'paymentExtra/all' + params,
+      { observe: 'response' });
   }
   
-  getPurchaseOrders(req?: any, search?: string): Observable<any> {
-    const options = req;
+  getPurchaseOrders(params): Observable<any> {
     return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'purchaseOrders/all',
-      { params: options, observe: 'response' });
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'purchaseOrders/all' + params,
+      { observe: 'response' });
   }
 
-  getInvoiceSupplier(req?: any, search?: string): Observable<any> {
-    const options = req;
+  getInvoiceSupplier(params): Observable<any> {
     return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'invoiceSupplier/all',
-      { params: options, observe: 'response' });
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'invoiceSupplier/all' + params,
+      { observe: 'response' });
   }
 
-  getIvaReport(req?: any, search?: string): Observable<any> {
-    const options = req;
+  getIvaReport(params): Observable<any> {
     return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'iva/all',
-      { params: options, observe: 'response' });
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'iva/all' + params,
+      { observe: 'response' });
   }
 
-  getRetentionSupplier(req?: any, search?: string): Observable<any> {
-    const options = req;
+  getRetentionSupplier(params): Observable<any> {
     return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'retentionSupplier/all',
-      { params: options, observe: 'response' });
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'retentionSupplier/all' + params,
+      { observe: 'response' });
   }
 
-  getInvoiceClient(req?: any, search?: string): Observable<any> {
-    const options = req;
+  getInvoiceClient(params): Observable<any> {
     return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'invoiceClient/all',
-      { params: options, observe: 'response' });
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'invoiceClient/all' + params,
+      { observe: 'response' });
   }
 
-  getMasterReport(req?: any, search?: string): Observable<any> {
-    const options = req;
+  getMasterReport(params): Observable<any> {
     return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'masterReport/all',
-      { params: options, observe: 'response' });
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'masterReport/all' + params,
+      { observe: 'response' });
   }
 
 }

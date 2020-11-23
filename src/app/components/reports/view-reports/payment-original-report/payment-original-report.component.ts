@@ -77,7 +77,11 @@ export class PaymentOriginalReportComponent implements OnInit {
   getPaymentOriginal() {
     this.loading = true;
     console.log(this.pagedRequest)
-    this.reportGeneratorService.getPaymentOriginal(this.pagedRequest, this.search).subscribe(
+
+    let params = '?page='+this.pagedRequest.page;
+    params = params + '&limit='+this.pagedRequest.limit;
+
+    this.reportGeneratorService.getPaymentOriginal(params).subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.paymentOriginals = res.body.data.dataLst;
         this.totalRecords = res.body.data.total;

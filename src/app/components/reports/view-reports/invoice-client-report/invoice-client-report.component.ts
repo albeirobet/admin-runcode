@@ -77,7 +77,11 @@ export class InvoiceClientReportComponent implements OnInit {
   getInvoiceClient() {
     this.loading = true;
     console.log(this.pagedRequest)
-    this.reportGeneratorService.getInvoiceClient(this.pagedRequest, this.search).subscribe(
+
+    let params = '?page='+this.pagedRequest.page;
+    params = params + '&limit='+this.pagedRequest.limit;
+
+    this.reportGeneratorService.getInvoiceClient(params).subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.invoiceClients = res.body.data.dataLst;
         this.totalRecords = res.body.data.total;
