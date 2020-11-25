@@ -7,15 +7,16 @@ import {InputTextModule} from 'primeng/inputtext';
 import {DynamicDialogModule} from 'primeng/dynamicdialog';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
-import { EntryMerchandisesReportRoutingModule } from './entry-merchandises-report-routing.module';
-import { EntryMerchandisesReportComponent } from 'src/app/components/reports/view-reports/entry-merchandises-report/entry-merchandises-report.component';
+import { PurchaseOrdersReportComponent } from 'src/app/components/reports/view-reports/purchase-orders-report/purchase-orders-report.component';
 import { AccordionModule } from 'primeng/accordion';
+import { PurchaseOrdersTrackingReportRoutingModule } from './purchase-orders-tracking-report-routing.module';
+import { PurchaseOrdersTrackingReportComponent } from 'src/app/components/reports/view-reports/purchase-orders-tracking-report/purchase-orders-tracking-report.component';
 
 @NgModule({
-  declarations: [EntryMerchandisesReportComponent],
+  declarations: [PurchaseOrdersTrackingReportComponent],
   imports: [
     SharedModule,
-    EntryMerchandisesReportRoutingModule,
+    PurchaseOrdersTrackingReportRoutingModule,
     PaginatorModule,
     TableModule,
     ToolbarModule,
@@ -25,6 +26,6 @@ import { AccordionModule } from 'primeng/accordion';
     ConfirmDialogModule,
     AccordionModule
   ],
-  exports: [EntryMerchandisesReportComponent]
+  exports: [PurchaseOrdersTrackingReportComponent]
 })
-export class EntryMerchandisesReportModule { }
+export class PurchaseOrdersTrackingReportModule { }

@@ -24,6 +24,7 @@ import { EntryMerchandisesExtraReportModule } from './entry-merchandises-extra-r
 import { IvaReportModule } from './iva-report/iva-report.module';
 import { PaymentExtraReportModule } from './payment-extra-report/payment-extra-report.module';
 import { PaymentOriginalReportModule } from './payment-original-report/payment-original-report.module';
+import { PurchaseOrdersTrackingReportModule } from './purchase-orders-tracking-report/purchase-orders-tracking-report.module';
 
 @NgModule({
   declarations: [ViewReportsComponent],
@@ -52,6 +53,7 @@ import { PaymentOriginalReportModule } from './payment-original-report/payment-o
     IvaReportModule,
     PaymentExtraReportModule,
     PaymentOriginalReportModule,
+    PurchaseOrdersTrackingReportModule
   ],
   exports: [ViewReportsComponent]
 })

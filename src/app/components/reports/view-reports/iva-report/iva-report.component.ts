@@ -10,6 +10,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { ReportGeneratorService } from 'src/app/services/report-generator/report-generator.service';
 import { IMasterReport } from 'src/app/model/reports/master-report';
 import { IIva } from 'src/app/model/reports/iva';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-iva-report',
@@ -40,6 +41,13 @@ export class IvaReportComponent implements OnInit {
   ascending!: boolean;
   ngbPaginationPage = 1;
 
+  /**
+   * Formulario de filtros
+   */
+  filterIvaReportForm = new FormGroup({
+    filter: new FormControl(null, Validators.nullValidator),
+  });
+
   constructor(protected reportGeneratorService: ReportGeneratorService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
@@ -48,6 +56,11 @@ export class IvaReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  cleanIvaReportForm() {
+    this.filterIvaReportForm.reset();
+    this.onSearchIvaReportFormSubmit();
   }
 
   /**
@@ -78,8 +91,13 @@ export class IvaReportComponent implements OnInit {
     this.loading = true;
     console.log(this.pagedRequest)
 
+    let filterForm = this.filterIvaReportForm.value;
+
     let params = '?page='+this.pagedRequest.page;
     params = params + '&limit='+this.pagedRequest.limit;
+    if(filterForm.filter) {
+      params = params + '&filter='+filterForm.filter.trim();
+    }
 
     this.reportGeneratorService.getIvaReport(params).subscribe(
       (res: HttpResponse<GeneralResponse>) => {
@@ -97,16 +115,12 @@ export class IvaReportComponent implements OnInit {
 
   /**
    * 
-   * @param filterValue 
    */
-  aplicarFiltro(filterValue) {
-    console.log(filterValue)
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase();
+  onSearchIvaReportFormSubmit() {
     this.pagedRequest = new PagedRequest;
     this.pagedRequest.page = 1;
     this.pagedRequest.limit = 10;
-    this.pagedRequest.filter = filterValue;
+
     this.getIvaReport();
   }
 

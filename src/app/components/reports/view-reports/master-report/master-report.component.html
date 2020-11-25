@@ -1,6 +1,25 @@
 <div class="alert alert-warning" id="no-result" *ngIf="masterReports?.length === 0">
     <span>No se encontraron Cuentas Contables y Documentos en el sistema</span>
 </div>
+<p-accordion>
+    <p-accordionTab header="Búsqueda Avanzada">
+        <form [formGroup]="filterMasterReportForm" (ngSubmit)="onSearchMasterReportFormSubmit()">
+            <div class="row">
+                <div class="form-group col-4">
+                    <label class="form-control-label" for="field_bg">Búsqueda General</label>
+                    <input type="text" class="form-control" name="name" id="field_bg"
+                        formControlName="filter" maxlength="50" size="50"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-4">
+                    <button pButton type="submit" label="Búsqueda" [disabled]="!filterMasterReportForm.valid"></button>
+                    <button pButton type="button" label="Limpiar" (click)="cleanMasterReportForm()"></button>
+                </div>
+            </div>
+        </form>
+    </p-accordionTab>
+</p-accordion>
 <p-table #dt [value]="masterReports" [lazy]="true" 
     (onLazyLoad)="loadMasterReportList($event)" [loading]="loading"
     loadingIcon="loaderIcon" [scrollable]="true">

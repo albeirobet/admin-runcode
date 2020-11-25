@@ -61,6 +61,7 @@ export class UploadInfoComponent implements OnInit {
     this.infoList.push({ type: 'Documentos Facturas', code: 'DOF', numReg: counter.find(data => data.code === 'DOF').counter, id: 12 });
     this.infoList.push({ type: 'Pagos Extra', code: 'PEX', numReg: counter.find(data => data.code === 'PEX').counter, id: 13 });
     this.infoList.push({ type: 'Iva', code: 'IVA', numReg: counter.find(data => data.code === 'IVA').counter, id: 14 });
+    this.infoList.push({ type: 'Pedidos de Compra v1', code: 'PC1', numReg: counter.find(data => data.code === 'PC1').counter, id: 15 });
     this.infoList.push({ type: 'Entrada de Mercancias Extra', code: 'EDE', numReg: counter.find(data => data.code === 'EDE').counter, id: 16});
     this.loading = false;
   }
@@ -149,6 +150,10 @@ export class UploadInfoComponent implements OnInit {
       }
       case 'PEX': {
         this.deletePaymentExtra();
+        break;
+      }
+      case 'PC1': {
+        this.deletePurchaseOrderTracking();
         break;
       }
       case 'IVA': {
@@ -427,6 +432,20 @@ export class UploadInfoComponent implements OnInit {
 
   deleteIvaData() {
     this.reportGeneratorService.deleteIva().subscribe(
+      (res: HttpResponse<GeneralResponse>) => {
+        this.notificationService.success('Información eliminada correctamente.');
+        this.loadInfo();
+      },
+      error => {
+        console.dir(error.error);
+        this.notificationService.error('Se ha presentado un error en el sistema, por favor intente nuevamente.');
+        this.loading = false;
+      }
+    );
+  }
+
+  deletePurchaseOrderTracking() {
+    this.reportGeneratorService.deletePurchaseOrderTracking().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
         this.loadInfo();

@@ -10,6 +10,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { ReportGeneratorService } from 'src/app/services/report-generator/report-generator.service';
 import { IPurchaseOrder } from 'src/app/model/reports/purchase-order';
 import { IPaymentOriginal } from 'src/app/model/reports/payment-original';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-payment-original-report',
@@ -40,6 +41,13 @@ export class PaymentOriginalReportComponent implements OnInit {
   ascending!: boolean;
   ngbPaginationPage = 1;
 
+  /**
+   * Formulario de filtros
+   */
+  filterPaymentOriginalForm = new FormGroup({
+    filter: new FormControl(null, Validators.nullValidator),
+  });
+
   constructor(protected reportGeneratorService: ReportGeneratorService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
@@ -48,6 +56,11 @@ export class PaymentOriginalReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  cleanPaymentOriginalForm() {
+    this.filterPaymentOriginalForm.reset();
+    this.onSearchPaymentOriginalFormSubmit();
   }
 
   /**
@@ -78,8 +91,13 @@ export class PaymentOriginalReportComponent implements OnInit {
     this.loading = true;
     console.log(this.pagedRequest)
 
+    let filterForm = this.filterPaymentOriginalForm.value;
+
     let params = '?page='+this.pagedRequest.page;
     params = params + '&limit='+this.pagedRequest.limit;
+    if(filterForm.filter) {
+      params = params + '&filter='+filterForm.filter.trim();
+    }
 
     this.reportGeneratorService.getPaymentOriginal(params).subscribe(
       (res: HttpResponse<GeneralResponse>) => {
@@ -97,16 +115,12 @@ export class PaymentOriginalReportComponent implements OnInit {
 
   /**
    * 
-   * @param filterValue 
    */
-  aplicarFiltro(filterValue) {
-    console.log(filterValue)
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase();
+  onSearchPaymentOriginalFormSubmit() {
     this.pagedRequest = new PagedRequest;
     this.pagedRequest.page = 1;
     this.pagedRequest.limit = 10;
-    this.pagedRequest.filter = filterValue;
+
     this.getPaymentOriginal();
   }
 

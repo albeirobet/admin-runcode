@@ -9,27 +9,27 @@ import { GeneralResponse } from 'src/app/model/commons/response/general-response
 import { DialogService } from 'primeng/dynamicdialog';
 import { ReportGeneratorService } from 'src/app/services/report-generator/report-generator.service';
 import { IPurchaseOrder } from 'src/app/model/reports/purchase-order';
-import { IEntryMerchandise } from 'src/app/model/reports/entry-merchandise';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { IPurchaseOrderTracking } from 'src/app/model/reports/purchase-order-tracking';
 
 @Component({
-  selector: 'app-entry-merchandises-report',
-  templateUrl: './entry-merchandises-report.component.html',
-  styleUrls: ['./entry-merchandises-report.component.css'],
+  selector: 'app-purchase-orders-tracking-report',
+  templateUrl: './purchase-orders-tracking-report.component.html',
+  styleUrls: ['./purchase-orders-tracking-report.component.css'],
   providers: [DialogService]
 })
-export class EntryMerchandisesReportComponent implements OnInit {
+export class PurchaseOrdersTrackingReportComponent implements OnInit {
 
   // --- Titulo de los componentes
-  titleComponent = 'Entrada de Mercancias';
+  titleComponent = 'Pedidos de Compra V1';
 
-  // --- Lista de registros de entrada de mercancias
-  entryMerchandises?: IEntryMerchandise[];
+  // --- Lista de registros de ordenes de compra
+  purchaseOrdersTracking?: IPurchaseOrderTracking[];
 
   // --- Total de registros 
   totalRecords: number;
 
-  // --- Loading para tabla de entrada de mercancias
+  // --- Loading para tabla de ordenes de compra
   pagedRequest: PagedRequest;
   search: string;
   loading: boolean = true;
@@ -44,7 +44,7 @@ export class EntryMerchandisesReportComponent implements OnInit {
   /**
    * Formulario de filtros
    */
-  filterEntryMerchandisesForm = new FormGroup({
+  filterPurchaseOrdersTrackingForm = new FormGroup({
     filter: new FormControl(null, Validators.nullValidator),
   });
 
@@ -58,16 +58,15 @@ export class EntryMerchandisesReportComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  cleanEntryMerchandisesForm() {
-    this.filterEntryMerchandisesForm.reset();
-    this.onSearchEntryMerchandisesFormSubmit();
+  cleanPurchaseOrdersTrackingForm() {
+    this.filterPurchaseOrdersTrackingForm.reset();
+    this.onSearchPurchaseOrdersTrackingFormSubmit();
   }
 
   /**
    * Metodo que se lanza en los eventos de la tabla
-   * de entrada de mercancias
    */
-  loadEntryMerchandisesList(event: LazyLoadEvent) {
+  loadPurchaseOrdersTrackingList(event: LazyLoadEvent) {
     console.log(event);
     let pageNumber = 0;
     let rowsNumber = event.rows ? event.rows : 10;
@@ -82,17 +81,17 @@ export class EntryMerchandisesReportComponent implements OnInit {
       this.pagedRequest.filter = event.globalFilter;
     }
 
-    this.getEntryMerchandises();
+    this.getPurchaseOrdersTracking();
   }
 
   /**
-   * Obtiene todas las entrada de mercancias
+   * Obtiene todas las ordenes de compra
    */
-  getEntryMerchandises() {
+  getPurchaseOrdersTracking() {
     this.loading = true;
     console.log(this.pagedRequest)
 
-    let filterForm = this.filterEntryMerchandisesForm.value;
+    let filterForm = this.filterPurchaseOrdersTrackingForm.value;
 
     let params = '?page='+this.pagedRequest.page;
     params = params + '&limit='+this.pagedRequest.limit;
@@ -100,9 +99,9 @@ export class EntryMerchandisesReportComponent implements OnInit {
       params = params + '&filter='+filterForm.filter.trim();
     }
 
-    this.reportGeneratorService.getEntryMerchandises(params).subscribe(
+    this.reportGeneratorService.getPurchaseOrders(params).subscribe(
       (res: HttpResponse<GeneralResponse>) => {
-        this.entryMerchandises = res.body.data.dataLst;
+        this.purchaseOrdersTracking = res.body.data.dataLst;
         this.totalRecords = res.body.data.total;
         this.loading = false;
 
@@ -117,12 +116,12 @@ export class EntryMerchandisesReportComponent implements OnInit {
   /**
    * 
    */
-  onSearchEntryMerchandisesFormSubmit() {
+  onSearchPurchaseOrdersTrackingFormSubmit() {
     this.pagedRequest = new PagedRequest;
     this.pagedRequest.page = 1;
     this.pagedRequest.limit = 10;
 
-    this.getEntryMerchandises();
+    this.getPurchaseOrdersTracking();
   }
 
 }

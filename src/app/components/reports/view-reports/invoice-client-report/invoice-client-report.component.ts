@@ -9,6 +9,7 @@ import { GeneralResponse } from 'src/app/model/commons/response/general-response
 import { DialogService } from 'primeng/dynamicdialog';
 import { ReportGeneratorService } from 'src/app/services/report-generator/report-generator.service';
 import { IInvoiceClient } from 'src/app/model/reports/invoice-client';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-invoice-client-report',
@@ -39,6 +40,13 @@ export class InvoiceClientReportComponent implements OnInit {
   ascending!: boolean;
   ngbPaginationPage = 1;
 
+  /**
+   * Formulario de filtros
+   */
+  filterInvoiceClientForm = new FormGroup({
+    filter: new FormControl(null, Validators.nullValidator),
+  });
+
   constructor(protected reportGeneratorService: ReportGeneratorService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
@@ -47,6 +55,11 @@ export class InvoiceClientReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  cleanInvoiceClientForm() {
+    this.filterInvoiceClientForm.reset();
+    this.onSearchInvoiceClientFormSubmit();
   }
 
   /**
@@ -78,8 +91,13 @@ export class InvoiceClientReportComponent implements OnInit {
     this.loading = true;
     console.log(this.pagedRequest)
 
+    let filterForm = this.filterInvoiceClientForm.value;
+
     let params = '?page='+this.pagedRequest.page;
     params = params + '&limit='+this.pagedRequest.limit;
+    if(filterForm.filter) {
+      params = params + '&filter='+filterForm.filter.trim();
+    }
 
     this.reportGeneratorService.getInvoiceClient(params).subscribe(
       (res: HttpResponse<GeneralResponse>) => {
@@ -97,16 +115,12 @@ export class InvoiceClientReportComponent implements OnInit {
 
   /**
    * 
-   * @param filterValue 
    */
-  aplicarFiltro(filterValue) {
-    console.log(filterValue)
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase();
+  onSearchInvoiceClientFormSubmit() {
     this.pagedRequest = new PagedRequest;
     this.pagedRequest.page = 1;
     this.pagedRequest.limit = 10;
-    this.pagedRequest.filter = filterValue;
+
     this.getInvoiceClient();
   }
 

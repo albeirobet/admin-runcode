@@ -9,6 +9,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { ReportGeneratorService } from 'src/app/services/report-generator/report-generator.service';
 import { IPurchaseOrder } from 'src/app/model/reports/purchase-order';
 import { IPaymentExtra } from 'src/app/model/reports/payment-extra';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-payment-extra-report',
@@ -39,6 +40,13 @@ export class PaymentExtraReportComponent implements OnInit {
   ascending!: boolean;
   ngbPaginationPage = 1;
 
+  /**
+   * Formulario de filtros
+   */
+  filterPaymentExtraForm = new FormGroup({
+    filter: new FormControl(null, Validators.nullValidator),
+  });
+
   constructor(protected reportGeneratorService: ReportGeneratorService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
@@ -47,6 +55,11 @@ export class PaymentExtraReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  cleanPaymentExtraForm() {
+    this.filterPaymentExtraForm.reset();
+    this.onSearchPaymentExtraFormSubmit();
   }
 
   /**
@@ -77,8 +90,13 @@ export class PaymentExtraReportComponent implements OnInit {
     this.loading = true;
     console.log(this.pagedRequest)
 
+    let filterForm = this.filterPaymentExtraForm.value;
+
     let params = '?page='+this.pagedRequest.page;
     params = params + '&limit='+this.pagedRequest.limit;
+    if(filterForm.filter) {
+      params = params + '&filter='+filterForm.filter.trim();
+    }
 
     this.reportGeneratorService.getPaymentExtra(params).subscribe(
       (res: HttpResponse<GeneralResponse>) => {
@@ -96,16 +114,12 @@ export class PaymentExtraReportComponent implements OnInit {
 
   /**
    * 
-   * @param filterValue 
    */
-  aplicarFiltro(filterValue) {
-    console.log(filterValue)
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase();
+  onSearchPaymentExtraFormSubmit() {
     this.pagedRequest = new PagedRequest;
     this.pagedRequest.page = 1;
     this.pagedRequest.limit = 10;
-    this.pagedRequest.filter = filterValue;
+
     this.getPaymentExtra();
   }
 

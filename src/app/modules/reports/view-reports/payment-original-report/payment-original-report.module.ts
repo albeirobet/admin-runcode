@@ -9,6 +9,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { PaymentOriginalReportRoutingModule } from './payment-original-report-routing.module';
 import { PaymentOriginalReportComponent } from 'src/app/components/reports/view-reports/payment-original-report/payment-original-report.component';
+import { AccordionModule } from 'primeng/accordion';
 
 @NgModule({
   declarations: [PaymentOriginalReportComponent],
@@ -21,7 +22,8 @@ import { PaymentOriginalReportComponent } from 'src/app/components/reports/view-
     ButtonModule,
     InputTextModule,
     DynamicDialogModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    AccordionModule
   ],
   exports: [PaymentOriginalReportComponent]
 })

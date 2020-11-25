@@ -148,6 +148,15 @@ export class ReportGeneratorService {
       formData);
   }
 
+  uploadPurchaseOrderTracking(file: File): Observable<EntityResponseType> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return this.http.post<any>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'purchaseOrderTracking/load',
+      formData);
+  }
+
   counter(): Observable<GeneralResponse> {
     return this.http.get<any>(
       ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'counter');
@@ -279,6 +288,11 @@ export class ReportGeneratorService {
   countPaymentExtra(): Observable<GeneralResponse> {
     return this.http.get<any>(
       ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'paymentExtra/count');
+  }
+
+  deletePurchaseOrderTracking(): Observable<HttpResponse<{}>> {
+    return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'purchaseOrderTracking/delete',
+      { observe: 'response' });
   }
 
   deleteIva(): Observable<HttpResponse<{}>> {

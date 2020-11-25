@@ -9,6 +9,7 @@ import { GeneralResponse } from 'src/app/model/commons/response/general-response
 import { DialogService } from 'primeng/dynamicdialog';
 import { ReportGeneratorService } from 'src/app/services/report-generator/report-generator.service';
 import { IEntryMerchandiseExtra } from 'src/app/model/reports/entry-merchandise-extra';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-entry-merchandises-extra-report',
@@ -39,6 +40,13 @@ export class EntryMerchandisesExtraReportComponent implements OnInit {
   ascending!: boolean;
   ngbPaginationPage = 1;
 
+  /**
+   * Formulario de filtros
+   */
+  filterEntryMerchandisesExtraForm = new FormGroup({
+    filter: new FormControl(null, Validators.nullValidator),
+  });
+
   constructor(protected reportGeneratorService: ReportGeneratorService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
@@ -47,6 +55,11 @@ export class EntryMerchandisesExtraReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  cleanEntryMerchandisesExtraForm() {
+    this.filterEntryMerchandisesExtraForm.reset();
+    this.onSearchEntryMerchandisesExtraFormSubmit();
   }
 
   /**
@@ -78,8 +91,13 @@ export class EntryMerchandisesExtraReportComponent implements OnInit {
     this.loading = true;
     console.log(this.pagedRequest)
 
+    let filterForm = this.filterEntryMerchandisesExtraForm.value;
+
     let params = '?page='+this.pagedRequest.page;
     params = params + '&limit='+this.pagedRequest.limit;
+    if(filterForm.filter) {
+      params = params + '&filter='+filterForm.filter.trim();
+    }
 
     this.reportGeneratorService.getEntryMerchandisesExtra(params).subscribe(
       (res: HttpResponse<GeneralResponse>) => {
@@ -97,16 +115,12 @@ export class EntryMerchandisesExtraReportComponent implements OnInit {
 
   /**
    * 
-   * @param filterValue 
    */
-  aplicarFiltro(filterValue) {
-    console.log(filterValue)
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase();
+  onSearchEntryMerchandisesExtraFormSubmit() {
     this.pagedRequest = new PagedRequest;
     this.pagedRequest.page = 1;
     this.pagedRequest.limit = 10;
-    this.pagedRequest.filter = filterValue;
+
     this.getEntryMerchandisesExtra();
   }
 

@@ -9,6 +9,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { IvaReportRoutingModule } from './iva-report-routing.module';
 import { IvaReportComponent } from 'src/app/components/reports/view-reports/iva-report/iva-report.component';
+import { AccordionModule } from 'primeng/accordion';
 
 @NgModule({
   declarations: [IvaReportComponent],
@@ -21,7 +22,8 @@ import { IvaReportComponent } from 'src/app/components/reports/view-reports/iva-
     ButtonModule,
     InputTextModule,
     DynamicDialogModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    AccordionModule
   ],
   exports: [IvaReportComponent]
 })

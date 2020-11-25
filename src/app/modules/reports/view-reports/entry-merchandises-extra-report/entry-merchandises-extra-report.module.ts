@@ -9,6 +9,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { EntryMerchandisesExtraReportComponent } from 'src/app/components/reports/view-reports/entry-merchandises-extra-report/entry-merchandises-extra-report.component';
 import { EntryMerchandisesExtraReportRoutingModule } from './entry-merchandises-extra-report-routing.module';
+import { AccordionModule } from 'primeng/accordion';
 
 @NgModule({
   declarations: [EntryMerchandisesExtraReportComponent],
@@ -21,7 +22,8 @@ import { EntryMerchandisesExtraReportRoutingModule } from './entry-merchandises-
     ButtonModule,
     InputTextModule,
     DynamicDialogModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    AccordionModule
   ],
   exports: [EntryMerchandisesExtraReportComponent]
 })

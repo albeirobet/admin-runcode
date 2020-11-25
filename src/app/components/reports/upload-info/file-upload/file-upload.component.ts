@@ -105,6 +105,10 @@ export class FileUploadComponent implements OnInit {
         this.uploadPagosExtraFile(event.files[0]);
         break;
       }
+      case 'PC1': {
+        this.uploadPurchaseOrderTrackingFile(event.files[0]);
+        break;
+      }
       case 'IVA': {
         this.uploadIvaFile(event.files[0]);
         break;
@@ -319,6 +323,21 @@ export class FileUploadComponent implements OnInit {
   uploadPagosExtraFile(file) {
     this.loading = true;
     this.reportGeneratorService.uploadPaymentExtra(file).subscribe(
+      event => {
+        console.log('File is completely uploaded! ', event);
+        this.loading = false;
+        this.ref.close(true);
+      },
+      error => {
+        this.loading = false;
+        this.notificationService.error(error.error.apiError.messageUser);
+      }
+    );
+  }
+
+  uploadPurchaseOrderTrackingFile(file) {
+    this.loading = true;
+    this.reportGeneratorService.uploadPurchaseOrderTracking(file).subscribe(
       event => {
         console.log('File is completely uploaded! ', event);
         this.loading = false;

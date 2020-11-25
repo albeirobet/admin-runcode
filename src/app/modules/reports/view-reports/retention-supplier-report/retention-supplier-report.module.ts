@@ -10,6 +10,7 @@ import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { EntryMerchandisesReportComponent } from 'src/app/components/reports/view-reports/entry-merchandises-report/entry-merchandises-report.component';
 import { RetentionSupplierReportRoutingModule } from './retention-supplier-report-routing.module';
 import { RetentionSupplierReportComponent } from 'src/app/components/reports/view-reports/retention-supplier-report/retention-supplier-report.component';
+import { AccordionModule } from 'primeng/accordion';
 
 @NgModule({
   declarations: [RetentionSupplierReportComponent],
@@ -22,7 +23,8 @@ import { RetentionSupplierReportComponent } from 'src/app/components/reports/vie
     ButtonModule,
     InputTextModule,
     DynamicDialogModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    AccordionModule
   ],
   exports: [RetentionSupplierReportComponent]
 })

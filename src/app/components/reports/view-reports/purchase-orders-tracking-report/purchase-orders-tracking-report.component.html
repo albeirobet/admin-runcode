@@ -1,0 +1,85 @@
+<div class="alert alert-warning" id="no-result" *ngIf="purchaseOrdersTracking?.length === 0">
+    <span>No se encontraron pedidos de compra en el sistema</span>
+</div>
+<p-accordion>
+    <p-accordionTab header="Búsqueda Avanzada">
+        <form [formGroup]="filterPurchaseOrdersTrackingForm" (ngSubmit)="onSearchPurchaseOrdersTrackingFormSubmit()">
+            <div class="row">
+                <div class="form-group col-4">
+                    <label class="form-control-label" for="field_bg">Búsqueda General</label>
+                    <input type="text" class="form-control" name="name" id="field_bg"
+                        formControlName="filter" maxlength="50" size="50"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-4">
+                    <button pButton type="submit" label="Búsqueda" [disabled]="!filterPurchaseOrdersTrackingForm.valid"></button>
+                    <button pButton type="button" label="Limpiar" (click)="cleanPurchaseOrdersTrackingForm()"></button>
+                </div>
+            </div>
+        </form>
+    </p-accordionTab>
+</p-accordion>
+<p-table #dt [value]="purchaseOrdersTracking" [lazy]="true" (onLazyLoad)="loadPurchaseOrdersTrackingList($event)" [loading]="loading"
+    loadingIcon="loaderIcon" [scrollable]="true">
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+            <h5 class="p-m-0">{{titleComponent}}</h5>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+        </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th>ID Proveedor </th>
+            <th>Nombre Proveedor </th>
+            <th>ID Pedido Compra </th>
+            <th>Fecha Creación Pedido </th>
+            <th>Cantidad Solicitada (UM Base) </th>
+            <th>Precio Neto Moneda Empresa </th>
+            <th>Cantidad Entregada </th>
+            <th>Valor Entregado </th>
+            <th>Valor Entregado Moneda Empresa </th>
+            <th>Cantidad Facturada </th>
+            <th>Valor Facturado </th>
+            <th>Valor Facturado Moneda Empresa </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-purchaseordertrack>
+        <tr>
+            <td>{{purchaseordertrack.supplierId}}</td>
+            <td>{{purchaseordertrack.supplierName}}</td>
+            <td>{{purchaseordertrack.purchaseOrderId}}</td>
+            <td>{{purchaseordertrack.purchaseOrderDate}}</td>
+            <td>{{purchaseordertrack.requestedAmount}}</td>
+            <td>{{purchaseordertrack.netPriceCompanyCurrency}}</td>
+            <td>{{purchaseordertrack.deliveredQuantity}}</td>
+            <td>{{purchaseordertrack.deliveredValue}}</td>
+            <td>{{purchaseordertrack.deliveredValueCompanyCurrency}}</td>
+            <td>{{purchaseordertrack.invoicedAmount}}</td>
+            <td>{{purchaseordertrack.invoicedValue}}</td>
+            <td>{{purchaseordertrack.invoicedValueCompanyCurrency}}</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+    </ng-template>
+</p-table>
+<div style="position: relative;">
+    <p-paginator rows="10" (onLazyLoad)="loadPurchaseOrdersTrackingList($event)" (onPageChange)="loadPurchaseOrdersTrackingList($event)"
+        [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,20,30]"></p-paginator>
+    <span style="position: absolute; top:3px; right:5px; margin: 5px;">Total de Pedidos de Compra V1: {{totalRecords}} </span>
+</div>

@@ -8,6 +8,7 @@ import { GeneralResponse } from 'src/app/model/commons/response/general-response
 import { DialogService } from 'primeng/dynamicdialog';
 import { ReportGeneratorService } from 'src/app/services/report-generator/report-generator.service';
 import { IRetentionSupplier } from 'src/app/model/reports/retention-supplier';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-retention-supplier-report',
@@ -38,6 +39,13 @@ export class RetentionSupplierReportComponent implements OnInit {
   ascending!: boolean;
   ngbPaginationPage = 1;
 
+  /**
+   * Formulario de filtros
+   */
+  filterRetentionSupplierForm = new FormGroup({
+    filter: new FormControl(null, Validators.nullValidator),
+  });
+
   constructor(protected reportGeneratorService: ReportGeneratorService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
@@ -46,6 +54,11 @@ export class RetentionSupplierReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  cleanRetentionSupplierForm() {
+    this.filterRetentionSupplierForm.reset();
+    this.onSearchRetentionSupplierFormSubmit();
   }
 
   /**
@@ -77,8 +90,13 @@ export class RetentionSupplierReportComponent implements OnInit {
     this.loading = true;
     console.log(this.pagedRequest)
 
+    let filterForm = this.filterRetentionSupplierForm.value;
+
     let params = '?page='+this.pagedRequest.page;
     params = params + '&limit='+this.pagedRequest.limit;
+    if(filterForm.filter) {
+      params = params + '&filter='+filterForm.filter.trim();
+    }
 
     this.reportGeneratorService.getRetentionSupplier(params).subscribe(
       (res: HttpResponse<GeneralResponse>) => {
@@ -96,16 +114,12 @@ export class RetentionSupplierReportComponent implements OnInit {
 
   /**
    * 
-   * @param filterValue 
    */
-  aplicarFiltro(filterValue) {
-    console.log(filterValue)
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase();
+  onSearchRetentionSupplierFormSubmit() {
     this.pagedRequest = new PagedRequest;
     this.pagedRequest.page = 1;
     this.pagedRequest.limit = 10;
-    this.pagedRequest.filter = filterValue;
+
     this.getRetentionSupplier();
   }
 

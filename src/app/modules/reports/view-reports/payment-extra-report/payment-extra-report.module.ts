@@ -9,6 +9,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { PaymentExtraReportComponent } from 'src/app/components/reports/view-reports/payment-extra-report/payment-extra-report.component';
 import { PaymentExtraReportRoutingModule } from './payment-extra-report-routing.module';
+import { AccordionModule } from 'primeng/accordion';
 
 @NgModule({
   declarations: [PaymentExtraReportComponent],
@@ -21,7 +22,8 @@ import { PaymentExtraReportRoutingModule } from './payment-extra-report-routing.
     ButtonModule,
     InputTextModule,
     DynamicDialogModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    AccordionModule
   ],
   exports: [PaymentExtraReportComponent]
 })

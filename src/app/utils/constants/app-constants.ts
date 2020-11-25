@@ -67,6 +67,7 @@ export class AppConstants {
             { label: 'CUENTAS CONTABLES', value: 'CCO' },
             { label: 'DOCUMENTOS FACTURAS', value: 'DOF' },
             { label: 'PAGOS EXTRA', value: 'PEX' },
+            { label: 'PEDIDOS DE COMPRA V1', value: 'PC1' },
             { label: 'IVA', value: 'IVA' },
         ];
     }
