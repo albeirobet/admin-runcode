@@ -9,44 +9,44 @@
     <div class="form-group col-6">
         <label class="form-control-label" for="field_report">Tipo de Reporte</label>
         <div class="input-group">
-            <p-dropdown [options]="reportTypeList" [(ngModel)]="report" 
+            <p-dropdown [options]="reportTypeList" [(ngModel)]="report" optionLabel="name"
                 placeholder="Selecciona el tipo de Reporte"></p-dropdown>
         </div>
     </div>
 </div>
 
 <div class="card">
+    <!-- REPORT_DATOS_DOCUMENTOS_FACTURAS -->
+    <app-assistant-report *ngIf="report?.code === REPORT_DATOS_DOCUMENTOS_FACTURAS"></app-assistant-report>
     <!-- Clientes -->
-    <app-assistant-report *ngIf="report === 'DOF'"></app-assistant-report>
-    <!-- Clientes -->
-    <app-client-report *ngIf="report === 'CLI'"></app-client-report>
+    <app-client-report *ngIf="report?.code === REPORT_DATOS_CLIENTES"></app-client-report>
     <!-- Entrada de Mercancias Extra-->
-    <app-entry-merchandises-extra-report *ngIf="report === 'EDE'"></app-entry-merchandises-extra-report>
+    <app-entry-merchandises-extra-report *ngIf="report?.code === REPORT_SEGUIMIENTO_ENTRADA_MERCANCIAS"></app-entry-merchandises-extra-report>
     <!-- Entrada de Mercancias -->
-    <app-entry-merchandises-report *ngIf="report === 'EDM'"></app-entry-merchandises-report>
+    <app-entry-merchandises-report *ngIf="report?.code === REPORT_ENTRADA_MERCANCIAS"></app-entry-merchandises-report>
     <!-- Factura de ventas -->
-    <app-invoice-client-report *ngIf="report === 'FDV'"></app-invoice-client-report>
+    <app-invoice-client-report *ngIf="report?.code === REPORT_FACTURAS_VENTAS"></app-invoice-client-report>
     <!-- Factura de proveedores -->
-    <app-invoice-supplier-report *ngIf="report === 'FPR'"></app-invoice-supplier-report>
+    <app-invoice-supplier-report *ngIf="report?.code === REPORT_FACTURAS_PROVEEDORES"></app-invoice-supplier-report>
     <!-- IVA -->
-    <app-iva-report *ngIf="report === 'IVA'"></app-iva-report>
+    <app-iva-report *ngIf="report?.code === REPORT_DOCUMENTOS_IVA"></app-iva-report>
     <!-- Pagos y Deposito: Master report -->
-    <app-master-report *ngIf="report === 'CCO'"></app-master-report>
+    <app-master-report *ngIf="report?.code === REPORT_CUENTAS_CONTABLES_DOCUMENTOS"></app-master-report>
     <!-- Materiales -->
-    <app-materials-report *ngIf="report === 'MAT'"></app-materials-report>
+    <app-materials-report *ngIf="report?.code === REPORT_MATERIALES"></app-materials-report>
     <!-- Pago Proveedores -->
-    <app-payment-extra-report *ngIf="report === 'PEX'"></app-payment-extra-report>
+    <app-payment-extra-report *ngIf="report?.code === REPORT_EXTRA_PAGOS_DEPOSITOS"></app-payment-extra-report>
     <!-- Pago Proveedores -->
-    <app-payment-original-report *ngIf="report === 'PYD'"></app-payment-original-report>
+    <app-payment-original-report *ngIf="report?.code === REPORT_PAGOS_DEPOSITOS"></app-payment-original-report>
     <!-- Pedidos de Compra -->
-    <app-purchase-orders-report *ngIf="report === 'PDC'"></app-purchase-orders-report>
+    <app-purchase-orders-report *ngIf="report?.code === REPORT_PEDIDOS_COMPRA"></app-purchase-orders-report>
     <!-- Pedidos de Compra V1-->
-    <app-purchase-orders-tracking-report *ngIf="report === 'PC1'"></app-purchase-orders-tracking-report>
+    <app-purchase-orders-tracking-report *ngIf="report?.code === REPORT_SEGUIMIENTO_PEDIDOS_COMPRA"></app-purchase-orders-tracking-report>
     <!-- Retencion de proveedores -->
-    <app-retention-supplier-report *ngIf="report === 'RPR'"></app-retention-supplier-report>
+    <app-retention-supplier-report *ngIf="report?.code === REPORT_RETENCIONES_PROVEEDORES"></app-retention-supplier-report>
     <!-- Servicios -->
-    <app-service-report *ngIf="report === 'SER'"></app-service-report>
+    <app-service-report *ngIf="report?.code === REPORT_SERVICIOS"></app-service-report>
     <!-- Proveedores -->
-    <app-supplier-report *ngIf="report === 'PRO'"></app-supplier-report>
+    <app-supplier-report *ngIf="report?.code === REPORT_PROVEEDORES"></app-supplier-report>
 
 </div>  

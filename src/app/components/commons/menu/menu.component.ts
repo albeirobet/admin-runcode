@@ -44,6 +44,11 @@ export class MenuComponent implements OnInit {
     this.router.navigate(['/dashboard/reports']);
   }
 
+  genReports(): void {
+    this.activeURL = '/dashboard/download-reports';
+    this.router.navigate(['/dashboard/download-reports']);
+  }
+
   dashboard(): void {
     this.activeURL = '/dashboard';
     this.router.navigate(['/dashboard']);

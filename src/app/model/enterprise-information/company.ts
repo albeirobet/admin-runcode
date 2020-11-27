@@ -9,6 +9,8 @@ export interface ICompany {
     phoneNumber?: string;
     nameContactPerson?: string;
     logoUrl?: string;
+    reportsUploader?: any[];
+    reportsGenerate?: any[];
 }
 
 export class Company implements ICompany {
@@ -22,5 +24,7 @@ export class Company implements ICompany {
         public email?: string,
         public phoneNumber?: string,
         public nameContactPerson?: string,
-        public logoUrl?: string) {}
+        public logoUrl?: string,
+        public reportsUploader?: any[],
+        public reportsGenerate?: any[]) {}
 }

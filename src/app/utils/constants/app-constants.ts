@@ -48,28 +48,73 @@ export class AppConstants {
             { label: 'CE', value: 'CEDULA EXTRANJERIA' }];
     }
 
-    /**
-     * Lista de tipos de reportes
-     */
-    public static get REPORTS_TYPE_LIST(): SelectItem[] {
-        return [
-            { label: 'CLIENTES', value: 'CLI' },
-            { label: 'PROVEEDORES', value: 'PRO' },
-            { label: 'SERVICIOS', value: 'SER' },
-            { label: 'MATERIALES', value: 'MAT' },
-            { label: 'PEDIDOS DE COMPRA', value: 'PDC' },
-            { label: 'ENTRADA DE MERCANCIAS', value: 'EDM' },
-            { label: 'ENTRADA DE MERCANCIAS EXTRA', value: 'EDE' },
-            { label: 'FACTURA PROVEEDORES', value: 'FPR' },
-            { label: 'RETENCIONES PROVEEDORES', value: 'RPR' },
-            { label: 'FACTURAS DE VENTAS', value: 'FDV' },
-            { label: 'PAGOS Y DEPOSITOS', value: 'PYD' },
-            { label: 'CUENTAS CONTABLES', value: 'CCO' },
-            { label: 'DOCUMENTOS FACTURAS', value: 'DOF' },
-            { label: 'PAGOS EXTRA', value: 'PEX' },
-            { label: 'PEDIDOS DE COMPRA V1', value: 'PC1' },
-            { label: 'IVA', value: 'IVA' },
-        ];
+    public static get REPORT_DATOS_DOCUMENTOS_FACTURAS(): string {
+        return 'ASITM';
     }
+
+    public static get REPORT_DATOS_CLIENTES(): string {
+        return 'CLITM';
+    }
+
+    public static get REPORT_SEGUIMIENTO_ENTRADA_MERCANCIAS(): string {
+        return 'EMETM';
+    }
+
+    public static get REPORT_ENTRADA_MERCANCIAS(): string {
+        return 'EMSTM';
+    }
+
+    public static get REPORT_FACTURAS_VENTAS(): string {
+        return 'INCTM';
+    }
+
+    public static get REPORT_FACTURAS_PROVEEDORES(): string {
+        return 'INSTM';
+    }
+
+    public static get REPORT_DOCUMENTOS_IVA(): string {
+        return 'IVATM';
+    }
+
+    public static get REPORT_CUENTAS_CONTABLES_DOCUMENTOS(): string {
+        return 'MASTM';
+    }
+
+    public static get REPORT_MATERIALES(): string {
+        return 'MATTM';
+    }
+
+    public static get REPORT_EXTRA_PAGOS_DEPOSITOS(): string {
+        return 'PAETM';
+    }
+
+    public static get REPORT_PAGOS_DEPOSITOS(): string {
+        return 'PAOTM';
+    }
+
+    public static get REPORT_PEDIDOS_COMPRA(): string {
+        return 'PORTM';
+    }
+
+    public static get REPORT_SEGUIMIENTO_PEDIDOS_COMPRA(): string {
+        return 'POTTM';
+    }
+
+    public static get REPORT_RETENCIONES_PROVEEDORES(): string {
+        return 'RESTM';
+    }
+
+    public static get REPORT_SERVICIOS(): string {
+        return 'SERTM';
+    }
+
+    public static get REPORT_PROVEEDORES(): string {
+        return 'SUPTM';
+    }
+
+    public static get REPORT_GEN_SEGUIMIENTO_ENTRADA_SERVICIOS(): string {
+        return 'EMEGR';
+    }
+
 
 }

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { GeneralResponse } from 'src/app/model/commons/response/general-response';
 import { ReportGeneratorConstants } from 'src/app/utils/constants/report-generator.constants';
 import { FilterRequest } from 'src/app/model/commons/request/filter-request';
+import { IReportUploader } from 'src/app/model/reports/report-uploader';
 
 type EntityResponseType = HttpResponse<GeneralResponse>;
 type EntityArrayResponseType = HttpResponse<GeneralResponse>;
@@ -157,19 +158,9 @@ export class ReportGeneratorService {
       formData);
   }
 
-  counter(): Observable<GeneralResponse> {
-    return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'counter');
-  }
-
   deleteClients(): Observable<HttpResponse<{}>> {
     return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'clients/delete',
       { observe: 'response' });
-  }
-
-  countClients(): Observable<GeneralResponse> {
-    return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'clients/count');
   }
 
   deleteSuppliers(): Observable<HttpResponse<{}>> {
@@ -177,117 +168,64 @@ export class ReportGeneratorService {
       { observe: 'response' });
   }
 
-  countSuppliers(): Observable<GeneralResponse> {
-    return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'suppliers/count');
-  }
-
   deleteServices(): Observable<HttpResponse<{}>> {
     return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'services/delete',
       { observe: 'response' });
-  }
-  countServices(): Observable<GeneralResponse> {
-    return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'services/count');
   }
 
   deleteMaterials(): Observable<HttpResponse<{}>> {
     return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'materials/delete',
       { observe: 'response' });
   }
-  countMaterials(): Observable<GeneralResponse> {
-    return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'materials/count');
-  }
 
   deletePurchaseOrders(): Observable<HttpResponse<{}>> {
     return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'purchaseOrders/delete',
       { observe: 'response' });
-  }
-  countPurchaseOrders(): Observable<GeneralResponse> {
-    return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'purchaseOrders/count');
   }
 
   deleteEntryMerchandises(): Observable<HttpResponse<{}>> {
     return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'entryMerchandises/delete',
       { observe: 'response' });
   }
-  countEntryMerchandises(): Observable<GeneralResponse> {
-    return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'entryMerchandises/count');
-  }
 
   deleteEntryMerchandiseExtra(): Observable<HttpResponse<{}>> {
     return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'entryMerchandiseExtra/delete',
       { observe: 'response' });
-  }
-  countEntryMerchandiseExtra(): Observable<GeneralResponse> {
-    return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'entryMerchandiseExtra/count');
   }
 
   deleteInvoiceSupplier(): Observable<HttpResponse<{}>> {
     return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'invoiceSupplier/delete',
       { observe: 'response' });
   }
-  countInvoiceSupplier(): Observable<GeneralResponse> {
-    return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'invoiceSupplier/count');
-  }
 
   deleteRetentionSupplier(): Observable<HttpResponse<{}>> {
     return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'retentionSupplier/delete',
       { observe: 'response' });
-  }
-  countRetentionSupplier(): Observable<GeneralResponse> {
-    return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'retentionSupplier/count');
   }
 
   deleteInvoiceClient(): Observable<HttpResponse<{}>> {
     return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'invoiceClient/delete',
       { observe: 'response' });
   }
-  countInvoiceClient(): Observable<GeneralResponse> {
-    return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'invoiceClient/count');
-  }
 
   deleteMasterReport(): Observable<HttpResponse<{}>> {
     return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'masterReport/delete',
       { observe: 'response' });
-  }
-  countMasterReport(): Observable<GeneralResponse> {
-    return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'masterReport/count');
   }
 
   deleteAssistantReport(): Observable<HttpResponse<{}>> {
     return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'assistantReport/delete',
       { observe: 'response' });
   }
-  countAssistantReport(): Observable<GeneralResponse> {
-    return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'assistantReport/count');
-  }
 
   deletePaymentOriginal(): Observable<HttpResponse<{}>> {
     return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'paymentOriginal/delete',
       { observe: 'response' });
   }
-  countPaymentOriginal(): Observable<GeneralResponse> {
-    return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'paymentOriginal/count');
-  }
 
   deletePaymentExtra(): Observable<HttpResponse<{}>> {
     return this.http.delete(ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'paymentExtra/delete',
       { observe: 'response' });
-  }
-  countPaymentExtra(): Observable<GeneralResponse> {
-    return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'paymentExtra/count');
   }
 
   deletePurchaseOrderTracking(): Observable<HttpResponse<{}>> {
@@ -387,6 +325,69 @@ export class ReportGeneratorService {
   getMasterReport(params): Observable<any> {
     return this.http.get<any>(
       ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'masterReport/all' + params,
+      { observe: 'response' });
+  }
+
+  getReportEnable(): Observable<any> {
+    return this.http.get<any>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'reportEnable/all',
+      { observe: 'response' });
+  }
+
+  getReportUploader(): Observable<any> {
+    return this.http.get<any>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'reportUploader/all',
+      { observe: 'response' });
+  }
+
+  getReportCreator(): Observable<any> {
+    return this.http.get<any>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'reportCreator/all',
+      { observe: 'response' });
+  }
+
+  createReportUploader(rupl: IReportUploader[]): Observable<GeneralResponse> {
+    return this.http.post<GeneralResponse>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'reportUploader/create', 
+      rupl);
+  }
+
+  createReportCreator(rupl: IReportUploader[]): Observable<GeneralResponse> {
+    return this.http.post<GeneralResponse>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'reportCreator/create', 
+      rupl);
+  }
+
+  deleteReportUploader(rupl: IReportUploader[]): Observable<GeneralResponse> {
+    return this.http.post<GeneralResponse>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'reportUploader/deleteReport', 
+      rupl);
+  }
+
+  deleteReportCreator(rupl: IReportUploader[]): Observable<GeneralResponse> {
+    return this.http.post<GeneralResponse>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'reportCreator/deleteReport', 
+      rupl);
+  }
+
+  getReportInfo(code: string): Observable<any> {
+    return this.http.get<any>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 
+        'reportEnable/getReportByCode/'+code,
+      { observe: 'response' });
+  }
+
+  generateEntryMerchandiseAndServicesReport(): Observable<any> {
+    return this.http.get<any>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 
+        'reportCreator/generateEntryMerchandiseAndServicesReport',
+      { observe: 'response' });
+  }
+
+  downloadEntryMerchandiseAndServicesReport(): Observable<any> {
+    return this.http.get<any>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 
+        'reportCreator/generateEntryMerchandiseAndServicesReport',
       { observe: 'response' });
   }
 

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { NotificationService } from 'src/app/services/common/notification.service';
 import { ReportGeneratorService } from 'src/app/services/report-generator/report-generator.service';
+import { AppConstants } from 'src/app/utils/constants/app-constants';
 
 @Component({
   selector: 'app-file-upload',
@@ -49,67 +50,67 @@ export class FileUploadComponent implements OnInit {
     this.loading = true;
     console.log(event.files[0])
     switch (this.info.code) {
-      case 'CLI': {
+      case AppConstants.REPORT_DATOS_CLIENTES: {
         this.uploadCientesFile(event.files[0]);
         break;
       }
-      case 'PRO': {
+      case AppConstants.REPORT_PROVEEDORES: {
         this.uploadProveedorFile(event.files[0]);
         break;
       }
-      case 'SER': {
+      case AppConstants.REPORT_SERVICIOS: {
         this.uploadServiciosFile(event.files[0]);
         break;
       }
-      case 'MAT': {
+      case AppConstants.REPORT_MATERIALES: {
         this.uploadMaterialesFile(event.files[0]);
         break;
       }
-      case 'PDC': {
+      case AppConstants.REPORT_PEDIDOS_COMPRA: {
         this.uploadPedidosCompraFile(event.files[0]);
         break;
       }
-      case 'EDM': {
+      case AppConstants.REPORT_ENTRADA_MERCANCIAS: {
         this.uploadEntradaMercanciasFile(event.files[0]);
         break;
       }
-      case 'EDE': {
+      case AppConstants.REPORT_SEGUIMIENTO_ENTRADA_MERCANCIAS: {
         this.uploadEntradaMercanciasExtraFile(event.files[0]);
         break;
       }
-      case 'FPR': {
+      case AppConstants.REPORT_FACTURAS_PROVEEDORES: {
         this.uploadFacturaProveedoresFile(event.files[0]);
         break;
       }
-      case 'RPR': {
+      case AppConstants.REPORT_RETENCIONES_PROVEEDORES: {
         this.uploadRetencionesProveedoresFile(event.files[0]);
         break;
       }
-      case 'FDV': {
+      case AppConstants.REPORT_FACTURAS_VENTAS: {
         this.uploadFacturasVentasFile(event.files[0]);
         break;
       }
-      case 'PYD': {
+      case AppConstants.REPORT_PAGOS_DEPOSITOS: {
         this.uploadPagosyDepositosFile(event.files[0]);
         break;
       }
-      case 'CCO': {
+      case AppConstants.REPORT_CUENTAS_CONTABLES_DOCUMENTOS: {
         this.uploadCuentasContablesFile(event.files[0]);
         break;
       }
-      case 'DOF': {
+      case AppConstants.REPORT_DATOS_DOCUMENTOS_FACTURAS: {
         this.uploadDocumentosFacturaFile(event.files[0]);
         break;
       }
-      case 'PEX': {
+      case AppConstants.REPORT_EXTRA_PAGOS_DEPOSITOS: {
         this.uploadPagosExtraFile(event.files[0]);
         break;
       }
-      case 'PC1': {
+      case AppConstants.REPORT_SEGUIMIENTO_PEDIDOS_COMPRA: {
         this.uploadPurchaseOrderTrackingFile(event.files[0]);
         break;
       }
-      case 'IVA': {
+      case AppConstants.REPORT_DOCUMENTOS_IVA: {
         this.uploadIvaFile(event.files[0]);
         break;
       }

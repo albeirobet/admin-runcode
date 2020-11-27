@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../shared/shared.module';
 import {PaginatorModule} from 'primeng/paginator';
 import {TableModule} from 'primeng/table';
 import {ToolbarModule} from 'primeng/toolbar';
@@ -7,28 +6,29 @@ import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
 import {DynamicDialogModule} from 'primeng/dynamicdialog';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
-import { UploadInfoRoutingModule } from './upload-info-routing.module';
-import { UploadInfoComponent } from 'src/app/components/reports/upload-info/upload-info.component';
-import { FileUploadInfoModule } from './file-upload-info.module';
+import { DownloadReportsRoutingModule } from './download-reports-routing.module';
 import {ProgressBarModule} from 'primeng/progressbar';
+import { SharedModule } from '../../shared/shared.module';
+import { DownloadReportsComponent } from 'src/app/components/reports/download-reports/download-reports.component';
+import {TooltipModule} from 'primeng/tooltip';
 import {DialogModule} from 'primeng/dialog';
 
 @NgModule({
-  declarations: [UploadInfoComponent],
+  declarations: [DownloadReportsComponent],
   imports: [
     SharedModule,
-    UploadInfoRoutingModule,
+    DownloadReportsRoutingModule,
     PaginatorModule,
     TableModule,
     ToolbarModule,
     ButtonModule,
     InputTextModule,
     DynamicDialogModule,
-    FileUploadInfoModule,
     ConfirmDialogModule,
     ProgressBarModule,
+    TooltipModule,
     DialogModule
   ],
-  exports: [UploadInfoComponent]
+  exports: [DownloadReportsComponent]
 })
-export class UploadInfoModule { }
+export class DownloadReportsModule { }

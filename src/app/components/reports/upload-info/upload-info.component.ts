@@ -7,6 +7,8 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
 import { ReportGeneratorService } from 'src/app/services/report-generator/report-generator.service';
 import { HttpResponse } from '@angular/common/http';
 import { GeneralResponse } from 'src/app/model/commons/response/general-response';
+import { IReportUploader } from 'src/app/model/reports/report-uploader';
+import { AppConstants } from 'src/app/utils/constants/app-constants';
 
 type EntityResponseType = HttpResponse<GeneralResponse>;
 
@@ -24,7 +26,10 @@ export class UploadInfoComponent implements OnInit {
   loading: boolean = true;
 
   // --- Lista de tipos de informacion
-  infoList?: any[];
+  infoList?: IReportUploader[];
+
+  reportInfo: any = null;
+  displayReportInfo: boolean = false;
 
   constructor(
     protected activatedRoute: ActivatedRoute,
@@ -35,47 +40,93 @@ export class UploadInfoComponent implements OnInit {
     protected reportGeneratorService: ReportGeneratorService
   ) {
   }
-
+  
   ngOnInit(): void {
-    this.loadInfo();
+    this.getReportUploader(false);
   }
 
-  async loadInfo() {
+  ngOnDestroy(): void {
+    if(this.interval) {
+      this.stopTimer();
+    }
+  }
+
+  interval = null;
+  startTimer() {
+    this.interval = setInterval(() => {
+      this.getReportUploader(true);
+    },5000);
+  }
+
+  stopTimer() {
+    clearInterval(this.interval);
+    this.interval = null;
+  }
+
+  getReportInfo(info) {
+    this.loading = true;
+    this.reportGeneratorService.getReportInfo(info.code).subscribe(
+      data => {
+        console.log(data.body.data)
+        this.reportInfo = data.body.data;
+        this.displayReportInfo = true;
+        this.loading = false;
+      },
+      error => {
+        this.loading = false;
+        this.notificationService.error(error.error.apiError.messageUser);
+      }
+    );
+  }
+
+  /**
+   * Obtiene la configuracion de reportes por empresa
+   */
+  getReportUploader(validate) {
     this.loading = true;
     this.infoList = [];
-
-    let counter = await this.counter();
-    console.log(counter);
-
-    this.infoList.push({ type: 'Clientes', code: 'CLI', numReg: counter.find(data => data.code === 'CLI').counter, id: 1 });
-    this.infoList.push({ type: 'Proveedores', code: 'PRO', numReg: counter.find(data => data.code === 'PRO').counter, id: 2 });
-    this.infoList.push({ type: 'Servicios', code: 'SER', numReg: counter.find(data => data.code === 'SER').counter, id: 3 });
-    this.infoList.push({ type: 'Materiales', code: 'MAT', numReg: counter.find(data => data.code === 'MAT').counter, id: 4 });
-    this.infoList.push({ type: 'Pedidos de Compra', code: 'PDC', numReg: counter.find(data => data.code === 'PDC').counter, id: 5 });
-    this.infoList.push({ type: 'Entrada de Mercancias', code: 'EDM', numReg: counter.find(data => data.code === 'EDM').counter, id: 6 });
-    this.infoList.push({ type: 'Factura Proveedores', code: 'FPR', numReg: counter.find(data => data.code === 'FPR').counter, id: 7 });
-    this.infoList.push({ type: 'Retenciones Proveedores', code: 'RPR', numReg: counter.find(data => data.code === 'RPR').counter, id: 8 });
-    this.infoList.push({ type: 'Facturas de Ventas', code: 'FDV', numReg: counter.find(data => data.code === 'FDV').counter, id: 9 });
-    this.infoList.push({ type: 'Pagos y Depositos', code: 'PYD', numReg: counter.find(data => data.code === 'PYD').counter, id: 10 });
-    this.infoList.push({ type: 'Cuentas Contables', code: 'CCO', numReg: counter.find(data => data.code === 'CCO').counter, id: 11 });
-    this.infoList.push({ type: 'Documentos Facturas', code: 'DOF', numReg: counter.find(data => data.code === 'DOF').counter, id: 12 });
-    this.infoList.push({ type: 'Pagos Extra', code: 'PEX', numReg: counter.find(data => data.code === 'PEX').counter, id: 13 });
-    this.infoList.push({ type: 'Iva', code: 'IVA', numReg: counter.find(data => data.code === 'IVA').counter, id: 14 });
-    this.infoList.push({ type: 'Pedidos de Compra v1', code: 'PC1', numReg: counter.find(data => data.code === 'PC1').counter, id: 15 });
-    this.infoList.push({ type: 'Entrada de Mercancias Extra', code: 'EDE', numReg: counter.find(data => data.code === 'EDE').counter, id: 16});
-    this.loading = false;
+    this.reportGeneratorService.getReportUploader().subscribe(
+      (res: HttpResponse<GeneralResponse>) => {
+        console.log(res)
+        this.infoList = res.body.data;
+        let inprocess = false;
+        this.loading = false;
+        if(validate) {
+          this.infoList.forEach(element => {
+            if(element.percentageCompletition &&
+                parseInt(element.percentageCompletition) > 0 &&
+                parseInt(element.percentageCompletition) < 100) {
+                  inprocess = true;
+                }
+          });
+          if(inprocess && !this.interval) {
+            setTimeout(() => {
+              this.startTimer();
+            },5000);
+          } else {
+            if(!inprocess && this.interval) {
+              this.stopTimer();
+            }
+          }
+        }
+      },
+      error => {
+        console.dir(error.error);
+        this.loading = false;
+      }
+    );
   }
 
   uploadFile(info: any): void {
     const ref = this.dialogService.open(FileUploadComponent, {
       data: info,
-      header: 'Cargar Información [' + info.type + ']',
+      header: 'Cargar Información [' + info.name + ']',
       width: '50%'
     });
     ref.onClose.subscribe((response: Boolean) => {
       if (response) {
         this.notificationService.success('Se ha iniciado la carga de información, por favor valide en un momento su información');
-        this.loadInfo();
+        this.getReportUploader(true);
       }
     });
   }
@@ -83,7 +134,7 @@ export class UploadInfoComponent implements OnInit {
   confirmDeleteData(info) {
     console.log(info)
     this.confirmationService.confirm({
-      message: 'Está seguro de eliminar la información de [' + info.type + '] ?',
+      message: 'Está seguro de eliminar la información de [' + info.name + '] ?',
       accept: () => {
         this.deleteData(info);
       }
@@ -96,67 +147,67 @@ export class UploadInfoComponent implements OnInit {
   deleteData(info) {
     this.loading = true;
     switch (info.code) {
-      case 'CLI': {
+      case AppConstants.REPORT_DATOS_CLIENTES: {
         this.deleteClients();
         break;
       }
-      case 'PRO': {
+      case AppConstants.REPORT_PROVEEDORES: {
         this.deleteSuppliers();
         break;
       }
-      case 'SER': {
+      case AppConstants.REPORT_SERVICIOS: {
         this.deleteServices();
         break;
       }
-      case 'MAT': {
+      case AppConstants.REPORT_MATERIALES: {
         this.deleteMaterials();
         break;
       }
-      case 'PDC': {
+      case AppConstants.REPORT_PEDIDOS_COMPRA: {
         this.deletePurchaseOrders();
         break;
       }
-      case 'EDM': {
+      case AppConstants.REPORT_ENTRADA_MERCANCIAS: {
         this.deleteEntryMerchandises();
         break;
       }
-      case 'EDE': {
+      case AppConstants.REPORT_SEGUIMIENTO_ENTRADA_MERCANCIAS: {
         this.deleteEntryMerchandisesExtra();
         break;
       }
-      case 'FPR': {
+      case AppConstants.REPORT_FACTURAS_PROVEEDORES: {
         this.deleteInvoiceSupplier();
         break;
       }
-      case 'RPR': {
+      case AppConstants.REPORT_RETENCIONES_PROVEEDORES: {
         this.deleteRetentionSupplier();
         break;
       }
-      case 'FDV': {
+      case AppConstants.REPORT_FACTURAS_VENTAS: {
         this.deleteInvoiceClient();
         break;
       }
-      case 'PYD': {
+      case AppConstants.REPORT_PAGOS_DEPOSITOS: {
         this.deletePaymentOriginal();
         break;
       }
-      case 'CCO': {
+      case AppConstants.REPORT_CUENTAS_CONTABLES_DOCUMENTOS: {
         this.deleteMasterReport();
         break;
       }
-      case 'DOF': {
+      case AppConstants.REPORT_DATOS_DOCUMENTOS_FACTURAS: {
         this.deleteAssistantReport();
         break;
       }
-      case 'PEX': {
+      case AppConstants.REPORT_EXTRA_PAGOS_DEPOSITOS: {
         this.deletePaymentExtra();
         break;
       }
-      case 'PC1': {
+      case AppConstants.REPORT_SEGUIMIENTO_PEDIDOS_COMPRA: {
         this.deletePurchaseOrderTracking();
         break;
       }
-      case 'IVA': {
+      case AppConstants.REPORT_DOCUMENTOS_IVA: {
         this.deleteIvaData();
         break;
       }
@@ -170,7 +221,7 @@ export class UploadInfoComponent implements OnInit {
     this.reportGeneratorService.deleteClients().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.loadInfo();
+        this.getReportUploader(true);
       },
       error => {
         console.dir(error.error);
@@ -178,25 +229,13 @@ export class UploadInfoComponent implements OnInit {
         this.loading = false;
       }
     );
-  }
-
-  async counter() {
-    const value = <GeneralResponse>await this.reportGeneratorService.counter().toPromise();
-    console.log(value)
-    return value.data;
-  }
-
-  async countClients() {
-    const value = <GeneralResponse>await this.reportGeneratorService.countClients().toPromise();
-    console.log(value)
-    return value.data;
   }
 
   deleteSuppliers() {
     this.reportGeneratorService.deleteSuppliers().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.loadInfo();
+        this.getReportUploader(true);
       },
       error => {
         console.dir(error.error);
@@ -204,18 +243,13 @@ export class UploadInfoComponent implements OnInit {
         this.loading = false;
       }
     );
-  }
-
-  async countSuppliers() {
-    const value = <GeneralResponse>await this.reportGeneratorService.countSuppliers().toPromise();
-    return value.data;
   }
 
   deleteServices() {
     this.reportGeneratorService.deleteServices().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.loadInfo();
+        this.getReportUploader(true);
       },
       error => {
         console.dir(error.error);
@@ -223,18 +257,13 @@ export class UploadInfoComponent implements OnInit {
         this.loading = false;
       }
     );
-  }
-
-  async countServices() {
-    const value = <GeneralResponse>await this.reportGeneratorService.countServices().toPromise();
-    return value.data;
   }
 
   deleteMaterials() {
     this.reportGeneratorService.deleteMaterials().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.loadInfo();
+        this.getReportUploader(true);
       },
       error => {
         console.dir(error.error);
@@ -242,17 +271,13 @@ export class UploadInfoComponent implements OnInit {
         this.loading = false;
       }
     );
-  }
-  async countMaterials() {
-    const value = <GeneralResponse>await this.reportGeneratorService.countMaterials().toPromise();
-    return value.data;
   }
 
   deletePurchaseOrders() {
     this.reportGeneratorService.deletePurchaseOrders().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.loadInfo();
+        this.getReportUploader(true);
       },
       error => {
         console.dir(error.error);
@@ -260,17 +285,13 @@ export class UploadInfoComponent implements OnInit {
         this.loading = false;
       }
     );
-  }
-  async countPurchaseOrders() {
-    const value = <GeneralResponse>await this.reportGeneratorService.countPurchaseOrders().toPromise();
-    return value.data;
   }
 
   deleteEntryMerchandises() {
     this.reportGeneratorService.deleteEntryMerchandises().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.loadInfo();
+        this.getReportUploader(true);
       },
       error => {
         console.dir(error.error);
@@ -278,17 +299,13 @@ export class UploadInfoComponent implements OnInit {
         this.loading = false;
       }
     );
-  }
-  async countEntryMerchandises() {
-    const value = <GeneralResponse>await this.reportGeneratorService.countEntryMerchandises().toPromise();
-    return value.data;
   }
 
   deleteEntryMerchandisesExtra() {
     this.reportGeneratorService.deleteEntryMerchandiseExtra().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.loadInfo();
+        this.getReportUploader(true);
       },
       error => {
         console.dir(error.error);
@@ -296,17 +313,13 @@ export class UploadInfoComponent implements OnInit {
         this.loading = false;
       }
     );
-  }
-  async countEntryMerchandiseExtra() {
-    const value = <GeneralResponse>await this.reportGeneratorService.countEntryMerchandiseExtra().toPromise();
-    return value.data;
   }
 
   deleteInvoiceSupplier() {
     this.reportGeneratorService.deleteInvoiceSupplier().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.loadInfo();
+        this.getReportUploader(true);
       },
       error => {
         console.dir(error.error);
@@ -314,17 +327,13 @@ export class UploadInfoComponent implements OnInit {
         this.loading = false;
       }
     );
-  }
-  async countInvoiceSupplier() {
-    const value = <GeneralResponse>await this.reportGeneratorService.countInvoiceSupplier().toPromise();
-    return value.data;
   }
 
   deleteRetentionSupplier() {
     this.reportGeneratorService.deleteRetentionSupplier().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.loadInfo();
+        this.getReportUploader(true);
       },
       error => {
         console.dir(error.error);
@@ -332,17 +341,13 @@ export class UploadInfoComponent implements OnInit {
         this.loading = false;
       }
     );
-  }
-  async countRetentionSupplier() {
-    const value = <GeneralResponse>await this.reportGeneratorService.countRetentionSupplier().toPromise();
-    return value.data;
   }
 
   deleteInvoiceClient() {
     this.reportGeneratorService.deleteInvoiceClient().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.loadInfo();
+        this.getReportUploader(true);
       },
       error => {
         console.dir(error.error);
@@ -350,17 +355,13 @@ export class UploadInfoComponent implements OnInit {
         this.loading = false;
       }
     );
-  }
-  async countInvoiceClient() {
-    const value = <GeneralResponse>await this.reportGeneratorService.countInvoiceClient().toPromise();
-    return value.data;
   }
 
   deleteMasterReport() {
     this.reportGeneratorService.deleteMasterReport().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.loadInfo();
+        this.getReportUploader(true);
       },
       error => {
         console.dir(error.error);
@@ -368,17 +369,13 @@ export class UploadInfoComponent implements OnInit {
         this.loading = false;
       }
     );
-  }
-  async countMasterReport() {
-    const value = <GeneralResponse>await this.reportGeneratorService.countMasterReport().toPromise();
-    return value.data;
   }
 
   deleteAssistantReport() {
     this.reportGeneratorService.deleteAssistantReport().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.loadInfo();
+        this.getReportUploader(true);
       },
       error => {
         console.dir(error.error);
@@ -387,17 +384,12 @@ export class UploadInfoComponent implements OnInit {
       }
     );
   }
-  async countAssistantReport() {
-    const value = <GeneralResponse>await this.reportGeneratorService.countAssistantReport().toPromise();
-    return value.data;
-  }
-
 
   deletePaymentOriginal() {
     this.reportGeneratorService.deletePaymentOriginal().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.loadInfo();
+        this.getReportUploader(true);
       },
       error => {
         console.dir(error.error);
@@ -406,17 +398,12 @@ export class UploadInfoComponent implements OnInit {
       }
     );
   }
-  async countPaymentOriginal() {
-    const value = <GeneralResponse>await this.reportGeneratorService.countPaymentOriginal().toPromise();
-    return value.data;
-  }
-
 
   deletePaymentExtra() {
     this.reportGeneratorService.deletePaymentExtra().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.loadInfo();
+        this.getReportUploader(true);
       },
       error => {
         console.dir(error.error);
@@ -424,17 +411,13 @@ export class UploadInfoComponent implements OnInit {
         this.loading = false;
       }
     );
-  }
-  async countPaymentExtra() {
-    const value = <GeneralResponse>await this.reportGeneratorService.countPaymentExtra().toPromise();
-    return value.data;
   }
 
   deleteIvaData() {
     this.reportGeneratorService.deleteIva().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.loadInfo();
+        this.getReportUploader(true);
       },
       error => {
         console.dir(error.error);
@@ -448,7 +431,7 @@ export class UploadInfoComponent implements OnInit {
     this.reportGeneratorService.deletePurchaseOrderTracking().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.loadInfo();
+        this.getReportUploader(true);
       },
       error => {
         console.dir(error.error);

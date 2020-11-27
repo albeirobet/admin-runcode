@@ -131,7 +131,7 @@ export class ListCompaniesComponent implements OnInit {
     ref.onClose.subscribe((response: Boolean) => {
       if (response) {
         this.notificationService.success('Empresa creado correctamente.');
-        this.reloadCompanies();
+        this.getAllCompaniesTable();
       }
     });
   }
@@ -149,7 +149,7 @@ export class ListCompaniesComponent implements OnInit {
     ref.onClose.subscribe((response: Boolean) => {
       if (response) {
         this.notificationService.success('Empresa actualizada correctamente.');
-        this.reloadCompanies();
+        this.getAllCompaniesTable();
       }
     });
   }
@@ -162,7 +162,7 @@ export class ListCompaniesComponent implements OnInit {
     this.companyDataService.delete(companySelected._id).subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Empresa eliminada correctamente.');
-        this.reloadCompanies();
+        this.getAllCompaniesTable();
         this.loading = false;
       },
       error => {
@@ -181,13 +181,6 @@ export class ListCompaniesComponent implements OnInit {
             this.deleteCompany(companySelected);
         }
     });
-  }
-
-  reloadCompanies(): void {
-    this.pagedRequest = new PagedRequest;
-    this.pagedRequest.page = 1;
-    this.pagedRequest.limit = 10;
-    this.getAllCompaniesTable();
   }
 
 }

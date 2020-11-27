@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IUser } from 'src/app/model/access-control/user';
 import { AccessControlConstants } from 'src/app/utils/constants/access-control.constants';
 import { GeneralResponse } from 'src/app/model/commons/response/general-response';
-import { UpdatePassRequest } from 'src/app/model/access-control/update-pass-request';
 import { EnterpriseInformationConstants } from 'src/app/utils/constants/enterprise-information.constants';
 import { ICompany } from 'src/app/model/enterprise-information/company';
 
@@ -16,9 +14,10 @@ export class CompanyDataService {
 
   constructor(protected http: HttpClient) {}
 
-  create(company: ICompany): Observable<EntityResponseType> {
+  create(company: ICompany): Observable<GeneralResponse> {
+    delete company._id;
     return this.http.post<GeneralResponse>(EnterpriseInformationConstants.ENTERPRISE_INFO_ENDPOINT_URL_COMPANY_DATA + 'create', 
-    company, { observe: 'response' });
+      company);
   }
 
   update(company: ICompany): Observable<EntityResponseType> {

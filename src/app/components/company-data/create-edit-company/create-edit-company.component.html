@@ -132,6 +132,33 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div class="form-group col-6">
+                    <label class="form-control-label" for="field_carrep">Carga de Reportes</label>
+                    <div class="input-group">
+                        <p-multiSelect appendTo="body" [options]="reportsUpload" formControlName="reportsUploader"
+                            optionLabel="name" defaultLabel="Seleccione Reportes" [style]="{'width':'250px'}"></p-multiSelect>
+                        <div *ngIf="editForm.get('reportsUploader')!.invalid && (editForm.get('reportsUploader')!.dirty || editForm.get('reportsUploader')!.touched)">
+                            <small class="form-text text-danger" *ngIf="editForm.get('reportsUploader')?.errors?.required">
+                            Este campo es obligatorio.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-6">
+                    <label class="form-control-label" for="field_genrep">Generación de Reportes</label>
+                    <div class="input-group">
+                        <p-multiSelect appendTo="body" [options]="reportsGenerate" formControlName="reportsGenerate"
+                            optionLabel="name" defaultLabel="Seleccione Reportes" [style]="{'width':'250px'}"></p-multiSelect>
+                        <div *ngIf="editForm.get('reportsGenerate')!.invalid && (editForm.get('reportsGenerate')!.dirty || editForm.get('reportsGenerate')!.touched)">
+                            <small class="form-text text-danger" *ngIf="editForm.get('reportsGenerate')?.errors?.required">
+                            Este campo es obligatorio.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
     </div>

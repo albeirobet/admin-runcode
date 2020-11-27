@@ -50,6 +50,10 @@
             id="reports-opt" data-toggle="tab" role="tab" aria-selected="true" href="javascript:void(0);"
             (click)="viewReports()">
             Visualizar Información</a>
+          <a [ngClass]="activeURL === '/dashboard/download-reports' ? 'nav-link child-style dropdown-item submenu active' : 'nav-link child-style dropdown-item submenu'"
+            id="reports-down" data-toggle="tab" role="tab" aria-selected="true" href="javascript:void(0);"
+            (click)="genReports()">
+            Generación / Descarga</a>
         </div>
       </li>
     </ul>
