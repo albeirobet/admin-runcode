@@ -384,11 +384,11 @@ export class ReportGeneratorService {
       { observe: 'response' });
   }
 
-  downloadEntryMerchandiseAndServicesReport(): Observable<any> {
-    return this.http.get<any>(
+  downloadEntryMerchandiseAndServicesReport(): any {
+    return this.http.get(
       ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 
-        'reportCreator/generateEntryMerchandiseAndServicesReport',
-      { observe: 'response' });
+        'reportCreator/downloadEntryMerchandiseAndServicesReport', 
+        { observe: 'response', responseType: 'blob'});
   }
 
 }

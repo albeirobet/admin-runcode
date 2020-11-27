@@ -164,15 +164,34 @@ export class DownloadReportsComponent implements OnInit {
 
   downloadEntryMerchandiseAndServicesReport() {
     this.loading = true;
-    /*this.reportGeneratorService.downloadEntryMerchandiseAndServicesReport().subscribe(
-      event => {*/
+    this.reportGeneratorService.downloadEntryMerchandiseAndServicesReport().subscribe(
+      event => {
+        this.downloadFile(event.body);
         this.loading = false;
-      /*},
+      },
       error => {
         this.loading = false;
         this.notificationService.error(error.error.apiError.messageUser);
       }
-    );*/
+    );
+  }
+
+  downloadFile(data) {
+    let blob = new Blob([data], 
+      {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        //type: "application/vnd.ms-excel"
+      }
+    );
+    let fileUrl = window.URL.createObjectURL(blob);
+    if (window.navigator.msSaveOrOpenBlob) {
+      window.navigator.msSaveOrOpenBlob(blob, fileUrl.split(":")[1] + ".xlsx");
+    } else {
+      window.open(fileUrl);
+    }
+    /*const blob = new Blob([data], { type: 'application/octet-stream' });
+    const url= window.URL.createObjectURL(blob);
+    window.open(url);*/
   }
 
 }
