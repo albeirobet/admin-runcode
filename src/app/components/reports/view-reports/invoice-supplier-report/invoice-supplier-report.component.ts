@@ -12,6 +12,7 @@ import { IPurchaseOrder } from 'src/app/model/reports/purchase-order';
 import { IEntryMerchandise } from 'src/app/model/reports/entry-merchandise';
 import { IInvoiceSupplier } from 'src/app/model/reports/invoice-supplier';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Utilities } from 'src/app/utils/utilities';
 
 @Component({
   selector: 'app-invoice-supplier-report',
@@ -42,10 +43,16 @@ export class InvoiceSupplierReportComponent implements OnInit {
   ascending!: boolean;
   ngbPaginationPage = 1;
 
+  // --- Fecha Maxima de seleccion
+  maxDate = new Date();
+  es: any;
+
   /**
    * Formulario de filtros
    */
   filterInvoiceSupplierForm = new FormGroup({
+    initDate: new FormControl(null, Validators.nullValidator),
+    endDate: new FormControl(null, Validators.nullValidator),
     filter: new FormControl(null, Validators.nullValidator),
   });
 
@@ -57,6 +64,16 @@ export class InvoiceSupplierReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.es = {
+      firstDayOfWeek: 1,
+      dayNames: [ "domingo","lunes","martes","miércoles","jueves","viernes","sábado" ],
+      dayNamesShort: [ "dom","lun","mar","mié","jue","vie","sáb" ],
+      dayNamesMin: [ "D","L","M","X","J","V","S" ],
+      monthNames: [ "enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre" ],
+      monthNamesShort: [ "ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic" ],
+      today: 'Hoy',
+      clear: 'Borrar'
+    }
   }
 
   cleanInvoiceSupplierForm() {
@@ -97,6 +114,10 @@ export class InvoiceSupplierReportComponent implements OnInit {
 
     let params = '?page='+this.pagedRequest.page;
     params = params + '&limit='+this.pagedRequest.limit;
+    if(filterForm.initDate && filterForm.endDate) {
+      params = params + '&documentDate[gte]='+Utilities.getFormattedDate(filterForm.initDate);
+      params = params + '&documentDate[lt]='+Utilities.getFormattedFinalDate(filterForm.endDate);
+    }
     if(filterForm.filter) {
       params = params + '&filter='+filterForm.filter.trim();
     }

@@ -10,6 +10,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { ReportGeneratorService } from 'src/app/services/report-generator/report-generator.service';
 import { IAssistantReport } from 'src/app/model/reports/assistant-report';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Utilities } from 'src/app/utils/utilities';
 
 @Component({
   selector: 'app-assistant-report',
@@ -40,10 +41,16 @@ export class AssistantReportComponent implements OnInit {
   ascending!: boolean;
   ngbPaginationPage = 1;
 
+  // --- Fecha Maxima de seleccion
+  maxDate = new Date();
+  es: any;
+
   /**
    * Formulario de filtros
    */
   filterAssistantReportForm = new FormGroup({
+    initDate: new FormControl(null, Validators.nullValidator),
+    endDate: new FormControl(null, Validators.nullValidator),
     filter: new FormControl(null, Validators.nullValidator),
   });
 
@@ -55,6 +62,16 @@ export class AssistantReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.es = {
+      firstDayOfWeek: 1,
+      dayNames: [ "domingo","lunes","martes","miércoles","jueves","viernes","sábado" ],
+      dayNamesShort: [ "dom","lun","mar","mié","jue","vie","sáb" ],
+      dayNamesMin: [ "D","L","M","X","J","V","S" ],
+      monthNames: [ "enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre" ],
+      monthNamesShort: [ "ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic" ],
+      today: 'Hoy',
+      clear: 'Borrar'
+    }
   }
 
   cleanAssistantReportForm() {
@@ -94,6 +111,10 @@ export class AssistantReportComponent implements OnInit {
 
     let params = '?page='+this.pagedRequest.page;
     params = params + '&limit='+this.pagedRequest.limit;
+    if(filterForm.initDate && filterForm.endDate) {
+      params = params + '&invoiceDate[gte]='+Utilities.getFormattedDate(filterForm.initDate);
+      params = params + '&invoiceDate[lt]='+Utilities.getFormattedFinalDate(filterForm.endDate);
+    }
     if(filterForm.filter) {
       params = params + '&filter='+filterForm.filter.trim();
     }

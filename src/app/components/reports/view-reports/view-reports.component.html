@@ -5,6 +5,9 @@
     </div>
 </section>
 
+<div class="alert alert-warning" id="no-result" *ngIf="reportTypeList?.length === 0">
+    <span>No se han encontrado reportes a visualizar.</span>
+</div>
 <div class="row">
     <div class="form-group col-6">
         <label class="form-control-label" for="field_report">Tipo de Reporte</label>

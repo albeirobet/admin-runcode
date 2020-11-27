@@ -10,6 +10,7 @@ import { ReportGeneratorService } from 'src/app/services/report-generator/report
 import { IPurchaseOrder } from 'src/app/model/reports/purchase-order';
 import { IPaymentExtra } from 'src/app/model/reports/payment-extra';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Utilities } from 'src/app/utils/utilities';
 
 @Component({
   selector: 'app-payment-extra-report',
@@ -40,10 +41,16 @@ export class PaymentExtraReportComponent implements OnInit {
   ascending!: boolean;
   ngbPaginationPage = 1;
 
+  // --- Fecha Maxima de seleccion
+  maxDate = new Date();
+  es: any;
+
   /**
    * Formulario de filtros
    */
   filterPaymentExtraForm = new FormGroup({
+    initDate: new FormControl(null, Validators.nullValidator),
+    endDate: new FormControl(null, Validators.nullValidator),
     filter: new FormControl(null, Validators.nullValidator),
   });
 
@@ -55,6 +62,16 @@ export class PaymentExtraReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.es = {
+      firstDayOfWeek: 1,
+      dayNames: [ "domingo","lunes","martes","miércoles","jueves","viernes","sábado" ],
+      dayNamesShort: [ "dom","lun","mar","mié","jue","vie","sáb" ],
+      dayNamesMin: [ "D","L","M","X","J","V","S" ],
+      monthNames: [ "enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre" ],
+      monthNamesShort: [ "ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic" ],
+      today: 'Hoy',
+      clear: 'Borrar'
+    }
   }
 
   cleanPaymentExtraForm() {
@@ -94,6 +111,10 @@ export class PaymentExtraReportComponent implements OnInit {
 
     let params = '?page='+this.pagedRequest.page;
     params = params + '&limit='+this.pagedRequest.limit;
+    if(filterForm.initDate && filterForm.endDate) {
+      params = params + '&documentDate[gte]='+Utilities.getFormattedDate(filterForm.initDate);
+      params = params + '&documentDate[lt]='+Utilities.getFormattedFinalDate(filterForm.endDate);
+    }
     if(filterForm.filter) {
       params = params + '&filter='+filterForm.filter.trim();
     }

@@ -9,7 +9,6 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import { ServiceReportRoutingModule } from './service-report-routing.module';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { ServiceReportComponent } from 'src/app/components/reports/view-reports/service-report/service-report.component';
-import {CalendarModule} from 'primeng/calendar';
 import {AccordionModule} from 'primeng/accordion';
 
 @NgModule({
@@ -24,7 +23,6 @@ import {AccordionModule} from 'primeng/accordion';
     InputTextModule,
     DynamicDialogModule,
     ConfirmDialogModule,
-    CalendarModule,
     AccordionModule
   ],
   exports: [ServiceReportComponent]

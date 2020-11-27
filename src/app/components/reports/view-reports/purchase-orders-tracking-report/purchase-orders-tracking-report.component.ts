@@ -11,6 +11,7 @@ import { ReportGeneratorService } from 'src/app/services/report-generator/report
 import { IPurchaseOrder } from 'src/app/model/reports/purchase-order';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IPurchaseOrderTracking } from 'src/app/model/reports/purchase-order-tracking';
+import { Utilities } from 'src/app/utils/utilities';
 
 @Component({
   selector: 'app-purchase-orders-tracking-report',
@@ -41,10 +42,16 @@ export class PurchaseOrdersTrackingReportComponent implements OnInit {
   ascending!: boolean;
   ngbPaginationPage = 1;
 
+  // --- Fecha Maxima de seleccion
+  maxDate = new Date();
+  es: any;
+
   /**
    * Formulario de filtros
    */
   filterPurchaseOrdersTrackingForm = new FormGroup({
+    initDate: new FormControl(null, Validators.nullValidator),
+    endDate: new FormControl(null, Validators.nullValidator),
     filter: new FormControl(null, Validators.nullValidator),
   });
 
@@ -56,6 +63,16 @@ export class PurchaseOrdersTrackingReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.es = {
+      firstDayOfWeek: 1,
+      dayNames: [ "domingo","lunes","martes","miércoles","jueves","viernes","sábado" ],
+      dayNamesShort: [ "dom","lun","mar","mié","jue","vie","sáb" ],
+      dayNamesMin: [ "D","L","M","X","J","V","S" ],
+      monthNames: [ "enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre" ],
+      monthNamesShort: [ "ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic" ],
+      today: 'Hoy',
+      clear: 'Borrar'
+    }
   }
 
   cleanPurchaseOrdersTrackingForm() {
@@ -95,11 +112,15 @@ export class PurchaseOrdersTrackingReportComponent implements OnInit {
 
     let params = '?page='+this.pagedRequest.page;
     params = params + '&limit='+this.pagedRequest.limit;
+    if(filterForm.initDate && filterForm.endDate) {
+      params = params + '&purchaseOrderDate[gte]='+Utilities.getFormattedDate(filterForm.initDate);
+      params = params + '&purchaseOrderDate[lt]='+Utilities.getFormattedFinalDate(filterForm.endDate);
+    }
     if(filterForm.filter) {
       params = params + '&filter='+filterForm.filter.trim();
     }
 
-    this.reportGeneratorService.getPurchaseOrders(params).subscribe(
+    this.reportGeneratorService.getPurchaseOrdersTracking(params).subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.purchaseOrdersTracking = res.body.data.dataLst;
         this.totalRecords = res.body.data.total;

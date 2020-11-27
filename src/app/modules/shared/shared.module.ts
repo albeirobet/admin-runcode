@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import {KeyFilterModule} from 'primeng/keyfilter';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {CalendarModule} from 'primeng/calendar';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    KeyFilterModule
+    KeyFilterModule,
+    CalendarModule
   ],
   declarations: [],
   exports: [
@@ -21,7 +23,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    KeyFilterModule
+    KeyFilterModule,
+    CalendarModule
   ]
 })
 export class SharedModule { }

@@ -298,6 +298,12 @@ export class ReportGeneratorService {
       { observe: 'response' });
   }
 
+  getPurchaseOrdersTracking(params): Observable<any> {
+    return this.http.get<any>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'purchaseOrderTracking/all' + params,
+      { observe: 'response' });
+  }
+
   getInvoiceSupplier(params): Observable<any> {
     return this.http.get<any>(
       ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'invoiceSupplier/all' + params,
