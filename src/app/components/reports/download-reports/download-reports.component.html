@@ -35,10 +35,12 @@
                     <span style="font-size: 10px;"><b>{{info.message ? info.message: ''}}</b></span>
                 </td>
                 <td>
-                    <button pButton pRipple icon="pi pi-angle-double-right" 
+                    <button *ngIf="info.state && info.state != 'PROCESSING'
+                        && info.state != 'ENTERING_INFORMATION'"
+                        pButton pRipple icon="pi pi-angle-double-right" 
                         class="p-button-rounded p-button-success p-mr-2"
                         pTooltip="Generar el reporte"
-                        (click)="generateReport(info)"></button>
+                        (click)="generateReportPre(info)"></button>
                     <button *ngIf="info.state && info.state == 'GENERATED_REPORT'" 
                         pButton pRipple icon="pi pi-download" 
                         class="p-button-rounded p-button-success p-mr-2"

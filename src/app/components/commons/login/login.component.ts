@@ -40,7 +40,6 @@ export class LoginComponent implements OnInit {
       })
       .subscribe(
         (data) => {
-          console.log(data)
           this.loading = false;
           this.notificationService.success('Bienvenido '+data.data.user.name);
           this.router.navigate(['/dashboard']);

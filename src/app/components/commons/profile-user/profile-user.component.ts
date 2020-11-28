@@ -58,7 +58,6 @@ export class ProfileUserComponent implements OnInit {
   ngOnInit(): void {
     this.accountService.identity().subscribe(account => {
       if (account) {
-        console.log(account.data)
         this.userForm.patchValue({
           _id: account.data.user._id,
           email: account.data.user.email,

@@ -109,7 +109,6 @@ export class CreateEditUserComponent implements OnInit {
   }
 
   onChangeCompany(event) {
-    console.log(event)
     let found = false;
     this.companies.forEach(element => {
       if(element._id === event.value){

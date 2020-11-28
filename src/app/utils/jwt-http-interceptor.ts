@@ -9,7 +9,6 @@ export class JwtHttpInterceptor implements HttpInterceptor {
     constructor() { }
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const token = localStorage.getItem('acc_tok_rc');
-        console.log('interceptor: '+ token);
         let clone: HttpRequest<any>;
         if (request.url === AppConstants.URL_IP_ADDRESS) {
             clone = request.clone({

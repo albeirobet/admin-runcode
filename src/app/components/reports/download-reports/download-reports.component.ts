@@ -41,7 +41,7 @@ export class DownloadReportsComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    this.getReportCreator(false);
+    this.getReportCreator();
   }
 
   ngOnDestroy(): void {
@@ -52,9 +52,11 @@ export class DownloadReportsComponent implements OnInit {
 
   interval = null;
   startTimer() {
-    this.interval = setInterval(() => {
-      this.getReportCreator(true);
-    },10000);
+    if(!this.interval) {
+      this.interval = setInterval(() => {
+        this.getReportCreator();
+      },10000);
+    }
   }
 
   stopTimer() {
@@ -65,31 +67,29 @@ export class DownloadReportsComponent implements OnInit {
   /**
    * Obtiene la configuracion de reportes por empresa
    */
-  getReportCreator(validate) {
+  getReportCreator() {
     this.loading = true;
-    this.infoList = [];
     this.reportGeneratorService.getReportCreator().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         console.log(res)
+        this.infoList = [];
         this.infoList = res.body.data;
         let inprocess = false;
         this.loading = false;
-        if(validate) {
-          this.infoList.forEach(element => {
-            if(element.percentageCompletition &&
-                parseInt(element.percentageCompletition) > 0 &&
-                parseInt(element.percentageCompletition) < 100) {
-                  inprocess = true;
-                }
-          });
-          if(inprocess && !this.interval) {
-            setTimeout(() => {
-              this.startTimer();
-            },10000);
-          } else {
-            if(!inprocess && this.interval) {
-              this.stopTimer();
-            }
+        this.infoList.forEach(element => {
+          if(element.percentageCompletition &&
+              parseInt(element.percentageCompletition) > 0 &&
+              parseInt(element.percentageCompletition) < 100) {
+                inprocess = true;
+              }
+        });
+        if(inprocess && !this.interval) {
+          setTimeout(() => {
+            this.startTimer();
+          },10000);
+        } else {
+          if(!inprocess && this.interval) {
+            this.stopTimer();
           }
         }
       },
@@ -104,12 +104,25 @@ export class DownloadReportsComponent implements OnInit {
     this.loading = true;
     switch (info.code) {
       case AppConstants.REPORT_GEN_SEGUIMIENTO_ENTRADA_SERVICIOS: {
-        this.downloadEntryMerchandiseAndServicesReport();
+        this.downloadEntryMerchandiseAndServicesReport(info);
         break;
       }
       default: {
         break;
       }
+    }
+  }
+
+  generateReportPre(info){
+    if(info.counterRows && info.counterRows > 0) {
+      this.confirmationService.confirm({
+        message: 'Está seguro de generar el reporte '
+         + info.name 
+         + '? \nEsto borrará la información procesada anteriormente.',
+        accept: () => {
+            this.generateReport(info);
+        }
+      });
     }
   }
 
@@ -152,8 +165,15 @@ export class DownloadReportsComponent implements OnInit {
         console.log('File is completely uploaded! ', event);
         this.notificationService.success('Se ha iniciado la generación del reporte, '
            + 'por favor valide en un momento su información');
+        this.infoList.forEach(element => {
+          if(element.code === AppConstants.REPORT_GEN_SEGUIMIENTO_ENTRADA_SERVICIOS) {
+            element.counterRows = '0';
+            element.percentageCompletition = '0';
+            element.message = '';
+          }          
+        });
+        this.startTimer();
         this.loading = false;
-        this.getReportCreator(true);
       },
       error => {
         this.loading = false;
@@ -162,33 +182,39 @@ export class DownloadReportsComponent implements OnInit {
     );
   }
 
-  downloadEntryMerchandiseAndServicesReport() {
+  downloadEntryMerchandiseAndServicesReport(info) {
     this.loading = true;
     this.reportGeneratorService.downloadEntryMerchandiseAndServicesReport().subscribe(
-      event => {
-        this.downloadFile(event.body);
-        this.loading = false;
+      (resp: HttpResponse<Blob>) => {
+        console.log(resp.headers.get('content-disposition'));
+        this.downloadFile(resp.body, resp.headers, info);
       },
       error => {
         this.loading = false;
-        this.notificationService.error(error.error.apiError.messageUser);
+        this.notificationService.error('Ha ocurrido un error con la descarga del archivo. Por favor intenta nuevamente.');
       }
     );
   }
 
-  downloadFile(data) {
+  downloadFile(data, header, info) {
+    console.log(header)
     let blob = new Blob([data], 
       {
         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         //type: "application/vnd.ms-excel"
       }
     );
-    let fileUrl = window.URL.createObjectURL(blob);
-    if (window.navigator.msSaveOrOpenBlob) {
+    var url = window.URL.createObjectURL(blob);
+    var anchor = document.createElement("a");
+    anchor.download = info.name +".xlsx";
+    anchor.href = url;
+    anchor.click();
+    this.loading = false;
+    /*if (window.navigator.msSaveOrOpenBlob) {
       window.navigator.msSaveOrOpenBlob(blob, fileUrl.split(":")[1] + ".xlsx");
-    } else {
-      window.open(fileUrl);
-    }
+    } else {*/
+      //window.open(fileUrl);
+    //}
     /*const blob = new Blob([data], { type: 'application/octet-stream' });
     const url= window.URL.createObjectURL(blob);
     window.open(url);*/

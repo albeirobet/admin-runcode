@@ -51,7 +51,6 @@ export class ResetPasswordComponent implements OnInit {
     let resetPassRequest = new ResetPassRequest();
     resetPassRequest.password = this.resetPasswordForm.get(['password'])!.value;
     resetPassRequest.passwordConfirm = this.resetPasswordForm.get(['passwordConfirm'])!.value;
-    console.log(resetPassRequest, this.code)
     this.loading = true;
     this.loginService.resetPassword(resetPassRequest, this.code).subscribe(
       (res: HttpResponse<GeneralResponse>) => {

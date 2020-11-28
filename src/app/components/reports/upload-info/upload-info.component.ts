@@ -42,7 +42,7 @@ export class UploadInfoComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    this.getReportUploader(false);
+    this.getReportUploader();
   }
 
   ngOnDestroy(): void {
@@ -54,7 +54,7 @@ export class UploadInfoComponent implements OnInit {
   interval = null;
   startTimer() {
     this.interval = setInterval(() => {
-      this.getReportUploader(true);
+      this.getReportUploader();
     },5000);
   }
 
@@ -82,7 +82,7 @@ export class UploadInfoComponent implements OnInit {
   /**
    * Obtiene la configuracion de reportes por empresa
    */
-  getReportUploader(validate) {
+  getReportUploader() {
     this.loading = true;
     this.infoList = [];
     this.reportGeneratorService.getReportUploader().subscribe(
@@ -91,7 +91,6 @@ export class UploadInfoComponent implements OnInit {
         this.infoList = res.body.data;
         let inprocess = false;
         this.loading = false;
-        if(validate) {
           this.infoList.forEach(element => {
             if(element.percentageCompletition &&
                 parseInt(element.percentageCompletition) > 0 &&
@@ -108,7 +107,6 @@ export class UploadInfoComponent implements OnInit {
               this.stopTimer();
             }
           }
-        }
       },
       error => {
         console.dir(error.error);
@@ -126,7 +124,7 @@ export class UploadInfoComponent implements OnInit {
     ref.onClose.subscribe((response: Boolean) => {
       if (response) {
         this.notificationService.success('Se ha iniciado la carga de información, por favor valide en un momento su información');
-        this.getReportUploader(true);
+        this.getReportUploader();
       }
     });
   }
@@ -221,7 +219,7 @@ export class UploadInfoComponent implements OnInit {
     this.reportGeneratorService.deleteClients().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.getReportUploader(true);
+        this.getReportUploader();
       },
       error => {
         console.dir(error.error);
@@ -235,7 +233,7 @@ export class UploadInfoComponent implements OnInit {
     this.reportGeneratorService.deleteSuppliers().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.getReportUploader(true);
+        this.getReportUploader();
       },
       error => {
         console.dir(error.error);
@@ -249,7 +247,7 @@ export class UploadInfoComponent implements OnInit {
     this.reportGeneratorService.deleteServices().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.getReportUploader(true);
+        this.getReportUploader();
       },
       error => {
         console.dir(error.error);
@@ -263,7 +261,7 @@ export class UploadInfoComponent implements OnInit {
     this.reportGeneratorService.deleteMaterials().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.getReportUploader(true);
+        this.getReportUploader();
       },
       error => {
         console.dir(error.error);
@@ -277,7 +275,7 @@ export class UploadInfoComponent implements OnInit {
     this.reportGeneratorService.deletePurchaseOrders().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.getReportUploader(true);
+        this.getReportUploader();
       },
       error => {
         console.dir(error.error);
@@ -291,7 +289,7 @@ export class UploadInfoComponent implements OnInit {
     this.reportGeneratorService.deleteEntryMerchandises().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.getReportUploader(true);
+        this.getReportUploader();
       },
       error => {
         console.dir(error.error);
@@ -305,7 +303,7 @@ export class UploadInfoComponent implements OnInit {
     this.reportGeneratorService.deleteEntryMerchandiseExtra().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.getReportUploader(true);
+        this.getReportUploader();
       },
       error => {
         console.dir(error.error);
@@ -319,7 +317,7 @@ export class UploadInfoComponent implements OnInit {
     this.reportGeneratorService.deleteInvoiceSupplier().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.getReportUploader(true);
+        this.getReportUploader();
       },
       error => {
         console.dir(error.error);
@@ -333,7 +331,7 @@ export class UploadInfoComponent implements OnInit {
     this.reportGeneratorService.deleteRetentionSupplier().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.getReportUploader(true);
+        this.getReportUploader();
       },
       error => {
         console.dir(error.error);
@@ -347,7 +345,7 @@ export class UploadInfoComponent implements OnInit {
     this.reportGeneratorService.deleteInvoiceClient().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.getReportUploader(true);
+        this.getReportUploader();
       },
       error => {
         console.dir(error.error);
@@ -361,7 +359,7 @@ export class UploadInfoComponent implements OnInit {
     this.reportGeneratorService.deleteMasterReport().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.getReportUploader(true);
+        this.getReportUploader();
       },
       error => {
         console.dir(error.error);
@@ -375,7 +373,7 @@ export class UploadInfoComponent implements OnInit {
     this.reportGeneratorService.deleteAssistantReport().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.getReportUploader(true);
+        this.getReportUploader();
       },
       error => {
         console.dir(error.error);
@@ -389,7 +387,7 @@ export class UploadInfoComponent implements OnInit {
     this.reportGeneratorService.deletePaymentOriginal().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.getReportUploader(true);
+        this.getReportUploader();
       },
       error => {
         console.dir(error.error);
@@ -403,7 +401,7 @@ export class UploadInfoComponent implements OnInit {
     this.reportGeneratorService.deletePaymentExtra().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.getReportUploader(true);
+        this.getReportUploader();
       },
       error => {
         console.dir(error.error);
@@ -417,7 +415,7 @@ export class UploadInfoComponent implements OnInit {
     this.reportGeneratorService.deleteIva().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.getReportUploader(true);
+        this.getReportUploader();
       },
       error => {
         console.dir(error.error);
@@ -431,7 +429,7 @@ export class UploadInfoComponent implements OnInit {
     this.reportGeneratorService.deletePurchaseOrderTracking().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
         this.notificationService.success('Información eliminada correctamente.');
-        this.getReportUploader(true);
+        this.getReportUploader();
       },
       error => {
         console.dir(error.error);

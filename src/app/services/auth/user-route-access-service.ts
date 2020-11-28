@@ -22,19 +22,15 @@ export class UserRouteAccessService implements CanActivate {
         if (!authorities || authorities.length === 0) {
           return true;
         }
-        console.log(account)
         if (account) {
           const hasAnyAuthority = this.accountService.hasAnyAuthority(authorities);
           if (hasAnyAuthority) {
-            console.log('return true')
             return true;
           }
-          console.log('return false accessdeni')
           this.router.navigate(['/accessdenied']);
           return false;
         } 
 
-        console.log('return false login')
         this.router.navigate(['/login']);
         return false;
       })
