@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ITEMS_PER_PAGE } from 'src/app/utils/constants/pagination.constants';
 import { Subscription, combineLatest } from 'rxjs';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
@@ -23,7 +23,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class SupplierReportComponent implements OnInit {
 
   // --- Titulo de los componentes
-  titleComponent = 'Proveedores';
+  @Input()
+  titleComponent: string = null;
 
   // --- Lista de registros de Proveedores
   suppliers?: ISupplier[];

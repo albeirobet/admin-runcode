@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ITEMS_PER_PAGE } from 'src/app/utils/constants/pagination.constants';
 import { Subscription, combineLatest } from 'rxjs';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
@@ -21,7 +21,8 @@ import { Utilities } from 'src/app/utils/utilities';
 export class MaterialsReportComponent implements OnInit {
 
   // --- Titulo de los componentes
-  titleComponent = 'Materiales';
+  @Input()
+  titleComponent: string = null;
 
   // --- Lista de registros de materiales
   materials?: IMaterial[];

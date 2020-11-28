@@ -22,7 +22,8 @@ import { Utilities } from 'src/app/utils/utilities';
 export class PurchaseOrdersTrackingReportComponent implements OnInit {
 
   // --- Titulo de los componentes
-  titleComponent = 'Pedidos de Compra V1';
+  @Input()
+  titleComponent: string = null;
 
   // --- Lista de registros de ordenes de compra
   purchaseOrdersTracking?: IPurchaseOrderTracking[];

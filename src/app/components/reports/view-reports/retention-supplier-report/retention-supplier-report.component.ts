@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ITEMS_PER_PAGE } from 'src/app/utils/constants/pagination.constants';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, ParamMap, Router, Data } from '@angular/router';
@@ -20,7 +20,8 @@ import { Utilities } from 'src/app/utils/utilities';
 export class RetentionSupplierReportComponent implements OnInit {
 
   // --- Titulo de los componentes
-  titleComponent = 'Retenciones a Proveedores';
+  @Input()
+  titleComponent: string = null;
 
   // --- Lista de registros de retenciones a proveedores
   retentionSupplier?: IRetentionSupplier[];
