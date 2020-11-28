@@ -123,6 +123,8 @@ export class DownloadReportsComponent implements OnInit {
             this.generateReport(info);
         }
       });
+    } else {
+      this.generateReport(info);
     }
   }
 
