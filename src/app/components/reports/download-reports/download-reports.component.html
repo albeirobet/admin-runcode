@@ -30,25 +30,20 @@
                 <td>{{info.name}}</td>
                 <td>{{info.counterRows ? info.counterRows : 0}}</td>
                 <td>
-                    <p-progressBar [value]="info.percentageCompletition" 
-                        *ngIf="info.percentageCompletition"></p-progressBar>
+                    <p-progressBar [value]="info.percentageCompletition" *ngIf="info.percentageCompletition">
+                    </p-progressBar>
                     <span style="font-size: 10px;"><b>{{info.message ? info.message: ''}}</b></span>
                 </td>
                 <td>
                     <button *ngIf="!info.state || (info.state && info.state != 'PROCESSING'
-                        && info.state != 'ENTERING_INFORMATION')"
-                        pButton pRipple icon="pi pi-angle-double-right" 
-                        class="p-button-rounded p-button-success p-mr-2"
-                        pTooltip="Generar el reporte"
+                        && info.state != 'ENTERING_INFORMATION')" pButton pRipple icon="pi pi-angle-double-right"
+                        class="p-button-rounded p-button-success p-mr-2" pTooltip="Generar el reporte"
                         (click)="generateReportPre(info)"></button>
-                    <button *ngIf="!info.state || (info.state && info.state == 'GENERATED_REPORT')" 
-                        pButton pRipple icon="pi pi-download" 
-                        class="p-button-rounded p-button-success p-mr-2"
-                        pTooltip="Descargar el reporte"
-                        (click)="downloadReport(info)"></button>
-                    <button pButton (click)="getReportInfo(info)" pTooltip="Información"
-                        pRipple icon="pi pi-info-circle" class="p-button-rounded p-button-primary"
-                        ></button>
+                    <button *ngIf="!info.state || (info.state && info.state == 'EMAIL_SEND')" pButton pRipple
+                        icon="pi pi-envelope" class="p-button-rounded p-button-success p-mr-2"
+                        pTooltip="Reenviar reporte" (click)="resendEmailWithReport(info)"></button>
+                    <button pButton (click)="getReportInfo(info)" pTooltip="Información" pRipple
+                        icon="pi pi-info-circle" class="p-button-rounded p-button-primary"></button>
                 </td>
             </tr>
         </ng-template>
@@ -56,13 +51,12 @@
         </ng-template>
     </p-table>
 </div>
-<p-dialog *ngIf="reportInfo" header="{{reportInfo.name}}" 
-    [(visible)]="displayReportInfo" [style]="{width: '50vw'}" 
+<p-dialog *ngIf="reportInfo" header="{{reportInfo.name}}" [(visible)]="displayReportInfo" [style]="{width: '50vw'}"
     [baseZIndex]="10000" [modal]="true" [draggable]="false" [resizable]="false">
-    <br/>
+    <br />
     <b>Descripción: </b>{{reportInfo.message}}
-    <br/>
-    <br/>
+    <br />
+    <br />
     <b>Instrucciones: </b>{{reportInfo.instructions}}
     <ng-template pTemplate="footer">
         <p-button icon="pi pi-check" (click)="displayReportInfo=false" label="Ok" styleClass="p-button-text"></p-button>

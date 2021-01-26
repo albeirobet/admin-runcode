@@ -291,7 +291,7 @@ export class ReportGeneratorService {
       ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'paymentExtra/all' + params,
       { observe: 'response' });
   }
-  
+
   getPurchaseOrders(params): Observable<any> {
     return this.http.get<any>(
       ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'purchaseOrders/all' + params,
@@ -354,50 +354,47 @@ export class ReportGeneratorService {
 
   createReportUploader(rupl: IReportUploader[]): Observable<GeneralResponse> {
     return this.http.post<GeneralResponse>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'reportUploader/create', 
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'reportUploader/create',
       rupl);
   }
 
   createReportCreator(rupl: IReportUploader[]): Observable<GeneralResponse> {
     return this.http.post<GeneralResponse>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'reportCreator/create', 
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'reportCreator/create',
       rupl);
   }
 
   deleteReportUploader(rupl: IReportUploader[]): Observable<GeneralResponse> {
     return this.http.post<GeneralResponse>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'reportUploader/deleteReport', 
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'reportUploader/deleteReport',
       rupl);
   }
 
   deleteReportCreator(rupl: IReportUploader[]): Observable<GeneralResponse> {
     return this.http.post<GeneralResponse>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'reportCreator/deleteReport', 
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 'reportCreator/deleteReport',
       rupl);
   }
 
   getReportInfo(code: string): Observable<any> {
     return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 
-        'reportEnable/getReportByCode/'+code,
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL +
+      'reportEnable/getReportByCode/' + code,
       { observe: 'response' });
   }
 
   generateEntryMerchandiseAndServicesReport(): Observable<any> {
     return this.http.get<any>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 
-        'reportCreator/generateEntryMerchandiseAndServicesReport',
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL +
+      'reportCreator/generateEntryMerchandiseAndServicesReport',
       { observe: 'response' });
   }
 
-  downloadEntryMerchandiseAndServicesReport(): Observable<HttpResponse<Blob>> {
-    return this.http.get<Blob>(
-      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL + 
-        'reportCreator/downloadEntryMerchandiseAndServicesReport', 
-        {
-          observe: 'response',
-          responseType: 'blob' as 'json'
-        });
+  downloadEntryMerchandiseAndServicesReport(): Observable<any> {
+    return this.http.get<any>(
+      ReportGeneratorConstants.REPORT_GENERATOR_ENDPOINT_URL +
+      'reportCreator/downloadEntryMerchandiseAndServicesReport',
+      { observe: 'response' });
   }
 
 }
