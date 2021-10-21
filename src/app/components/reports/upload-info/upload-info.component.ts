@@ -16,10 +16,9 @@ type EntityResponseType = HttpResponse<GeneralResponse>;
   selector: 'app-upload-info',
   templateUrl: './upload-info.component.html',
   styleUrls: ['./upload-info.component.css'],
-  providers: [DialogService]
+  providers: [DialogService],
 })
 export class UploadInfoComponent implements OnInit {
-
   // --- Titulo de los componentes
   titleComponent = 'Cargar Información';
 
@@ -38,15 +37,14 @@ export class UploadInfoComponent implements OnInit {
     private notificationService: NotificationService,
     private confirmationService: ConfirmationService,
     protected reportGeneratorService: ReportGeneratorService
-  ) {
-  }
-  
+  ) {}
+
   ngOnInit(): void {
     this.getReportUploader();
   }
 
   ngOnDestroy(): void {
-    if(this.interval) {
+    if (this.interval) {
       this.stopTimer();
     }
   }
@@ -55,7 +53,7 @@ export class UploadInfoComponent implements OnInit {
   startTimer() {
     this.interval = setInterval(() => {
       this.getReportUploader();
-    },5000);
+    }, 5000);
   }
 
   stopTimer() {
@@ -66,13 +64,13 @@ export class UploadInfoComponent implements OnInit {
   getReportInfo(info) {
     this.loading = true;
     this.reportGeneratorService.getReportInfo(info.code).subscribe(
-      data => {
-        console.log(data.body.data)
+      (data) => {
+        console.log(data.body.data);
         this.reportInfo = data.body.data;
         this.displayReportInfo = true;
         this.loading = false;
       },
-      error => {
+      (error) => {
         this.loading = false;
         this.notificationService.error(error.error.apiError.messageUser);
       }
@@ -87,28 +85,30 @@ export class UploadInfoComponent implements OnInit {
     this.infoList = [];
     this.reportGeneratorService.getReportUploader().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
-        console.log(res)
+        console.log(res);
         this.infoList = res.body.data;
         let inprocess = false;
         this.loading = false;
-          this.infoList.forEach(element => {
-            if(element.percentageCompletition &&
-                parseInt(element.percentageCompletition) > 0 &&
-                parseInt(element.percentageCompletition) < 100) {
-                  inprocess = true;
-                }
-          });
-          if(inprocess && !this.interval) {
-            setTimeout(() => {
-              this.startTimer();
-            },5000);
-          } else {
-            if(!inprocess && this.interval) {
-              this.stopTimer();
-            }
+        this.infoList.forEach((element) => {
+          if (
+            element.percentageCompletition &&
+            parseInt(element.percentageCompletition) > 0 &&
+            parseInt(element.percentageCompletition) < 100
+          ) {
+            inprocess = true;
           }
+        });
+        if (inprocess && !this.interval) {
+          setTimeout(() => {
+            this.startTimer();
+          }, 5000);
+        } else {
+          if (!inprocess && this.interval) {
+            this.stopTimer();
+          }
+        }
       },
-      error => {
+      (error) => {
         console.dir(error.error);
         this.loading = false;
       }
@@ -119,23 +119,26 @@ export class UploadInfoComponent implements OnInit {
     const ref = this.dialogService.open(FileUploadComponent, {
       data: info,
       header: 'Cargar Información [' + info.name + ']',
-      width: '50%'
+      width: '50%',
     });
     ref.onClose.subscribe((response: Boolean) => {
       if (response) {
-        this.notificationService.success('Se ha iniciado la carga de información, por favor valide en un momento su información');
+        this.notificationService.success(
+          'Se ha iniciado la carga de información, por favor valide en un momento su información'
+        );
         this.getReportUploader();
       }
     });
   }
 
   confirmDeleteData(info) {
-    console.log(info)
+    console.log(info);
     this.confirmationService.confirm({
-      message: 'Está seguro de eliminar la información de [' + info.name + '] ?',
+      message:
+        'Está seguro de eliminar la información de [' + info.name + '] ?',
       accept: () => {
         this.deleteData(info);
-      }
+      },
     });
   }
 
@@ -143,6 +146,7 @@ export class UploadInfoComponent implements OnInit {
    * Eliminar datos
    */
   deleteData(info) {
+    console.log(info);
     this.loading = true;
     switch (info.code) {
       case AppConstants.REPORT_DATOS_CLIENTES: {
@@ -193,6 +197,20 @@ export class UploadInfoComponent implements OnInit {
         this.deleteMasterReport();
         break;
       }
+      case AppConstants.REPORT_PLAN_CUENTAS: {
+        this.deleteChartAccountReport();
+        break;
+      }
+
+      case AppConstants.REPORT_REGISTRO_DIARIO_CUENTAS: {
+        this.deleteDailyAccountReport();
+        break;
+      }
+      case AppConstants.REPORT_DEUDAS_SUSCRIPTORES: {
+        this.deleteSuscriberDebReport();
+        break;
+      }
+
       case AppConstants.REPORT_DATOS_DOCUMENTOS_FACTURAS: {
         this.deleteAssistantReport();
         break;
@@ -218,12 +236,16 @@ export class UploadInfoComponent implements OnInit {
   deleteClients() {
     this.reportGeneratorService.deleteClients().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
-        this.notificationService.success('Información eliminada correctamente.');
+        this.notificationService.success(
+          'Información eliminada correctamente.'
+        );
         this.getReportUploader();
       },
-      error => {
+      (error) => {
         console.dir(error.error);
-        this.notificationService.error('Se ha presentado un error en el sistema, por favor intente nuevamente.');
+        this.notificationService.error(
+          'Se ha presentado un error en el sistema, por favor intente nuevamente.'
+        );
         this.loading = false;
       }
     );
@@ -232,12 +254,16 @@ export class UploadInfoComponent implements OnInit {
   deleteSuppliers() {
     this.reportGeneratorService.deleteSuppliers().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
-        this.notificationService.success('Información eliminada correctamente.');
+        this.notificationService.success(
+          'Información eliminada correctamente.'
+        );
         this.getReportUploader();
       },
-      error => {
+      (error) => {
         console.dir(error.error);
-        this.notificationService.error('Se ha presentado un error en el sistema, por favor intente nuevamente.');
+        this.notificationService.error(
+          'Se ha presentado un error en el sistema, por favor intente nuevamente.'
+        );
         this.loading = false;
       }
     );
@@ -246,12 +272,16 @@ export class UploadInfoComponent implements OnInit {
   deleteServices() {
     this.reportGeneratorService.deleteServices().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
-        this.notificationService.success('Información eliminada correctamente.');
+        this.notificationService.success(
+          'Información eliminada correctamente.'
+        );
         this.getReportUploader();
       },
-      error => {
+      (error) => {
         console.dir(error.error);
-        this.notificationService.error('Se ha presentado un error en el sistema, por favor intente nuevamente.');
+        this.notificationService.error(
+          'Se ha presentado un error en el sistema, por favor intente nuevamente.'
+        );
         this.loading = false;
       }
     );
@@ -260,12 +290,16 @@ export class UploadInfoComponent implements OnInit {
   deleteMaterials() {
     this.reportGeneratorService.deleteMaterials().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
-        this.notificationService.success('Información eliminada correctamente.');
+        this.notificationService.success(
+          'Información eliminada correctamente.'
+        );
         this.getReportUploader();
       },
-      error => {
+      (error) => {
         console.dir(error.error);
-        this.notificationService.error('Se ha presentado un error en el sistema, por favor intente nuevamente.');
+        this.notificationService.error(
+          'Se ha presentado un error en el sistema, por favor intente nuevamente.'
+        );
         this.loading = false;
       }
     );
@@ -274,12 +308,16 @@ export class UploadInfoComponent implements OnInit {
   deletePurchaseOrders() {
     this.reportGeneratorService.deletePurchaseOrders().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
-        this.notificationService.success('Información eliminada correctamente.');
+        this.notificationService.success(
+          'Información eliminada correctamente.'
+        );
         this.getReportUploader();
       },
-      error => {
+      (error) => {
         console.dir(error.error);
-        this.notificationService.error('Se ha presentado un error en el sistema, por favor intente nuevamente.');
+        this.notificationService.error(
+          'Se ha presentado un error en el sistema, por favor intente nuevamente.'
+        );
         this.loading = false;
       }
     );
@@ -288,12 +326,16 @@ export class UploadInfoComponent implements OnInit {
   deleteEntryMerchandises() {
     this.reportGeneratorService.deleteEntryMerchandises().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
-        this.notificationService.success('Información eliminada correctamente.');
+        this.notificationService.success(
+          'Información eliminada correctamente.'
+        );
         this.getReportUploader();
       },
-      error => {
+      (error) => {
         console.dir(error.error);
-        this.notificationService.error('Se ha presentado un error en el sistema, por favor intente nuevamente.');
+        this.notificationService.error(
+          'Se ha presentado un error en el sistema, por favor intente nuevamente.'
+        );
         this.loading = false;
       }
     );
@@ -302,12 +344,16 @@ export class UploadInfoComponent implements OnInit {
   deleteEntryMerchandisesExtra() {
     this.reportGeneratorService.deleteEntryMerchandiseExtra().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
-        this.notificationService.success('Información eliminada correctamente.');
+        this.notificationService.success(
+          'Información eliminada correctamente.'
+        );
         this.getReportUploader();
       },
-      error => {
+      (error) => {
         console.dir(error.error);
-        this.notificationService.error('Se ha presentado un error en el sistema, por favor intente nuevamente.');
+        this.notificationService.error(
+          'Se ha presentado un error en el sistema, por favor intente nuevamente.'
+        );
         this.loading = false;
       }
     );
@@ -316,12 +362,16 @@ export class UploadInfoComponent implements OnInit {
   deleteInvoiceSupplier() {
     this.reportGeneratorService.deleteInvoiceSupplier().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
-        this.notificationService.success('Información eliminada correctamente.');
+        this.notificationService.success(
+          'Información eliminada correctamente.'
+        );
         this.getReportUploader();
       },
-      error => {
+      (error) => {
         console.dir(error.error);
-        this.notificationService.error('Se ha presentado un error en el sistema, por favor intente nuevamente.');
+        this.notificationService.error(
+          'Se ha presentado un error en el sistema, por favor intente nuevamente.'
+        );
         this.loading = false;
       }
     );
@@ -330,12 +380,16 @@ export class UploadInfoComponent implements OnInit {
   deleteRetentionSupplier() {
     this.reportGeneratorService.deleteRetentionSupplier().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
-        this.notificationService.success('Información eliminada correctamente.');
+        this.notificationService.success(
+          'Información eliminada correctamente.'
+        );
         this.getReportUploader();
       },
-      error => {
+      (error) => {
         console.dir(error.error);
-        this.notificationService.error('Se ha presentado un error en el sistema, por favor intente nuevamente.');
+        this.notificationService.error(
+          'Se ha presentado un error en el sistema, por favor intente nuevamente.'
+        );
         this.loading = false;
       }
     );
@@ -344,12 +398,16 @@ export class UploadInfoComponent implements OnInit {
   deleteInvoiceClient() {
     this.reportGeneratorService.deleteInvoiceClient().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
-        this.notificationService.success('Información eliminada correctamente.');
+        this.notificationService.success(
+          'Información eliminada correctamente.'
+        );
         this.getReportUploader();
       },
-      error => {
+      (error) => {
         console.dir(error.error);
-        this.notificationService.error('Se ha presentado un error en el sistema, por favor intente nuevamente.');
+        this.notificationService.error(
+          'Se ha presentado un error en el sistema, por favor intente nuevamente.'
+        );
         this.loading = false;
       }
     );
@@ -358,12 +416,69 @@ export class UploadInfoComponent implements OnInit {
   deleteMasterReport() {
     this.reportGeneratorService.deleteMasterReport().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
-        this.notificationService.success('Información eliminada correctamente.');
+        this.notificationService.success(
+          'Información eliminada correctamente.'
+        );
         this.getReportUploader();
       },
-      error => {
+      (error) => {
         console.dir(error.error);
-        this.notificationService.error('Se ha presentado un error en el sistema, por favor intente nuevamente.');
+        this.notificationService.error(
+          'Se ha presentado un error en el sistema, por favor intente nuevamente.'
+        );
+        this.loading = false;
+      }
+    );
+  }
+
+  deleteDailyAccountReport() {
+    this.reportGeneratorService.deleteDailyAccountReport().subscribe(
+      (res: HttpResponse<GeneralResponse>) => {
+        this.notificationService.success(
+          'Información eliminada correctamente.'
+        );
+        this.getReportUploader();
+      },
+      (error) => {
+        console.dir(error.error);
+        this.notificationService.error(
+          'Se ha presentado un error en el sistema, por favor intente nuevamente.'
+        );
+        this.loading = false;
+      }
+    );
+  }
+
+  deleteSuscriberDebReport() {
+    this.reportGeneratorService.deleteSuscriberDebReport().subscribe(
+      (res: HttpResponse<GeneralResponse>) => {
+        this.notificationService.success(
+          'Información eliminada correctamente.'
+        );
+        this.getReportUploader();
+      },
+      (error) => {
+        console.dir(error.error);
+        this.notificationService.error(
+          'Se ha presentado un error en el sistema, por favor intente nuevamente.'
+        );
+        this.loading = false;
+      }
+    );
+  }
+  deleteChartAccountReport() {
+    this.reportGeneratorService.deleteChartAccountReport().subscribe(
+      (res: HttpResponse<GeneralResponse>) => {
+        this.notificationService.success(
+          'Información eliminada correctamente.'
+        );
+        this.getReportUploader();
+      },
+      (error) => {
+        console.dir(error.error);
+        this.notificationService.error(
+          'Se ha presentado un error en el sistema, por favor intente nuevamente.'
+        );
         this.loading = false;
       }
     );
@@ -372,12 +487,16 @@ export class UploadInfoComponent implements OnInit {
   deleteAssistantReport() {
     this.reportGeneratorService.deleteAssistantReport().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
-        this.notificationService.success('Información eliminada correctamente.');
+        this.notificationService.success(
+          'Información eliminada correctamente.'
+        );
         this.getReportUploader();
       },
-      error => {
+      (error) => {
         console.dir(error.error);
-        this.notificationService.error('Se ha presentado un error en el sistema, por favor intente nuevamente.');
+        this.notificationService.error(
+          'Se ha presentado un error en el sistema, por favor intente nuevamente.'
+        );
         this.loading = false;
       }
     );
@@ -386,12 +505,16 @@ export class UploadInfoComponent implements OnInit {
   deletePaymentOriginal() {
     this.reportGeneratorService.deletePaymentOriginal().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
-        this.notificationService.success('Información eliminada correctamente.');
+        this.notificationService.success(
+          'Información eliminada correctamente.'
+        );
         this.getReportUploader();
       },
-      error => {
+      (error) => {
         console.dir(error.error);
-        this.notificationService.error('Se ha presentado un error en el sistema, por favor intente nuevamente.');
+        this.notificationService.error(
+          'Se ha presentado un error en el sistema, por favor intente nuevamente.'
+        );
         this.loading = false;
       }
     );
@@ -400,12 +523,16 @@ export class UploadInfoComponent implements OnInit {
   deletePaymentExtra() {
     this.reportGeneratorService.deletePaymentExtra().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
-        this.notificationService.success('Información eliminada correctamente.');
+        this.notificationService.success(
+          'Información eliminada correctamente.'
+        );
         this.getReportUploader();
       },
-      error => {
+      (error) => {
         console.dir(error.error);
-        this.notificationService.error('Se ha presentado un error en el sistema, por favor intente nuevamente.');
+        this.notificationService.error(
+          'Se ha presentado un error en el sistema, por favor intente nuevamente.'
+        );
         this.loading = false;
       }
     );
@@ -414,12 +541,16 @@ export class UploadInfoComponent implements OnInit {
   deleteIvaData() {
     this.reportGeneratorService.deleteIva().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
-        this.notificationService.success('Información eliminada correctamente.');
+        this.notificationService.success(
+          'Información eliminada correctamente.'
+        );
         this.getReportUploader();
       },
-      error => {
+      (error) => {
         console.dir(error.error);
-        this.notificationService.error('Se ha presentado un error en el sistema, por favor intente nuevamente.');
+        this.notificationService.error(
+          'Se ha presentado un error en el sistema, por favor intente nuevamente.'
+        );
         this.loading = false;
       }
     );
@@ -428,12 +559,16 @@ export class UploadInfoComponent implements OnInit {
   deletePurchaseOrderTracking() {
     this.reportGeneratorService.deletePurchaseOrderTracking().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
-        this.notificationService.success('Información eliminada correctamente.');
+        this.notificationService.success(
+          'Información eliminada correctamente.'
+        );
         this.getReportUploader();
       },
-      error => {
+      (error) => {
         console.dir(error.error);
-        this.notificationService.error('Se ha presentado un error en el sistema, por favor intente nuevamente.');
+        this.notificationService.error(
+          'Se ha presentado un error en el sistema, por favor intente nuevamente.'
+        );
         this.loading = false;
       }
     );

@@ -1,6 +1,10 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import {
+  DialogService,
+  DynamicDialogConfig,
+  DynamicDialogRef,
+} from 'primeng/dynamicdialog';
 import { NotificationService } from 'src/app/services/common/notification.service';
 import { ReportGeneratorService } from 'src/app/services/report-generator/report-generator.service';
 import { AppConstants } from 'src/app/utils/constants/app-constants';
@@ -8,10 +12,9 @@ import { AppConstants } from 'src/app/utils/constants/app-constants';
 @Component({
   selector: 'app-file-upload',
   templateUrl: './file-upload.component.html',
-  styleUrls: ['./file-upload.component.css']
+  styleUrls: ['./file-upload.component.css'],
 })
 export class FileUploadComponent implements OnInit {
-
   // --- Info a Actualizar
   info?: any;
 
@@ -22,16 +25,17 @@ export class FileUploadComponent implements OnInit {
 
   uploadedFiles: any[] = [];
 
-  constructor(protected reportGeneratorService: ReportGeneratorService,
+  constructor(
+    protected reportGeneratorService: ReportGeneratorService,
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
-    private notificationService: NotificationService) {
+    private notificationService: NotificationService
+  ) {
     this.info = config.data;
-    console.log(this.info)
+    console.log(this.info);
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   close(): void {
     this.ref.close(null);
@@ -48,7 +52,7 @@ export class FileUploadComponent implements OnInit {
   upload(event) {
     console.log('uploadFile', event);
     this.loading = true;
-    console.log(event.files[0])
+    console.log(event.files[0]);
     switch (this.info.code) {
       case AppConstants.REPORT_DATOS_CLIENTES: {
         this.uploadCientesFile(event.files[0]);
@@ -98,6 +102,21 @@ export class FileUploadComponent implements OnInit {
         this.uploadCuentasContablesFile(event.files[0]);
         break;
       }
+      case AppConstants.REPORT_PLAN_CUENTAS: {
+        this.uploadPlanCuentasFile(event.files[0]);
+        break;
+      }
+
+      case AppConstants.REPORT_REGISTRO_DIARIO_CUENTAS: {
+        this.uploadRegistroDiarioCuentasFile(event.files[0]);
+        break;
+      }
+
+      case AppConstants.REPORT_DEUDAS_SUSCRIPTORES: {
+        this.uploadDeudasSuscriptoresFile(event.files[0]);
+        break;
+      }
+
       case AppConstants.REPORT_DATOS_DOCUMENTOS_FACTURAS: {
         this.uploadDocumentosFacturaFile(event.files[0]);
         break;
@@ -129,12 +148,12 @@ export class FileUploadComponent implements OnInit {
   uploadCientesFile(file) {
     this.loading = true;
     this.reportGeneratorService.uploadClients(file).subscribe(
-      event => {
+      (event) => {
         console.log('File is completely uploaded! ', event);
         this.loading = false;
         this.ref.close(true);
       },
-      error => {
+      (error) => {
         this.loading = false;
         this.notificationService.error(error.error.apiError.messageUser);
       }
@@ -144,12 +163,12 @@ export class FileUploadComponent implements OnInit {
   uploadProveedorFile(file) {
     this.loading = true;
     this.reportGeneratorService.uploadSuppliers(file).subscribe(
-      event => {
+      (event) => {
         console.log('File is completely uploaded! ', event);
         this.loading = false;
         this.ref.close(true);
       },
-      error => {
+      (error) => {
         this.loading = false;
         this.notificationService.error(error.error.apiError.messageUser);
       }
@@ -159,12 +178,12 @@ export class FileUploadComponent implements OnInit {
   uploadServiciosFile(file) {
     this.loading = true;
     this.reportGeneratorService.uploadServices(file).subscribe(
-      event => {
+      (event) => {
         console.log('File is completely uploaded! ', event);
         this.loading = false;
         this.ref.close(true);
       },
-      error => {
+      (error) => {
         this.loading = false;
         this.notificationService.error(error.error.apiError.messageUser);
       }
@@ -174,12 +193,12 @@ export class FileUploadComponent implements OnInit {
   uploadMaterialesFile(file) {
     this.loading = true;
     this.reportGeneratorService.uploadMaterials(file).subscribe(
-      event => {
+      (event) => {
         console.log('File is completely uploaded! ', event);
         this.loading = false;
         this.ref.close(true);
       },
-      error => {
+      (error) => {
         this.loading = false;
         this.notificationService.error(error.error.apiError.messageUser);
       }
@@ -189,12 +208,12 @@ export class FileUploadComponent implements OnInit {
   uploadPedidosCompraFile(file) {
     this.loading = true;
     this.reportGeneratorService.uploadPurchaseOrders(file).subscribe(
-      event => {
+      (event) => {
         console.log('File is completely uploaded! ', event);
         this.loading = false;
         this.ref.close(true);
       },
-      error => {
+      (error) => {
         this.loading = false;
         this.notificationService.error(error.error.apiError.messageUser);
       }
@@ -204,12 +223,12 @@ export class FileUploadComponent implements OnInit {
   uploadEntradaMercanciasFile(file) {
     this.loading = true;
     this.reportGeneratorService.uploadEntryMerchandises(file).subscribe(
-      event => {
+      (event) => {
         console.log('File is completely uploaded! ', event);
         this.loading = false;
         this.ref.close(true);
       },
-      error => {
+      (error) => {
         this.loading = false;
         this.notificationService.error(error.error.apiError.messageUser);
       }
@@ -219,12 +238,12 @@ export class FileUploadComponent implements OnInit {
   uploadEntradaMercanciasExtraFile(file) {
     this.loading = true;
     this.reportGeneratorService.uploadEntryMerchandiseExtra(file).subscribe(
-      event => {
+      (event) => {
         console.log('File is completely uploaded! ', event);
         this.loading = false;
         this.ref.close(true);
       },
-      error => {
+      (error) => {
         this.loading = false;
         this.notificationService.error(error.error.apiError.messageUser);
       }
@@ -234,12 +253,12 @@ export class FileUploadComponent implements OnInit {
   uploadFacturaProveedoresFile(file) {
     this.loading = true;
     this.reportGeneratorService.uploadInvoiceSupplier(file).subscribe(
-      event => {
+      (event) => {
         console.log('File is completely uploaded! ', event);
         this.loading = false;
         this.ref.close(true);
       },
-      error => {
+      (error) => {
         this.loading = false;
         this.notificationService.error(error.error.apiError.messageUser);
       }
@@ -249,12 +268,12 @@ export class FileUploadComponent implements OnInit {
   uploadRetencionesProveedoresFile(file) {
     this.loading = true;
     this.reportGeneratorService.uploadRetentionSupplier(file).subscribe(
-      event => {
+      (event) => {
         console.log('File is completely uploaded! ', event);
         this.loading = false;
         this.ref.close(true);
       },
-      error => {
+      (error) => {
         this.loading = false;
         this.notificationService.error(error.error.apiError.messageUser);
       }
@@ -264,12 +283,12 @@ export class FileUploadComponent implements OnInit {
   uploadFacturasVentasFile(file) {
     this.loading = true;
     this.reportGeneratorService.uploadInvoiceClient(file).subscribe(
-      event => {
+      (event) => {
         console.log('File is completely uploaded! ', event);
         this.loading = false;
         this.ref.close(true);
       },
-      error => {
+      (error) => {
         this.loading = false;
         this.notificationService.error(error.error.apiError.messageUser);
       }
@@ -279,12 +298,12 @@ export class FileUploadComponent implements OnInit {
   uploadPagosyDepositosFile(file) {
     this.loading = true;
     this.reportGeneratorService.uploadPaymentOriginal(file).subscribe(
-      event => {
+      (event) => {
         console.log('File is completely uploaded! ', event);
         this.loading = false;
         this.ref.close(true);
       },
-      error => {
+      (error) => {
         this.loading = false;
         this.notificationService.error(error.error.apiError.messageUser);
       }
@@ -294,12 +313,57 @@ export class FileUploadComponent implements OnInit {
   uploadCuentasContablesFile(file) {
     this.loading = true;
     this.reportGeneratorService.uploadMasterReport(file).subscribe(
-      event => {
+      (event) => {
         console.log('File is completely uploaded! ', event);
         this.loading = false;
         this.ref.close(true);
       },
-      error => {
+      (error) => {
+        this.loading = false;
+        this.notificationService.error(error.error.apiError.messageUser);
+      }
+    );
+  }
+
+  uploadPlanCuentasFile(file) {
+    this.loading = true;
+    this.reportGeneratorService.uploadChartAccountReport(file).subscribe(
+      (event) => {
+        console.log('File is completely uploaded! ', event);
+        this.loading = false;
+        this.ref.close(true);
+      },
+      (error) => {
+        this.loading = false;
+        this.notificationService.error(error.error.apiError.messageUser);
+      }
+    );
+  }
+
+  uploadRegistroDiarioCuentasFile(file) {
+    this.loading = true;
+    this.reportGeneratorService.uploadDailyAccountReport(file).subscribe(
+      (event) => {
+        console.log('File is completely uploaded! ', event);
+        this.loading = false;
+        this.ref.close(true);
+      },
+      (error) => {
+        this.loading = false;
+        this.notificationService.error(error.error.apiError.messageUser);
+      }
+    );
+  }
+
+  uploadDeudasSuscriptoresFile(file) {
+    this.loading = true;
+    this.reportGeneratorService.uploadSuscriberDebtReport(file).subscribe(
+      (event) => {
+        console.log('File is completely uploaded! ', event);
+        this.loading = false;
+        this.ref.close(true);
+      },
+      (error) => {
         this.loading = false;
         this.notificationService.error(error.error.apiError.messageUser);
       }
@@ -309,12 +373,12 @@ export class FileUploadComponent implements OnInit {
   uploadDocumentosFacturaFile(file) {
     this.loading = true;
     this.reportGeneratorService.uploadAssistantReport(file).subscribe(
-      event => {
+      (event) => {
         console.log('File is completely uploaded! ', event);
         this.loading = false;
         this.ref.close(true);
       },
-      error => {
+      (error) => {
         this.loading = false;
         this.notificationService.error(error.error.apiError.messageUser);
       }
@@ -324,12 +388,12 @@ export class FileUploadComponent implements OnInit {
   uploadPagosExtraFile(file) {
     this.loading = true;
     this.reportGeneratorService.uploadPaymentExtra(file).subscribe(
-      event => {
+      (event) => {
         console.log('File is completely uploaded! ', event);
         this.loading = false;
         this.ref.close(true);
       },
-      error => {
+      (error) => {
         this.loading = false;
         this.notificationService.error(error.error.apiError.messageUser);
       }
@@ -339,12 +403,12 @@ export class FileUploadComponent implements OnInit {
   uploadPurchaseOrderTrackingFile(file) {
     this.loading = true;
     this.reportGeneratorService.uploadPurchaseOrderTracking(file).subscribe(
-      event => {
+      (event) => {
         console.log('File is completely uploaded! ', event);
         this.loading = false;
         this.ref.close(true);
       },
-      error => {
+      (error) => {
         this.loading = false;
         this.notificationService.error(error.error.apiError.messageUser);
       }
@@ -354,16 +418,15 @@ export class FileUploadComponent implements OnInit {
   uploadIvaFile(file) {
     this.loading = true;
     this.reportGeneratorService.uploadIva(file).subscribe(
-      event => {
+      (event) => {
         console.log('File is completely uploaded! ', event);
         this.loading = false;
         this.ref.close(true);
       },
-      error => {
+      (error) => {
         this.loading = false;
         this.notificationService.error(error.error.apiError.messageUser);
       }
     );
   }
-
 }

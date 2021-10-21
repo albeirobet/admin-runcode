@@ -15,10 +15,9 @@ type EntityResponseType = HttpResponse<GeneralResponse>;
   selector: 'app-download-reports',
   templateUrl: './download-reports.component.html',
   styleUrls: ['./download-reports.component.css'],
-  providers: [DialogService]
+  providers: [DialogService],
 })
 export class DownloadReportsComponent implements OnInit {
-
   // --- Titulo de los componentes
   titleComponent = 'Generar y Descargar Información';
 
@@ -37,8 +36,7 @@ export class DownloadReportsComponent implements OnInit {
     private notificationService: NotificationService,
     private confirmationService: ConfirmationService,
     protected reportGeneratorService: ReportGeneratorService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.getReportCreator();
@@ -71,15 +69,17 @@ export class DownloadReportsComponent implements OnInit {
     this.loading = true;
     this.reportGeneratorService.getReportCreator().subscribe(
       (res: HttpResponse<GeneralResponse>) => {
-        console.log(res)
+        console.log(res);
         this.infoList = [];
         this.infoList = res.body.data;
         let inprocess = false;
         this.loading = false;
-        this.infoList.forEach(element => {
-          if (element.percentageCompletition &&
+        this.infoList.forEach((element) => {
+          if (
+            element.percentageCompletition &&
             parseInt(element.percentageCompletition) > 0 &&
-            parseInt(element.percentageCompletition) < 100) {
+            parseInt(element.percentageCompletition) < 100
+          ) {
             inprocess = true;
           }
         });
@@ -93,7 +93,7 @@ export class DownloadReportsComponent implements OnInit {
           }
         }
       },
-      error => {
+      (error) => {
         console.dir(error.error);
         this.loading = false;
       }
@@ -116,12 +116,13 @@ export class DownloadReportsComponent implements OnInit {
   generateReportPre(info) {
     if (info.counterRows && info.counterRows > 0) {
       this.confirmationService.confirm({
-        message: 'Está seguro de generar el reporte '
-          + info.name
-          + '? \nEsto borrará la información procesada anteriormente.',
+        message:
+          'Está seguro de generar el reporte ' +
+          info.name +
+          '? \nEsto borrará la información procesada anteriormente.',
         accept: () => {
           this.generateReport(info);
-        }
+        },
       });
     } else {
       this.generateReport(info);
@@ -151,6 +152,31 @@ export class DownloadReportsComponent implements OnInit {
         this.generateEntryMerchandiseAndServicesReport();
         break;
       }
+      case AppConstants.REPORT_GEN_1001: {
+        this.generate1001Report();
+        break;
+      }
+      case AppConstants.REPORT_GEN_1005: {
+        this.generate1005Report();
+        break;
+      }
+      case AppConstants.REPORT_GEN_1006: {
+        this.generate1006Report();
+        break;
+      }
+      case AppConstants.REPORT_GEN_1007: {
+        this.generate1007Report();
+        break;
+      }
+      case AppConstants.REPORT_GEN_1008: {
+        this.generate1008Report();
+        break;
+      }
+      case AppConstants.REPORT_GEN_1009: {
+        this.generate1009Report();
+        break;
+      }
+
       default: {
         break;
       }
@@ -160,13 +186,13 @@ export class DownloadReportsComponent implements OnInit {
   getReportInfo(info) {
     this.loading = true;
     this.reportGeneratorService.getReportInfo(info.code).subscribe(
-      data => {
-        console.log(data.body.data)
+      (data) => {
+        console.log(data.body.data);
         this.reportInfo = data.body.data;
         this.displayReportInfo = true;
         this.loading = false;
       },
-      error => {
+      (error) => {
         this.loading = false;
         this.notificationService.error(error.error.apiError.messageUser);
       }
@@ -175,13 +201,46 @@ export class DownloadReportsComponent implements OnInit {
 
   generateEntryMerchandiseAndServicesReport() {
     this.loading = true;
-    this.reportGeneratorService.generateEntryMerchandiseAndServicesReport().subscribe(
-      event => {
+    this.reportGeneratorService
+      .generateEntryMerchandiseAndServicesReport()
+      .subscribe(
+        (event) => {
+          console.log('File is completely uploaded! ', event);
+          this.notificationService.success(
+            'Se ha iniciado la generación del reporte, ' +
+              'por favor valide en un momento su información'
+          );
+          this.infoList.forEach((element) => {
+            if (
+              element.code ===
+              AppConstants.REPORT_GEN_SEGUIMIENTO_ENTRADA_SERVICIOS
+            ) {
+              element.counterRows = '0';
+              element.percentageCompletition = '0';
+              element.message = 'GENERACIÓN DE REPORTE EN PROCESO';
+            }
+          });
+          this.startTimer();
+          this.loading = false;
+        },
+        (error) => {
+          this.loading = false;
+          this.notificationService.error(error.error.apiError.messageUser);
+        }
+      );
+  }
+
+  generate1001Report() {
+    this.loading = true;
+    this.reportGeneratorService.generate1001Report().subscribe(
+      (event) => {
         console.log('File is completely uploaded! ', event);
-        this.notificationService.success('Se ha iniciado la generación del reporte, '
-          + 'por favor valide en un momento su información');
-        this.infoList.forEach(element => {
-          if (element.code === AppConstants.REPORT_GEN_SEGUIMIENTO_ENTRADA_SERVICIOS) {
+        this.notificationService.success(
+          'Se ha iniciado la generación del reporte, ' +
+            'por favor valide en un momento su información'
+        );
+        this.infoList.forEach((element) => {
+          if (element.code === AppConstants.REPORT_GEN_1001) {
             element.counterRows = '0';
             element.percentageCompletition = '0';
             element.message = 'GENERACIÓN DE REPORTE EN PROCESO';
@@ -190,7 +249,137 @@ export class DownloadReportsComponent implements OnInit {
         this.startTimer();
         this.loading = false;
       },
-      error => {
+      (error) => {
+        this.loading = false;
+        this.notificationService.error(error.error.apiError.messageUser);
+      }
+    );
+  }
+
+  generate1005Report() {
+    this.loading = true;
+    this.reportGeneratorService.generate1005Report().subscribe(
+      (event) => {
+        console.log('File is completely uploaded! ', event);
+        this.notificationService.success(
+          'Se ha iniciado la generación del reporte, ' +
+            'por favor valide en un momento su información'
+        );
+        this.infoList.forEach((element) => {
+          if (element.code === AppConstants.REPORT_GEN_1005) {
+            element.counterRows = '0';
+            element.percentageCompletition = '0';
+            element.message = 'GENERACIÓN DE REPORTE EN PROCESO';
+          }
+        });
+        this.startTimer();
+        this.loading = false;
+      },
+      (error) => {
+        this.loading = false;
+        this.notificationService.error(error.error.apiError.messageUser);
+      }
+    );
+  }
+
+  generate1006Report() {
+    this.loading = true;
+    this.reportGeneratorService.generate1006Report().subscribe(
+      (event) => {
+        console.log('File is completely uploaded! ', event);
+        this.notificationService.success(
+          'Se ha iniciado la generación del reporte, ' +
+            'por favor valide en un momento su información'
+        );
+        this.infoList.forEach((element) => {
+          if (element.code === AppConstants.REPORT_GEN_1006) {
+            element.counterRows = '0';
+            element.percentageCompletition = '0';
+            element.message = 'GENERACIÓN DE REPORTE EN PROCESO';
+          }
+        });
+        this.startTimer();
+        this.loading = false;
+      },
+      (error) => {
+        this.loading = false;
+        this.notificationService.error(error.error.apiError.messageUser);
+      }
+    );
+  }
+
+  generate1007Report() {
+    this.loading = true;
+    this.reportGeneratorService.generate1007Report().subscribe(
+      (event) => {
+        console.log('File is completely uploaded! ', event);
+        this.notificationService.success(
+          'Se ha iniciado la generación del reporte, ' +
+            'por favor valide en un momento su información'
+        );
+        this.infoList.forEach((element) => {
+          if (element.code === AppConstants.REPORT_GEN_1007) {
+            element.counterRows = '0';
+            element.percentageCompletition = '0';
+            element.message = 'GENERACIÓN DE REPORTE EN PROCESO';
+          }
+        });
+        this.startTimer();
+        this.loading = false;
+      },
+      (error) => {
+        this.loading = false;
+        this.notificationService.error(error.error.apiError.messageUser);
+      }
+    );
+  }
+
+  generate1008Report() {
+    this.loading = true;
+    this.reportGeneratorService.generate1008Report().subscribe(
+      (event) => {
+        console.log('File is completely uploaded! ', event);
+        this.notificationService.success(
+          'Se ha iniciado la generación del reporte, ' +
+            'por favor valide en un momento su información'
+        );
+        this.infoList.forEach((element) => {
+          if (element.code === AppConstants.REPORT_GEN_1008) {
+            element.counterRows = '0';
+            element.percentageCompletition = '0';
+            element.message = 'GENERACIÓN DE REPORTE EN PROCESO';
+          }
+        });
+        this.startTimer();
+        this.loading = false;
+      },
+      (error) => {
+        this.loading = false;
+        this.notificationService.error(error.error.apiError.messageUser);
+      }
+    );
+  }
+
+  generate1009Report() {
+    this.loading = true;
+    this.reportGeneratorService.generate1009Report().subscribe(
+      (event) => {
+        console.log('File is completely uploaded! ', event);
+        this.notificationService.success(
+          'Se ha iniciado la generación del reporte, ' +
+            'por favor valide en un momento su información'
+        );
+        this.infoList.forEach((element) => {
+          if (element.code === AppConstants.REPORT_GEN_1009) {
+            element.counterRows = '0';
+            element.percentageCompletition = '0';
+            element.message = 'GENERACIÓN DE REPORTE EN PROCESO';
+          }
+        });
+        this.startTimer();
+        this.loading = false;
+      },
+      (error) => {
         this.loading = false;
         this.notificationService.error(error.error.apiError.messageUser);
       }
@@ -199,38 +388,44 @@ export class DownloadReportsComponent implements OnInit {
 
   downloadEntryMerchandiseAndServicesReport(info) {
     this.loading = true;
-    this.reportGeneratorService.downloadEntryMerchandiseAndServicesReport().subscribe(
-      data => {
-        console.log(data.body)
-        this.reportInfo = data.body.data;
-        this.notificationService.success('Se ha iniciado la generación del reporte para reenviar reporte a su correo, '
-          + 'por favor valide en un momento su información');
-        this.infoList.forEach(element => {
-          if (element.code === AppConstants.REPORT_GEN_SEGUIMIENTO_ENTRADA_SERVICIOS) {
-            element.message = 'REENVIANDO REPORTE A CORREO ELECTRÓNICO DEL USUARIO';
-          }
-        });
-        this.startTimer();
-        this.loading = false;
-      },
-      error => {
-        this.loading = false;
-        this.notificationService.error(error.error.apiError.messageUser);
-      }
-    );
+    this.reportGeneratorService
+      .downloadEntryMerchandiseAndServicesReport()
+      .subscribe(
+        (data) => {
+          console.log(data.body);
+          this.reportInfo = data.body.data;
+          this.notificationService.success(
+            'Se ha iniciado la generación del reporte para reenviar reporte a su correo, ' +
+              'por favor valide en un momento su información'
+          );
+          this.infoList.forEach((element) => {
+            if (
+              element.code ===
+              AppConstants.REPORT_GEN_SEGUIMIENTO_ENTRADA_SERVICIOS
+            ) {
+              element.message =
+                'REENVIANDO REPORTE A CORREO ELECTRÓNICO DEL USUARIO';
+            }
+          });
+          this.startTimer();
+          this.loading = false;
+        },
+        (error) => {
+          this.loading = false;
+          this.notificationService.error(error.error.apiError.messageUser);
+        }
+      );
   }
 
   downloadFile(data, header, info) {
-    console.log(header)
-    let blob = new Blob([data],
-      {
-        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        //type: "application/vnd.ms-excel"
-      }
-    );
+    console.log(header);
+    let blob = new Blob([data], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      //type: "application/vnd.ms-excel"
+    });
     var url = window.URL.createObjectURL(blob);
-    var anchor = document.createElement("a");
-    anchor.download = info.name + ".xlsx";
+    var anchor = document.createElement('a');
+    anchor.download = info.name + '.xlsx';
     anchor.href = url;
     anchor.click();
     this.loading = false;
@@ -243,5 +438,4 @@ export class DownloadReportsComponent implements OnInit {
     const url= window.URL.createObjectURL(blob);
     window.open(url);*/
   }
-
 }

@@ -42,8 +42,8 @@
                     <button *ngIf="!info.state || (info.state && info.state == 'EMAIL_SEND')" pButton pRipple
                         icon="pi pi-envelope" class="p-button-rounded p-button-success p-mr-2"
                         pTooltip="Reenviar reporte" (click)="resendEmailWithReport(info)"></button>
-                    <button pButton (click)="getReportInfo(info)" pTooltip="Información" pRipple
-                        icon="pi pi-info-circle" class="p-button-rounded p-button-primary"></button>
+                    <!-- <button pButton (click)="getReportInfo(info)" pTooltip="Información" pRipple
+                        icon="pi pi-info-circle" class="p-button-rounded p-button-primary"></button> -->
                 </td>
             </tr>
         </ng-template>
