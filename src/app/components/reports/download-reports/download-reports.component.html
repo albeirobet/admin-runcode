@@ -39,9 +39,9 @@
                         && info.state != 'ENTERING_INFORMATION')" pButton pRipple icon="pi pi-angle-double-right"
                         class="p-button-rounded p-button-success p-mr-2" pTooltip="Generar el reporte"
                         (click)="generateReportPre(info)"></button>
-                    <button *ngIf="!info.state || (info.state && info.state == 'EMAIL_SEND')" pButton pRipple
+                    <!-- <button *ngIf="!info.state || (info.state && info.state == 'EMAIL_SEND')" pButton pRipple
                         icon="pi pi-envelope" class="p-button-rounded p-button-success p-mr-2"
-                        pTooltip="Reenviar reporte" (click)="resendEmailWithReport(info)"></button>
+                        pTooltip="Reenviar reporte" (click)="resendEmailWithReport(info)"></button> -->
                     <!-- <button pButton (click)="getReportInfo(info)" pTooltip="Información" pRipple
                         icon="pi pi-info-circle" class="p-button-rounded p-button-primary"></button> -->
                 </td>
